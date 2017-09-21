@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->integer('tipouser_id')->unisgned();
+            $table->integer('tipouser_id')->unsigned();
             $table->integer('negocio_id')->unsigned()->nullable();
             $table->rememberToken();
             $table->timestamps();

@@ -15,10 +15,10 @@ class CreateCotizacionesTable extends Migration
     {
         Schema::create('cotizaciones', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('oportunidade_id');
+            $table->integer('oportunidade_id')->unsigned();
             $table->integer('estado_id')->unsigned();
             $table->string('version');
-            $table->string('moneda_id')->unsigned();
+            $table->integer('moneda_id')->unsigned();
             $table->string('descuento');
             $table->boolean('showdescuento');
             $table->timestamps();

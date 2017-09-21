@@ -17,7 +17,7 @@ class CreateProductosTable extends Migration
             $table->increments('id');
             $table->string('descripcion');
             $table->integer('proveedore_id')->unsigned();
-            $table->inteher('categoria_id')->unsigned();
+            $table->integer('categoria_id')->unsigned();
             $table->timestamps();
 
             $table->integer('negocio_id')->unsigned();
