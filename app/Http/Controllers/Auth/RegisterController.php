@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Http\Controllers\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {
@@ -48,9 +48,15 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'tipouser_id' => 'required|numeric',
+            'tipodocumento_id' => 'required|numeric',
+            'numero_documento' => 'required|numeric',
+            'nombres' => 'required|max:255',
+            'apellidos' => 'required|max:255',
+            'fecha_nacimiento' => 'required|date',
+            'genero' => 'required',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|min:6|confirmed',
         ]);
     }
 
@@ -58,13 +64,19 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\User
+     * @return User
      */
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
+            'tipouser_id' => $data['tipouser_id'],
+            'tipodocumento_id' => $data['tipodocumento_id'],
+            'numero_documento' => $data['numero_documento'], 
+            'nombres' => $data['nombres'], 
+            'apellidos' => $data['apellidos'], 
+            'fecha_nacimiento' => $data['fecha_nacimiento'], 
+            'genero' => $data['genero'], 
+            'email' => $data['email'], 
             'password' => bcrypt($data['password']),
         ]);
     }

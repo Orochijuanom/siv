@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->integer('tipouser_id')->unsigned();
             $table->integer('negocio_id')->unsigned()->nullable();
+            $table->boolean('activo')->default(1);
             $table->rememberToken();
             $table->timestamps();
 

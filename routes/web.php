@@ -17,7 +17,14 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index');
 
-Route::get('/clientes', 'ClientesController@index');
+Route::group(['prefix' => 'administrador', 'middleware' => 'administrador'], function () {
+    Route::get('/', function () {
+        return view('admin.clientes');
+    });
+    Route::get('/clientes', 'ClientesController@index');
+});
+
+
 Route::get('/empresas', 'EmpresasController@index');
