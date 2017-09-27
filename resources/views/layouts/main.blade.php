@@ -56,12 +56,7 @@
                   
                   <li class="">
                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                      {{ Auth::user()->nombres }} {{ Auth::user()->apellidos }} <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-usermenu pull-right">
-                      @yield('dropmenu')
-                      <li>
-                          <a href="/logout"
+                      {{ Auth::user()->name }}<span class="caret"></span><a href="/logout"
                               onclick="event.preventDefault();
                                           document.getElementById('logout-form').submit();">
                               <i class="fa fa-sign-out pull-right"></i> Salir</a>
@@ -69,6 +64,11 @@
                           <form id="logout-form" action="/logout" method="POST" style="display: none;">
                               {{ csrf_field() }}
                           </form>
+                    </a>
+                    <ul class="dropdown-menu dropdown-usermenu pull-right">
+                     
+                      <li>
+                          
                       </li>
                     </ul>
                   </li>

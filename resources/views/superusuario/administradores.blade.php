@@ -1,9 +1,9 @@
-@extends('layouts.admin')
+@extends('layouts.super')
 
 @section('content')
 <div class="container">
     <div class="row">
-       <Clientes></Clientes>       
+       <Administradores></Administradores>       
     </div>
 </div>
 @endsection

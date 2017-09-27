@@ -35,7 +35,7 @@
         },
         methods: {
             enviar(){
-                this.$http.post('/api/cliente', this.user).then(response => {                        
+                this.$http.post('/api/administrador', this.user).then(response => {                        
                 
                    this.user.nombre = ''
                    this.user.email = ''

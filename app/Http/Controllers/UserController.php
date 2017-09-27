@@ -9,11 +9,11 @@ use Hash;
 
 class ClientesController extends Controller
 {
-    public function index(){
-        return view('admin.clientes');
+    public function administradores(){
+        return view('superusuario.administradores');
     }
 
-    public function store(Request $request){
+    public function storeAdmin(Request $request){
         $this->validate($request, [            
             'nombre' => 'required',
             'email' => 'required',

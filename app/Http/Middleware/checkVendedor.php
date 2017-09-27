@@ -6,7 +6,7 @@ use Closure;
 use Auth;
 use Response;
 
-class checkPersonas
+class checkVendedor
 {
     /**
      * Handle an incoming request.

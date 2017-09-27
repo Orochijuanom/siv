@@ -6,7 +6,7 @@ use Closure;
 use Auth;
 use Response;
 
-class checkEmpresas
+class checkCliente
 {
     /**
      * Handle an incoming request.

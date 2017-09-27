@@ -30,11 +30,11 @@ class LoginController extends Controller
     {   
         switch (Auth::user()->tipouser_id) {
             case '1':
-                return $redirectTo = '/administrador';
+                return $redirectTo = '/superusuario';
                 break;
 
             case '2':
-                return $redirectTo = '/cliente';
+                return $redirectTo = '/administrador';
                 break;
 
             case '3':

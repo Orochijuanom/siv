@@ -19,12 +19,14 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
-Route::group(['prefix' => 'administrador', 'middleware' => 'administrador'], function () {
+//superusuario tipouser_id=1 administador tipouser_id=2 vendedor tipouser_id=3
+Route::group(['prefix' => 'superusuario', 'middleware' => 'superusuario'], function () {
     Route::get('/', function () {
-        return view('admin.clientes');
+        return view('superusuario.administradores');
     });
-    Route::get('/clientes', 'ClientesController@index');
+    Route::get('/administradores', 'UserController@administradores');
 });
+
 
 
 Route::get('/empresas', 'EmpresasController@index');

@@ -12,11 +12,11 @@ class TipousersTableSeeder extends Seeder
     public function run()
     {
         DB::table('tipousers')->insert([
-            'descripcion' => 'Administrador'
+            'descripcion' => 'Superusuario'
         ]);
 
         DB::table('tipousers')->insert([
-            'descripcion' => 'Cliente'
+            'descripcion' => 'Administrador'
         ]);
 
         DB::table('tipousers')->insert([
