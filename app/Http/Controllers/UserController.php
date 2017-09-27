@@ -7,7 +7,7 @@ use App\Negocio;
 use App\User;
 use Hash;
 
-class ClientesController extends Controller
+class UserController extends Controller
 {
     public function administradores(){
         return view('superusuario.administradores');

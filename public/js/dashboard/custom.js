@@ -102,13 +102,13 @@ var setContentHeight = function () {
 // toggle small or large menu 
 $MENU_TOGGLE.on('click', function() {				
 		if ($BODY.hasClass('nav-md')) {
-			$('#logo').css('backgroundImage','url(../../img/hapydesk_m.png)');			
+				
 			$SIDEBAR_MENU.find('li.active ul').hide();
 			$SIDEBAR_MENU.find('li.active').addClass('active-sm').removeClass('active');
 		} else {
 			$SIDEBAR_MENU.find('li.active-sm ul').show();
 			$SIDEBAR_MENU.find('li.active-sm').addClass('active').removeClass('active-sm');
-			$('#logo').css('backgroundImage','url(../../img/hapydesk.png)');
+			
 		}
 
 	$BODY.toggleClass('nav-md nav-sm');

@@ -8,9 +8,9 @@
 @endsection
 
 @section('sidebar')
-<li><a><i class="fa fa-home"></i> Clientes <span class="fa fa-chevron-down"></span></a>
+<li><a><i class="fa fa-home"></i> Administadores <span class="fa fa-chevron-down"></span></a>
   <ul class="nav child_menu">
-    <li><a href="/administrador/clientes">Clientes</a></li>
+    <li><a href="/superusuario/administradores">Administradores</a></li>
   </ul>
 </li>
 
