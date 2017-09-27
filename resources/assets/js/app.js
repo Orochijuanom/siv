@@ -19,7 +19,9 @@ Vue.use(VueResource);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+
 Vue.component('Administradores', require('./components/Administradores.vue'));
+Vue.component('Negocios', require('./components/usuarios/Negocios.vue'));
 
 const app = new Vue({
     el: '#app'
