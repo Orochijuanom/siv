@@ -23,6 +23,8 @@ Vue.use(VueResource);
 Vue.component('Administradores', require('./components/Administradores.vue'));
 Vue.component('Negocios', require('./components/usuarios/Negocios.vue'));
 
+Vue.component('Proveedores', require('./components/Proveedores.vue'));
+
 const app = new Vue({
     el: '#app'
 });

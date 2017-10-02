@@ -18,3 +18,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('/administrador', 'UserController@storeAdministrador');
+
+Route::post('/proveedores', 'ProveedoresController@storeProveedores');

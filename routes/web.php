@@ -40,3 +40,5 @@ Route::group(['prefix' => 'superusuario', 'middleware' => 'superusuario'], funct
 
 
 Route::get('/empresas', 'EmpresasController@index');
+
+Route::get('/proveedores','ProveedoresController@index');
