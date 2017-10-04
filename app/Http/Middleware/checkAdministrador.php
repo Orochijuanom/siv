@@ -16,9 +16,9 @@ class checkAdministrador
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {
+    {   
         if (Auth::check()) {
-            if (Auth::user()->tipouser_id != 1) {
+            if (Auth::user()->tipouser_id != 3) {
                 return response::view('errors/401',array() ,401);
             }
         }else{

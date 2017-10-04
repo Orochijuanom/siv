@@ -34,7 +34,7 @@ class LoginController extends Controller
                 break;
 
             case '2':
-                return $redirectTo = '/administrador';
+                return $redirectTo = '/negocio';
                 break;
 
             case '3':

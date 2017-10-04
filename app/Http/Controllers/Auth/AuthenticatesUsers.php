@@ -142,7 +142,6 @@ trait AuthenticatesUsers
             return response()->json($errors, 422);
         }
     
-        \LogActivity::addToLog('INICIO_SESION_FALLIDO Email: '.$request->email.' '.$errors[$this->username()]);
         return redirect()->back()
             ->withInput($request->only($this->username(), 'remember'))
             ->withErrors($errors);
