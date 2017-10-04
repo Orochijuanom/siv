@@ -9,6 +9,7 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 import VueResource from 'vue-resource';
+import store from './vuex/store';
 
 Vue.use(VueResource);
 
@@ -28,3 +29,4 @@ Vue.component('Proveedores', require('./components/Proveedores.vue'));
 const app = new Vue({
     el: '#app'
 });
+

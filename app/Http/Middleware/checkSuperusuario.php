@@ -6,7 +6,7 @@ use Closure;
 use Auth;
 use Response;
 
-class checkCliente
+class checkSuperusuario
 {
     /**
      * Handle an incoming request.
@@ -16,9 +16,9 @@ class checkCliente
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {   
+    {
         if (Auth::check()) {
-            if (Auth::user()->tipouser_id != 3) {
+            if (Auth::user()->tipouser_id != 1) {
                 return response::view('errors/401',array() ,401);
             }
         }else{

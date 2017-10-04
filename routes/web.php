@@ -38,7 +38,10 @@ Route::group(['prefix' => 'superusuario', 'middleware' => 'superusuario'], funct
 });
 
 
+Route::group(['prefix' => 'negocio'], function () {
+    
+    Route::get('/empresas', 'EmpresasController@index');
+    
+    Route::get('/proveedores','ProveedoresController@index');
+});
 
-Route::get('/empresas', 'EmpresasController@index');
-
-Route::get('/proveedores','ProveedoresController@index');

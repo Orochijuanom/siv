@@ -17,6 +17,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/negocios', 'SuperusuarioController@getNegocios');
+
 Route::post('/administrador', 'UserController@storeAdministrador');
 
 Route::post('/proveedores', 'ProveedoresController@storeProveedores');
