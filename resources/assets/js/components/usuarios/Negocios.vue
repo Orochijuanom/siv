@@ -26,10 +26,9 @@
 
             }
         },
-        computed: {
-            ...mapState({
-                apiSuperusuari: state => apiSuperusuario
+        computed: mapState({
+                apiSuperusuario: state => state.apiSuperusuario
             })
-        },
+    
     }
 </script>

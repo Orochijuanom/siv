@@ -11108,7 +11108,8 @@ Vue.component('Negocios', __webpack_require__(45));
 Vue.component('Proveedores', __webpack_require__(48));
 
 var app = new Vue({
-  el: '#app'
+  el: '#app',
+  store: __WEBPACK_IMPORTED_MODULE_1__vuex_store__["a" /* default */]
 });
 
 /***/ }),
@@ -43587,16 +43588,17 @@ if (typeof window !== 'undefined' && window.Vue) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__apiSuperusuario__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__apiSuperusuario_js__ = __webpack_require__(41);
 
 
 
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
+
 var debug = "development" !== 'production';
-/* unused harmony default export */ var _unused_webpack_default_export = (new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
+/* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     modules: {
-        apiSuperusuario: __WEBPACK_IMPORTED_MODULE_2__apiSuperusuario__["a" /* default */]
+        apiSuperusuario: __WEBPACK_IMPORTED_MODULE_2__apiSuperusuario_js__["a" /* default */]
     },
     strict: debug
 }));
@@ -43608,7 +43610,7 @@ var debug = "development" !== 'production';
 "use strict";
 /* unused harmony export Store */
 /* unused harmony export install */
-/* unused harmony export mapState */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return mapState; });
 /* unused harmony export mapMutations */
 /* unused harmony export mapGetters */
 /* unused harmony export mapActions */
@@ -44817,9 +44819,47 @@ module.exports = Component.exports
 
 /***/ }),
 /* 46 */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed: SyntaxError: Unexpected token (30:8)\n\n\u001b[0m \u001b[90m 28 | \u001b[39m    }\u001b[33m,\u001b[39m\n \u001b[90m 29 | \u001b[39m    computed\u001b[33m:\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 30 | \u001b[39m        \u001b[33m...\u001b[39mmapState({\n \u001b[90m    | \u001b[39m        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 31 | \u001b[39m            apiSuperusuari\u001b[33m:\u001b[39m state \u001b[33m=>\u001b[39m apiSuperusuario\n \u001b[90m 32 | \u001b[39m        })\n \u001b[90m 33 | \u001b[39m    }\u001b[33m,\u001b[39m\u001b[0m\n");
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(40);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {};
+    },
+
+    computed: Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapState */])({
+        apiSuperusuario: function apiSuperusuario(state) {
+            return state.apiSuperusuario;
+        }
+    })
+
+});
 
 /***/ }),
 /* 47 */
