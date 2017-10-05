@@ -19,6 +19,8 @@ class CreateStocksTable extends Migration
             $table->integer('producto_id')->unsigned();
             $table->boolean('estado');
             $table->bigInteger('valor');
+            $table->date('fecha_entrega');
+            $table->text('forma_entrega');
             $table->timestamps();
 
             $table->foreign('categoria_id')
