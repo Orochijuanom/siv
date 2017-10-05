@@ -22,7 +22,7 @@ Vue.use(VueResource);
 
 
 Vue.component('Administradores', require('./components/Administradores.vue'));
-Vue.component('Negocios', require('./components/usuarios/Negocios.vue'));
+Vue.component('Negocios', require('./components/grid/Negocios.vue'));
 
 Vue.component('Proveedores', require('./components/Proveedores.vue'));
 

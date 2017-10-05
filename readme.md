@@ -49,3 +49,14 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+
+
+## Migrate
+para migrar la base de datos se debe ejecutar en el siguiente orden
+
+php artisan migrate
+php artisan db:seed
+
+luego para crear el cliente de auth api
+php artisan passport:install
+php artisan passport:client --personal
