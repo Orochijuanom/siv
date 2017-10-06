@@ -35,7 +35,7 @@
                 user: {
                     nombre: '',
                     email: '',
-                    negocio: ''
+                    negocio: '',
                 },
                 
             }
