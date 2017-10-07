@@ -8,7 +8,19 @@
             <div class="modal-body">
                 <form v-on:submit.prevent="createNegocio" method="post">
 
-                    <div class="col-md-12">
+                    <div class="col-md-12" v-show="!show">
+                        <br/>
+                        <label for="pariente" class="control-label">Negocio:</label>
+                        <br/>
+                        <span class="tag" v-if="negocio.nombre != ''">
+                        <span>{{negocio.nombre}}</span>
+                        
+                        </span>
+                        <br/>
+                        <br/>
+                    </div>
+
+                    <div class="col-md-12" v-show="show">
                         <div v-bind:class="{'form-group': true, 'has-error': errors.negocio}">
                             <label for="negocio">Negocio :</label>
                             <input type="text" v-model="data.negocio" class="form-control">
@@ -19,14 +31,14 @@
                     <div class="col-md-12">
                         <div v-bind:class="{'form-group': true, 'has-error': errors.administrador}">
                             <label for="administrador">Usuario Administrador :</label>
-                             <input type="text" v-model="data.adminstrador" class="form-control">
+                             <input type="text" v-model="data.administrador" class="form-control">
                             <span class="help-block" v-for="(error, index) in errors.administrador" :key="index">{{ error }}</span>
                         </div>
                     </div>
 
                     <div class="col-md-12">
                         <div v-bind:class="{'form-group': true, 'has-error': errors.email}">
-                            <label for="email">Documento :</label>
+                            <label for="email">Email :</label>
                             <input type="email" v-model="data.email" class="form-control">
                             <span class="help-block" v-for="(error, index) in errors.email" :key="index">{{ error }}</span>
                         </div>
@@ -79,6 +91,7 @@
                     negocio: '',
                     administrador : '',
                     email: '',
+                    negocio_id: '',
 
                 },
                 
@@ -96,16 +109,17 @@
             createNegocio(){
                 var button = $('#createNegocio');
                 button.button('loading');
-                this.$http.post('/api/negocio', this.data).then(response => {
+                this.$http.post('/api/negocios', this.data).then(response => {
                     this.$emit('negocioCreated'); 
                     this.data = {negocio: '',administrador: '',email: ''};
                     if (this.errors) {
                         this.errors = [];
                     }
                     button.button('reset');
-                    toastr.success('Se ha creado el usuario con exito.', 'Exito', {timeOut: 5000,closeButton:true});
-                }, response => {                                
-                    this.errors = response.data;
+                    toastr.success('Se ha creado el negocio con exito.', 'Exito', {timeOut: 5000,closeButton:true});
+                }, response => {  
+                                     
+                    this.errors = response.data.errors;
                     button.button('reset');
                     toastr.error('Ocurrio un error', 'Error', {timeOut: 5000,closeButton:true});
                 });

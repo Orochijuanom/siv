@@ -55,18 +55,20 @@
                 <ul class="nav navbar-nav navbar-right">
                   
                   <li class="">
-                    <a href="javascript:;"  aria-expanded="false">
-                      {{ Auth::user()->name }}<span class="caret"></span></a>
-                    <ul >
+                    <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    {{ Auth::user()->name }}<span class="caret"> </span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-usermenu pull-right">
                      
                       <li>
-                          <a href="/logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                          <a href="/logout"
+                              onclick="event.preventDefault();
+                                          document.getElementById('logout-form').submit();">
                               <i class="fa fa-sign-out pull-right"></i> Salir</a>
-                          
+                          </a>
                           <form id="logout-form" action="/logout" method="POST" style="display: none;">
                               {{ csrf_field() }}
                           </form>
-                          
                       </li>
                     </ul>
                   </li>

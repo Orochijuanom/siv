@@ -19,6 +19,8 @@ class User extends Authenticatable
         'name', 'email', 'password', 'negocio_id', 'tipouser_id'
     ];
 
+    protected $appends = ['tipouser'];
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -30,5 +32,9 @@ class User extends Authenticatable
 
     public function negocio(){
         return $this->belongsTo('App\Negocio');
+    }
+
+    public function getTipouserAttribute(){
+        return Tipouser::where('id', $this->tipouser_id)->first();
     }
 }
