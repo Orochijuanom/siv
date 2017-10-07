@@ -8,7 +8,7 @@
             <div class="x_title">
                 <h2>Negocios</h2>        
                 <ul class="nav navbar-right panel_toolbox">
-                    <li><a data-toggle="modal" data-target="#modal-negocio" class="btn btn-info btn-sm"><i class="fa fa-user-plus"></i> Crear negocio</a></li>        
+                    <li><a v-on:click="negocioProp = []" data-toggle="modal" data-target="#modal-negocio" class="btn btn-info btn-sm"><i class="fa fa-user-plus"></i> Crear negocio</a></li>        
                 </ul>
                 <div class="clearfix"></div>
             </div>
@@ -27,6 +27,7 @@
                         </tr>
                     </thead>
                     <Negocio v-on:vernegocio="verNegocio($event)" v-for="(negocio,index) in apiSuperusuario.negocios.data" :key="index" v-bind:index="index" v-bind:negocio="negocio"
+                    v-on:crearusuario="negocioProp = $event"
                     v-on:editnegocio="editnegocio = $event"
                     >
                     </Negocio>    
