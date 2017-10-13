@@ -24,3 +24,5 @@ Route::post('/negocios', 'SuperusuarioController@storeNegocios');
 Route::post('/administrador', 'UserController@storeAdministrador');
 
 Route::post('/proveedores', 'ProveedoresController@storeProveedores');
+
+Route::post('/oportunidades', 'OportunidadesController@storeOportunidades');

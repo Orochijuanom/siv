@@ -53,7 +53,7 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 ## Migrate
 para migrar la base de datos se debe ejecutar en el siguiente orden
-
+CREATE SCHEMA `siv` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
 php artisan migrate
 php artisan db:seed
 
