@@ -9,7 +9,8 @@ const debug = process.env.NODE_ENV !== 'production';
 export default new Vuex.Store({
     modules: {
         apiSuperusuario,
-        apiNegocio
+        apiNegocio,
+        master
     },
     strict:debug
 });

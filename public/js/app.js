@@ -10366,13 +10366,14 @@ module.exports = Vue$3;
 
 "use strict";
 /* unused harmony export Store */
+/* unused harmony export install */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return mapState; });
 /* unused harmony export mapMutations */
 /* unused harmony export mapGetters */
 /* unused harmony export mapActions */
 /* unused harmony export createNamespacedHelpers */
 /**
- * vuex v2.4.0
+ * vuex v2.4.1
  * (c) 2017 Evan You
  * @license MIT
  */
@@ -10478,7 +10479,7 @@ var Module = function Module (rawModule, runtime) {
   this.state = (typeof rawState === 'function' ? rawState() : rawState) || {};
 };
 
-var prototypeAccessors$1 = { namespaced: {} };
+var prototypeAccessors$1 = { namespaced: { configurable: true } };
 
 prototypeAccessors$1.namespaced.get = function () {
   return !!this._rawModule.namespaced
@@ -10646,6 +10647,13 @@ var Store = function Store (options) {
   var this$1 = this;
   if ( options === void 0 ) options = {};
 
+  // Auto install if it is not done yet and `window` has `Vue`.
+  // To allow users to avoid auto-installation in some cases,
+  // this code should be placed here. See #731
+  if (!Vue && typeof window !== 'undefined' && window.Vue) {
+    install(window.Vue);
+  }
+
   if (true) {
     assert(Vue, "must call Vue.use(Vuex) before creating a store instance.");
     assert(typeof Promise !== 'undefined', "vuex requires a Promise polyfill in this browser.");
@@ -10702,7 +10710,7 @@ var Store = function Store (options) {
   }
 };
 
-var prototypeAccessors = { state: {} };
+var prototypeAccessors = { state: { configurable: true } };
 
 prototypeAccessors.state.get = function () {
   return this._vm._data.$$state
@@ -11100,7 +11108,7 @@ function unifyObjectStyle (type, payload, options) {
 }
 
 function install (_Vue) {
-  if (Vue) {
+  if (Vue && _Vue === Vue) {
     if (true) {
       console.error(
         '[vuex] already installed. Vue.use(Vuex) should be called only once.'
@@ -11110,11 +11118,6 @@ function install (_Vue) {
   }
   Vue = _Vue;
   applyMixin(Vue);
-}
-
-// auto install in dist mode
-if (typeof window !== 'undefined' && window.Vue) {
-  install(window.Vue);
 }
 
 var mapState = normalizeNamespace(function (namespace, states) {
@@ -11150,15 +11153,21 @@ var mapMutations = normalizeNamespace(function (namespace, mutations) {
     var key = ref.key;
     var val = ref.val;
 
-    val = namespace + val;
     res[key] = function mappedMutation () {
       var args = [], len = arguments.length;
       while ( len-- ) args[ len ] = arguments[ len ];
 
-      if (namespace && !getModuleByNamespace(this.$store, 'mapMutations', namespace)) {
-        return
+      var commit = this.$store.commit;
+      if (namespace) {
+        var module = getModuleByNamespace(this.$store, 'mapMutations', namespace);
+        if (!module) {
+          return
+        }
+        commit = module.context.commit;
       }
-      return this.$store.commit.apply(this.$store, [val].concat(args))
+      return typeof val === 'function'
+        ? val.apply(this, [commit].concat(args))
+        : commit.apply(this.$store, [val].concat(args))
     };
   });
   return res
@@ -11193,15 +11202,21 @@ var mapActions = normalizeNamespace(function (namespace, actions) {
     var key = ref.key;
     var val = ref.val;
 
-    val = namespace + val;
     res[key] = function mappedAction () {
       var args = [], len = arguments.length;
       while ( len-- ) args[ len ] = arguments[ len ];
 
-      if (namespace && !getModuleByNamespace(this.$store, 'mapActions', namespace)) {
-        return
+      var dispatch = this.$store.dispatch;
+      if (namespace) {
+        var module = getModuleByNamespace(this.$store, 'mapActions', namespace);
+        if (!module) {
+          return
+        }
+        dispatch = module.context.dispatch;
       }
-      return this.$store.dispatch.apply(this.$store, [val].concat(args))
+      return typeof val === 'function'
+        ? val.apply(this, [dispatch].concat(args))
+        : dispatch.apply(this.$store, [val].concat(args))
     };
   });
   return res
@@ -11243,13 +11258,14 @@ function getModuleByNamespace (store, helper, namespace) {
 var index_esm = {
   Store: Store,
   install: install,
-  version: '2.4.0',
+  version: '2.4.1',
   mapState: mapState,
   mapMutations: mapMutations,
   mapGetters: mapGetters,
   mapActions: mapActions,
   createNamespacedHelpers: createNamespacedHelpers
 };
+
 
 /* harmony default export */ __webpack_exports__["a"] = (index_esm);
 
@@ -11259,7 +11275,7 @@ var index_esm = {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(4);
-module.exports = __webpack_require__(28);
+
 
 
 /***/ }),
@@ -11289,11 +11305,10 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue_resource__["a" /* default */]);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('Administradores', __webpack_require__(10));
-Vue.component('Negocios', __webpack_require__(13));
+Vue.component('Administradores', __webpack_require__(11));
+Vue.component('Negocios', __webpack_require__(14));
 
-Vue.component('Proveedores', __webpack_require__(38));
-Vue.component('Oportunidades', __webpack_require__(25));
+
 
 var app = new Vue({
   el: '#app',
@@ -12919,8 +12934,6 @@ if (typeof window !== 'undefined' && window.Vue) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__apiSuperusuario_js__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__apiNegocio_js__ = __webpack_require__(44);
-
 
 
 
@@ -12987,14 +13000,75 @@ var actions = {
 
 /***/ }),
 /* 10 */
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+
+
+var state = {
+    usuarios: [],
+    tipousers: [],
+    loadingNegocio: true
+};
+
+var mutations = {
+    SET_USUARIOS: function SET_USUARIOS(state, usuarios) {
+        state.usuarios = usuarios;
+    },
+    SET_TIPOUSERS: function SET_TIPOUSERS(state, tipousers) {
+        state.tipousers = tipousers;
+    },
+    SET_LOADING: function SET_LOADING(state, status) {
+        state.loadingNegocio = status;
+    }
+};
+
+var actions = {
+    getUsuarios: function getUsuarios(_ref, params) {
+        var commit = _ref.commit;
+
+        commit('SET_LOADING', true);
+        var url = '';
+        if (params.search_query_1 == '') {
+            url = '/api/usuarios/negocio/' + params.negocio + '?column=' + params.column + '&direction=' + params.direction + '&per_page=' + params.per_page + '&page=' + params.page + '&search_operator=' + params.search_operator + '&search_column=' + params.search_column;
+        } else {
+            url = '/api/usuarios/negocio/' + params.negocio + '?column=' + params.column + '&direction=' + params.direction + '&per_page=' + params.per_page + '&page=' + params.page + '&search_operator=' + params.search_operator + '&search_column=' + params.search_column + '&search_query_1=' + params.search_query_1;
+        }
+        return __WEBPACK_IMPORTED_MODULE_0_vue___default.a.http.get(url).then(function (response) {
+            if (response.status === 200) {
+                commit('SET_USUARIOS', response.body.usuarios);
+                commit('SET_LOADING', false);
+            }
+        }, function (response) {
+            console.log('Error');
+        });
+    },
+    getTipousers: function getTipousers(_ref2, params) {
+        var commit = _ref2.commit;
+
+        return __WEBPACK_IMPORTED_MODULE_0_vue___default.a.http.get('/api/tipousers').then(function (response) {
+            if (response.status === 200) {
+                commit('SET_TIPOUSERS', response.body.tipousers);
+            }
+        });
+    }
+};
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    state: state, mutations: mutations, actions: actions
+});
+
+/***/ }),
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(11)
+var __vue_script__ = __webpack_require__(12)
 /* template */
-var __vue_template__ = __webpack_require__(12)
+var __vue_template__ = __webpack_require__(13)
 /* styles */
 var __vue_styles__ = null
 /* scopeId */
@@ -13008,7 +13082,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources\\assets\\js\\components\\Administradores.vue"
+Component.options.__file = "resources/assets/js/components/Administradores.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Administradores.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -13032,7 +13106,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13096,7 +13170,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -13207,15 +13281,15 @@ if (false) {
 }
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(14)
+var __vue_script__ = __webpack_require__(15)
 /* template */
-var __vue_template__ = __webpack_require__(21)
+var __vue_template__ = __webpack_require__(22)
 /* styles */
 var __vue_styles__ = null
 /* scopeId */
@@ -13229,7 +13303,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources\\assets\\js\\components\\grid\\Negocios.vue"
+Component.options.__file = "resources/assets/js/components/grid/Negocios.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Negocios.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -13253,7 +13327,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13261,9 +13335,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Negocio_vue__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Negocio_vue__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Negocio_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Negocio_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modals_NegocioForm_vue__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modals_NegocioForm_vue__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modals_NegocioForm_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__modals_NegocioForm_vue__);
 //
 //
@@ -13398,15 +13472,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(16)
+var __vue_script__ = __webpack_require__(17)
 /* template */
-var __vue_template__ = __webpack_require__(17)
+var __vue_template__ = __webpack_require__(18)
 /* styles */
 var __vue_styles__ = null
 /* scopeId */
@@ -13420,7 +13494,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources\\assets\\js\\components\\grid\\Negocio.vue"
+Component.options.__file = "resources/assets/js/components/grid/Negocio.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Negocio.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -13444,7 +13518,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13531,7 +13605,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -13699,15 +13773,15 @@ if (false) {
 }
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(19)
+var __vue_script__ = __webpack_require__(20)
 /* template */
-var __vue_template__ = __webpack_require__(20)
+var __vue_template__ = __webpack_require__(21)
 /* styles */
 var __vue_styles__ = null
 /* scopeId */
@@ -13721,7 +13795,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources\\assets\\js\\components\\modals\\NegocioForm.vue"
+Component.options.__file = "resources/assets/js/components/modals/NegocioForm.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] NegocioForm.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -13745,7 +13819,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13880,7 +13954,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -14187,7 +14261,7 @@ if (false) {
 }
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -14444,18 +14518,13 @@ if (false) {
 }
 
 /***/ }),
-/* 22 */,
-/* 23 */,
-/* 24 */,
-/* 25 */
+
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(26)
-/* template */
-var __vue_template__ = __webpack_require__(27)
+
 /* styles */
 var __vue_styles__ = null
 /* scopeId */
@@ -14469,7 +14538,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources\\assets\\js\\components\\Oportunidades.vue"
+
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Oportunidades.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -14492,8 +14561,7 @@ if (false) {(function () {
 module.exports = Component.exports
 
 
-/***/ }),
-/* 26 */
+
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14635,7 +14703,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 27 */
+
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -15033,30 +15101,13 @@ if (false) {
 }
 
 /***/ }),
-/* 28 */
-/***/ (function(module, exports) {
 
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 29 */,
-/* 30 */,
-/* 31 */,
-/* 32 */,
-/* 33 */,
-/* 34 */,
-/* 35 */,
-/* 36 */,
-/* 37 */,
-/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(39)
-/* template */
-var __vue_template__ = __webpack_require__(40)
+
 /* styles */
 var __vue_styles__ = null
 /* scopeId */
@@ -15070,7 +15121,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources\\assets\\js\\components\\grid\\Proveedores.vue"
+
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Proveedores.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -15094,7 +15145,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 39 */
+
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15168,742 +15219,44 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['token'],
-    components: { Proveedor: __WEBPACK_IMPORTED_MODULE_2__Proveedor_vue___default.a, ProveedorForm: __WEBPACK_IMPORTED_MODULE_3__modals_ProveedorForm_vue___default.a },
-    data: function data() {
-        return {
-            proveedorProp: [],
-            column: 'id',
-            direction: 'desc',
-            per_page: '10',
-            page: '1',
-            search_operator: 'like',
-            search_column: 'descripcion',
-            search_query_1: '',
-            search_query_2: ''
-        };
-    },
-    created: function created() {
-        this.getProveedores();
-    },
-
-    computed: Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapState */])({
-        apiNegocio: function apiNegocio(state) {
-            return state.apiNegocio;
-        }
-    }),
-    methods: {
-        getProveedores: function getProveedores() {
-            this.$store.dispatch('getProveedores', {
-                column: this.column,
-                direction: this.direction,
-                per_page: this.per_page,
-                page: this.page,
-                search_operator: this.search_operator,
-                search_column: this.search_column,
-                search_query_1: this.search_query_1,
-                search_query_2: this.search_query_2,
-                headers: this.headers
-            });
-        },
-        sort: function sort(column) {
-            if (column === this.column) {
-                if (this.direction === 'desc') {
-                    this.direction = 'asc';
-                } else {
-                    this.direction = 'desc';
-                }
-            } else {
-                this.column = column;
-                this.direction = 'asc';
-            }
-            this.getProveedores();
-        },
-        next: function next() {
-            if (this.apiNegocio.proveedores.next_page_url) {
-                this.page++;
-                this.getProveedores();
-            }
-        },
-        prev: function prev() {
-            if (this.apiNegocio.proveedores.prev_page_url) {
-
-                this.page--;
-                this.getProveedores();
-            }
-        }
-    }
-
-});
-
-/***/ }),
-/* 40 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _vm.apiNegocio.loadingSuperusuario
-        ? [
-            _c("i", { staticClass: "fa fa-spinner fa-spin" }),
-            _vm._v(" "),
-            _c("span", [_vm._v("Cargando ...")])
-          ]
-        : _vm._e(),
-      _vm._v(" "),
-      _c("div", { staticClass: "x_panel" }, [
-        _c("div", { staticClass: "x_title" }, [
-          _c("h2", [_vm._v("Proveedores")]),
-          _vm._v(" "),
-          _c("ul", { staticClass: "nav navbar-right panel_toolbox" }, [
-            _c("li", [
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-info btn-sm",
-                  attrs: {
-                    "data-toggle": "modal",
-                    "data-target": "#modal-negocio"
-                  },
-                  on: {
-                    click: function($event) {
-                      _vm.proveedorProp = []
-                    }
-                  }
-                },
-                [
-                  _c("i", { staticClass: "fa fa-user-plus" }),
-                  _vm._v(" Crear proveedor")
-                ]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "clearfix" })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "input-group col-sm-12" }, [
-          _c("label", [_vm._v("Buscar: ")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.search_query_1,
-                expression: "search_query_1"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text", debounce: "500" },
-            domProps: { value: _vm.search_query_1 },
-            on: {
-              keyup: _vm.getProveedores,
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.search_query_1 = $event.target.value
-              }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "container" },
-          [
-            _vm.apiNegocio.proveedores.data
-              ? _c(
-                  "table",
-                  { staticClass: "table table-striped" },
-                  [
-                    _c("thead", [
-                      _c("tr", [
-                        _c("th", [_vm._v("Nº")]),
-                        _vm._v(" "),
-                        _c("th", [
-                          _c(
-                            "a",
-                            {
-                              on: {
-                                click: function($event) {
-                                  _vm.sort("nit")
-                                }
-                              }
-                            },
-                            [_vm._v("Nit")]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("th", [
-                          _c(
-                            "a",
-                            {
-                              on: {
-                                click: function($event) {
-                                  _vm.sort("nombre")
-                                }
-                              }
-                            },
-                            [_vm._v("Nombre")]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("th", [
-                          _c(
-                            "a",
-                            {
-                              on: {
-                                click: function($event) {
-                                  _vm.sort("empresa")
-                                }
-                              }
-                            },
-                            [_vm._v("Empresa")]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("th", [
-                          _c(
-                            "a",
-                            {
-                              on: {
-                                click: function($event) {
-                                  _vm.sort("email")
-                                }
-                              }
-                            },
-                            [_vm._v("Email")]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("th", [
-                          _c(
-                            "a",
-                            {
-                              on: {
-                                click: function($event) {
-                                  _vm.sort("telefono")
-                                }
-                              }
-                            },
-                            [_vm._v("Telefono")]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("th", [_vm._v("Acciones")])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _vm._l(_vm.apiNegocio.proveedores.data, function(
-                      proveedor,
-                      index
-                    ) {
-                      return _c("Proveedor", {
-                        key: index,
-                        attrs: { index: index, proveedor: proveedor },
-                        on: {
-                          verProveedor: function($event) {
-                            _vm.verProveedor($event)
-                          },
-                          crearusuario: function($event) {
-                            _vm.proveedorProp = $event
-                          },
-                          editproveedor: function($event) {
-                            _vm.editproveedor = $event
-                          }
-                        }
-                      })
-                    })
-                  ],
-                  2
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _c("span", [_vm._v("Registros por página:")]),
-            _vm._v(" "),
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.per_page,
-                    expression: "per_page"
-                  }
-                ],
-                on: {
-                  change: [
-                    function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.per_page = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
-                    },
-                    _vm.getProveedores
-                  ]
-                }
-              },
-              [
-                _c("option", { attrs: { value: "5" } }, [_vm._v("5")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "10" } }, [_vm._v("10")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "20" } }, [_vm._v("20")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "25" } }, [_vm._v("25")])
-              ]
-            ),
-            _vm._v("\n            |\n            "),
-            _c("span", [
-              _vm._v(
-                "Mostrando " +
-                  _vm._s(_vm.apiNegocio.proveedores.from) +
-                  " - " +
-                  _vm._s(_vm.apiNegocio.proveedores.to) +
-                  " de " +
-                  _vm._s(_vm.apiNegocio.proveedores.total)
-              )
-            ]),
-            _vm._v("\n            |\n            "),
-            _c("span", [
-              _vm._v("Página actual "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.page,
-                    expression: "page"
-                  }
-                ],
-                attrs: { size: "2", type: "text" },
-                domProps: { value: _vm.page },
-                on: {
-                  keyup: function($event) {
-                    if (
-                      !("button" in $event) &&
-                      _vm._k($event.keyCode, "enter", 13)
-                    ) {
-                      return null
-                    }
-                    _vm.getProveedores($event)
-                  },
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.page = $event.target.value
-                  }
-                }
-              }),
-              _vm._v(" de " + _vm._s(_vm.apiNegocio.proveedores.last_page))
-            ]),
-            _vm._v("\n            |\n            "),
-            _c("span", [
-              _c("button", { on: { click: _vm.next } }, [_vm._v("Siguiente")])
-            ]),
-            _vm._v(" "),
-            _c("span", [
-              _c("button", { on: { click: _vm.prev } }, [_vm._v("Anterior")])
-            ]),
-            _vm._v(" "),
-            _c("ProveedorForm", {
-              attrs: { negocioData: _vm.proveedorProp },
-              on: {
-                negocioCreated: function($event) {
-                  _vm.getProveedores()
-                }
-              }
-            })
-          ],
-          1
-        )
-      ])
-    ],
-    2
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-99866aea", module.exports)
-  }
-}
-
-/***/ }),
-/* 41 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(0)
-/* script */
-var __vue_script__ = __webpack_require__(42)
-/* template */
-var __vue_template__ = __webpack_require__(43)
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources\\assets\\js\\components\\grid\\Proveedor.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] Proveedor.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-d4eedbc6", Component.options)
-  } else {
-    hotAPI.reload("data-v-d4eedbc6", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 42 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['index', 'proveedor']
-});
-
-/***/ }),
-/* 43 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("tbody", [
-    _c("tr", [
-      _c("td", [_c("span", [_vm._v(_vm._s(_vm.index + 1))])]),
-      _vm._v(" "),
-      _c("td", [_c("span", [_vm._v(_vm._s(_vm.proveedor.nit))])]),
-      _vm._v(" "),
-      _c("td", [_c("span", [_vm._v(_vm._s(_vm.proveedor.nombre))])]),
-      _vm._v(" "),
-      _c("td", [_c("span", [_vm._v(_vm._s(_vm.proveedor.empresa))])]),
-      _vm._v(" "),
-      _c("td", [_c("span", [_vm._v(_vm._s(_vm.proveedor.email))])]),
-      _vm._v(" "),
-      _c("td", [_c("span", [_vm._v(_vm._s(_vm.proveedor.telefono))])]),
-      _vm._v(" "),
-      _c("td", [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-info btn-xs",
-            attrs: {
-              type: "button",
-              "data-toggle": "modal",
-              "data-target": "#modal-edit"
-            },
-            on: {
-              click: function($event) {
-                _vm.$emit("editproveedor", _vm.proveedor)
-              }
-            }
-          },
-          [
-            _c("span", {
-              staticClass: "fa fa-pencil",
-              attrs: { "aria-hidden": "true" }
-            }),
-            _vm._v(" Modificar\n            ")
-          ]
-        )
-      ])
-    ])
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-d4eedbc6", module.exports)
-  }
-}
-
-/***/ }),
-/* 44 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-
-
-var state = {
-    proveedores: [],
-    loadingSuperusuario: true
-};
-
-var mutations = {
-    SET_PROVEEDORES: function SET_PROVEEDORES(state, proveedores) {
-        state.proveedores = proveedores;
-    },
-    SET_LOADING: function SET_LOADING(state, status) {
-        state.loadingSuperusuario = status;
-    }
-};
-
-var actions = {
-    getProveedores: function getProveedores(_ref, params) {
-        var commit = _ref.commit;
-
-        commit('SET_LOADING', true);
-        var url = '';
-        if (params.search_query_1 == '') {
-            url = '/api/proveedores?column=' + params.column + '&direction=' + params.direction + '&per_page=' + params.per_page + '&page=' + params.page + '&search_operator=' + params.search_operator + '&search_column=' + params.search_column;
-        } else {
-            url = '/api/proveedores?column=' + params.column + '&direction=' + params.direction + '&per_page=' + params.per_page + '&page=' + params.page + '&search_operator=' + params.search_operator + '&search_column=' + params.search_column + '&search_query_1=' + params.search_query_1;
-        }
-        return __WEBPACK_IMPORTED_MODULE_0_vue___default.a.http.get(url).then(function (response) {
-            if (response.status === 200) {
-                commit('SET_PROVEEDORES', response.body.proveedores);
-                commit('SET_LOADING', false);
-            }
-        }, function (response) {
-            console.log('Error');
-        });
-    }
-};
-
-/* harmony default export */ __webpack_exports__["a"] = ({
-    state: state, mutations: mutations, actions: actions
-});
-
-/***/ }),
-/* 45 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(0)
-/* script */
-var __vue_script__ = __webpack_require__(46)
-/* template */
-var __vue_template__ = __webpack_require__(47)
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources\\assets\\js\\components\\modals\\ProveedorForm.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] ProveedorForm.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-24ff6abe", Component.options)
-  } else {
-    hotAPI.reload("data-v-24ff6abe", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 46 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['negocioData'],
-    watch: {
-        negocioData: function negocioData() {
-            this.errors = [];
-            if (this.negocioData.length != 0) {
-                this.negocio.nombre = this.negocioData.descripcion;
-                this.data.negocio_id = this.negocioData.id;
-                this.show = false;
-            } else {
-                this.negocio.nombre = '';
-                this.data.negocio = '';
-                this.data.negocio_id = '';
-                this.data.email = '';
-                this.show = true;
-            }
-        }
-    },
+    props: ['negocio', 'token'],
     data: function data() {
         return {
             errors: [],
@@ -15914,547 +15267,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 empresa: '',
                 telefono: '',
                 nit: '',
-                dig: ''
-
+                cargo: '',
+                fecha: '',
+                presupuesto: '',
+                descripcion: ''
             },
-
-            negocio: {
-                nombre: ''
-            },
-
-            show: true
+            spinner: false
 
         };
     },
+    created: function created() {
+        this.data.negocio = this.negocio.id;
 
-    methods: {
-        createProveedor: function createProveedor() {
-            var _this = this;
-
-            var button = $('#createProveedor');
-            button.button('loading');
-            this.$http.post('/api/proveedores', this.data).then(function (response) {
-                _this.$emit('negocioCreated');
-                _this.data = { nombre: '', email: '', empresa: '', telefono: '', nit: '', dig: '' };
-                if (_this.errors) {
-                    _this.errors = [];
-                }
-                button.button('reset');
-                toastr.success('Se ha creado el negocio con exito.', 'Exito', { timeOut: 5000, closeButton: true });
-            }, function (response) {
-
-                _this.errors = response.data.errors;
-                button.button('reset');
-                toastr.error('Ocurrio un error', 'Error', { timeOut: 5000, closeButton: true });
-            });
-        }
-    }
-});
-
-/***/ }),
-/* 47 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticClass: "modal fade modal-fullscreen",
-      attrs: {
-        id: "modal-negocio",
-        tabindex: "-1",
-        role: "dialog",
-        "aria-hidden": "true"
-      }
     },
-    [
-      _c("div", { staticClass: "modal-content" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c("div", { staticClass: "modal-body" }, [
-          _c(
-            "form",
-            {
-              attrs: { method: "post" },
-              on: {
-                submit: function($event) {
-                  $event.preventDefault()
-                  _vm.createProveedor($event)
-                }
-              }
-            },
-            [
-              _c(
-                "div",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: !_vm.show,
-                      expression: "!show"
-                    }
-                  ],
-                  staticClass: "col-md-12"
-                },
-                [
-                  _c("br"),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "control-label",
-                      attrs: { for: "pariente" }
-                    },
-                    [_vm._v("Negocio:")]
-                  ),
-                  _vm._v(" "),
-                  _c("br"),
-                  _vm._v(" "),
-                  _vm.negocio.nombre != ""
-                    ? _c("span", { staticClass: "tag" }, [
-                        _c("span", [_vm._v(_vm._s(_vm.negocio.nombre))])
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c("br"),
-                  _vm._v(" "),
-                  _c("br")
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.show,
-                      expression: "show"
-                    }
-                  ],
-                  staticClass: "col-md-12"
-                },
-                [
-                  _c(
-                    "div",
-                    {
-                      class: {
-                        "form-group": true,
-                        "has-error": _vm.errors.nombre
-                      }
-                    },
-                    [
-                      _c("label", { attrs: { for: "nit" } }, [_vm._v("Nit :")]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.data.nit,
-                            expression: "data.nit"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "number", placeholder: "Nit" },
-                        domProps: { value: _vm.data.nit },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.data.nit = $event.target.value
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm._l(_vm.errors.nit, function(error, index) {
-                        return _c(
-                          "span",
-                          { key: index, staticClass: "help-block" },
-                          [_vm._v(_vm._s(error))]
-                        )
-                      })
-                    ],
-                    2
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.show,
-                      expression: "show"
-                    }
-                  ],
-                  staticClass: "col-md-12"
-                },
-                [
-                  _c(
-                    "div",
-                    {
-                      class: {
-                        "form-group": true,
-                        "has-error": _vm.errors.nombre
-                      }
-                    },
-                    [
-                      _c("label", { attrs: { for: "nombre" } }, [
-                        _vm._v("Digito Verificacion :")
-                      ]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.data.dig,
-                            expression: "data.dig"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "text", placeholder: "Digito" },
-                        domProps: { value: _vm.data.dig },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.data.dig = $event.target.value
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm._l(_vm.errors.dig, function(error, index) {
-                        return _c(
-                          "span",
-                          { key: index, staticClass: "help-block" },
-                          [_vm._v(_vm._s(error))]
-                        )
-                      })
-                    ],
-                    2
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.show,
-                      expression: "show"
-                    }
-                  ],
-                  staticClass: "col-md-12"
-                },
-                [
-                  _c(
-                    "div",
-                    {
-                      class: {
-                        "form-group": true,
-                        "has-error": _vm.errors.nombre
-                      }
-                    },
-                    [
-                      _c("label", { attrs: { for: "nombre" } }, [
-                        _vm._v("Nombre :")
-                      ]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.data.nombre,
-                            expression: "data.nombre"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "text", placeholder: "Nombre" },
-                        domProps: { value: _vm.data.nombre },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.data.nombre = $event.target.value
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm._l(_vm.errors.nombre, function(error, index) {
-                        return _c(
-                          "span",
-                          { key: index, staticClass: "help-block" },
-                          [_vm._v(_vm._s(error))]
-                        )
-                      })
-                    ],
-                    2
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.show,
-                      expression: "show"
-                    }
-                  ],
-                  staticClass: "col-md-12"
-                },
-                [
-                  _c(
-                    "div",
-                    {
-                      class: {
-                        "form-group": true,
-                        "has-error": _vm.errors.nombre
-                      }
-                    },
-                    [
-                      _c("label", { attrs: { for: "nombre" } }, [
-                        _vm._v("Empresa :")
-                      ]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.data.empresa,
-                            expression: "data.empresa"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "text", placeholder: "Empresa" },
-                        domProps: { value: _vm.data.empresa },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.data.empresa = $event.target.value
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm._l(_vm.errors.empresa, function(error, index) {
-                        return _c(
-                          "span",
-                          { key: index, staticClass: "help-block" },
-                          [_vm._v(_vm._s(error))]
-                        )
-                      })
-                    ],
-                    2
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.show,
-                      expression: "show"
-                    }
-                  ],
-                  staticClass: "col-md-12"
-                },
-                [
-                  _c(
-                    "div",
-                    {
-                      class: {
-                        "form-group": true,
-                        "has-error": _vm.errors.nombre
-                      }
-                    },
-                    [
-                      _c("label", { attrs: { for: "nombre" } }, [
-                        _vm._v("Telefono :")
-                      ]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.data.telefono,
-                            expression: "data.telefono"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "text", placeholder: "Telefono" },
-                        domProps: { value: _vm.data.telefono },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.data.telefono = $event.target.value
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm._l(_vm.errors.telefono, function(error, index) {
-                        return _c(
-                          "span",
-                          { key: index, staticClass: "help-block" },
-                          [_vm._v(_vm._s(error))]
-                        )
-                      })
-                    ],
-                    2
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-12" }, [
-                _c(
-                  "div",
-                  {
-                    class: { "form-group": true, "has-error": _vm.errors.email }
-                  },
-                  [
-                    _c("label", { attrs: { for: "email" } }, [
-                      _vm._v("Email :")
-                    ]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.data.email,
-                          expression: "data.email"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: { type: "email", placeholder: "Email" },
-                      domProps: { value: _vm.data.email },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.data.email = $event.target.value
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _vm._l(_vm.errors.email, function(error, index) {
-                      return _c(
-                        "span",
-                        { key: index, staticClass: "help-block" },
-                        [_vm._v(_vm._s(error))]
-                      )
-                    })
-                  ],
-                  2
-                )
-              ]),
-              _vm._v(" "),
-              _vm._m(1)
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _vm._m(2)
-      ])
-    ]
-  )
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-hidden": "true"
-          }
-        },
-        [_vm._v("×")]
-      ),
-      _vm._v(" "),
-      _c("h4", { staticClass: "modal-title" }, [_vm._v("Agregar Negocio")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group col-md-12" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-success",
-          attrs: {
-            type: "submit",
-            id: "createNegocio",
-            "data-loading-text":
-              "<i class='fa fa-spinner fa-spin'></i> Enviando"
-          }
-        },
-        [_vm._v("Crear Negocio")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-default",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [_vm._v("Cerrar")]
-      )
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-24ff6abe", module.exports)
-  }
-}
 
-/***/ })
-/******/ ]);
+    computed: Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapState */])({
+        apiNegocio: function apiNegocio(state) {
+            return state.apiNegocio;
+        }
+    }),
+    methods: {
+
+        ? [
+            _c("i", { staticClass: "fa fa-spinner fa-spin" }),
+            _vm._v(" "),
+            _c("span", [_vm._v("Cargando ...")])
+          ]
+        : _vm._e(),
+      _vm._v(" "),
+      _c("div", { staticClass: "x_panel" }, [

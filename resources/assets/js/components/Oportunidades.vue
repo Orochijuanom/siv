@@ -1,132 +1,143 @@
 <template> 
-    <div class="container"> 
-        <div class="row"> 
-            <div class="col-md-8 col-md-offset-2"> 
-                <div class="panel panel-default"> 
-                    <div class="panel-heading">Oportunidades  </div> 
-                    <div class="panel-body"> 
-                        <!--form class="form-horizontal" role="form"--> 
-                        <div class="form-horizontal">    
-                            <div class="form-group"> 
-                                <label class="col-lg-2 control-label">Nit:</label> 
-                                <div class="col-lg-10"> 
-                                    <input type="number" class="form-control" placeholder='Nit'   v-model="user.nit"/> 
-                                </div> 
-                            </div> 
-                            <div class="form-group"> 
-                                <label class="col-lg-2 control-label">Digito Verificacion:</label> 
-                                <div class="col-lg-10"> 
-                                    <input type="number" class="form-control" maxlength=2   placeholder='Digito'  v-model="user.dig"/> 
-                                </div> 
-                            </div> 
-                            <div class="form-group"> 
-                                <label class="col-lg-2 control-label">Empresa:</label> 
-                                <div class="col-lg-10"> 
-                                    <input type="text" class="form-control" placeholder='Empresa'   v-model="user.empresa"/> 
-                                </div> 
-                            </div> 
-                            <div class="form-group"> 
-                                <label class="col-lg-2 control-label">Solicitante:</label> 
-                                <div class="col-lg-10"> 
-                                    <input type="text" class="form-control" placeholder='Solicitante'  v-model="user.solicitante"/> 
-                                </div> 
-                            </div> 
-                            <div class="form-group"> 
-                                <label class="col-lg-2 control-label">Cargo:</label> 
-                                <div class="col-lg-10"> 
-                                    <select  class="form-control"  v-model="user.cargo"> 
-                                        <option value = "ADMINISTRADOR">ADMINISTRADOR</option> 
-                                        <option value = "OTRO">OTRO</option> 
-                                    </select> 
-                                </div> 
-                            </div> 
-                            <div class="form-group"> 
-                                <label class="col-lg-2 control-label">Telefono:</label> 
-                                <div class="col-lg-10"> 
-                                    <input type="number" class="form-control" placeholder='Telefono'  v-model="user.telefono"/> 
-                                </div> 
-                            </div> 
-                            <div class="form-group"> 
-                                <label class="col-lg-2 control-label">Correo Electronico:</label> 
-                                <div class="col-lg-10"> 
-                                    <input type="email" class="form-control" placeholder='Email'   v-model="user.email"/> 
-                                </div> 
-                            </div> 
-                            <div class="form-group"> 
-                                <label class="col-lg-2 control-label">Fecha - hora Respuesta:</label> 
-                                <div class="col-lg-10"> 
-                                    <input type="datetime-local" class="form-control" placeholder='Fecha'   v-model="user.fecha"/> 
-                                </div> 
-                            </div> 
-                            <div class="form-group"> 
-                                <label class="col-lg-2 control-label">Presupuesto:</label> 
-                                <div class="col-lg-10"> 
-                                    <input type="number" class="form-control" placeholder='Presupuesto'  v-model="user.presupuesto"/> 
-                                </div> 
-                            </div> 
-                            <div class="form-group"> 
-                                <label class="col-lg-2 control-label">Negocio:</label> 
-                                <div class="col-lg-10"> 
-                                    <input type="number" class="form-control" placeholder='1' value="1"  v-model="user.negocio"/> 
-                                </div> 
-                            </div> 
-                            <div class="form-group"> 
-                                <label class="col-lg-2 control-label">Solicita:</label> 
-                                <div class="col-lg-10"> 
-                                    <textarea class="form-control" placeholder='Solicita'  v-model="user.descripcion"></textarea> 
-                                </div> 
-                            </div> 
-                            <div class="form-group"> 
-                                <div class="col-lg-offset-2 col-lg-10"> 
-                                    <button v-on:click="enviar" class="btn btn-success"> Guardar</button> 
-                                </div> 
-                            </div> 
-                        </div> 
-                        <!--/form--> 
-                    </div> 
-                </div> 
-            </div> 
-        </div> 
-    </div> 
+
+    <div>
+        <template v-if="spinner">
+            <i class="fa fa-spinner fa-spin"></i>
+            <span>Cargando ...</span>
+        </template>
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Solicitar cotización</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="container">
+                <div class="col-md-12">
+                    <div v-bind:class="{'form-group': true, 'has-error': errors.nit}">
+                        <label for="administrador">NIT* :</label>
+                            <input type="text" v-model="data.nit" class="form-control">
+                        <span class="help-block" v-for="(error, index) in errors.nit" :key="index">{{ error }}</span>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div v-bind:class="{'form-group': true, 'has-error': errors.empresa}">
+                        <label for="administrador">Empresa* :</label>
+                            <input type="text" v-model="data.empresa" class="form-control">
+                        <span class="help-block" v-for="(error, index) in errors.empresa" :key="index">{{ error }}</span>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div v-bind:class="{'form-group': true, 'has-error': errors.solicitante}">
+                        <label for="administrador">Solicitante* :</label>
+                            <input type="text" v-model="data.solicitante" class="form-control">
+                        <span class="help-block" v-for="(error, index) in errors.solicitante" :key="index">{{ error }}</span>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div v-bind:class="{'form-group': true, 'has-error': errors.cargo}">
+                        <label for="administrador">Cargo* :</label>
+                            <input type="text" v-model="data.cargo" class="form-control">
+                        <span class="help-block" v-for="(error, index) in errors.cargo" :key="index">{{ error }}</span>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div v-bind:class="{'form-group': true, 'has-error': errors.telefono}">
+                        <label for="administrador">Telefono* :</label>
+                            <input type="text" v-model="data.telefono" class="form-control">
+                        <span class="help-block" v-for="(error, index) in errors.telefono" :key="index">{{ error }}</span>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div v-bind:class="{'form-group': true, 'has-error': errors.email}">
+                        <label for="administrador">Email* :</label>
+                            <input type="text" v-model="data.email" class="form-control">
+                        <span class="help-block" v-for="(error, index) in errors.email" :key="index">{{ error }}</span>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div v-bind:class="{'form-group': true, 'has-error': errors.fecha}">
+                        <label for="administrador">Fecha de respuesta esperada* :</label>
+                            <input type="datetime-local" v-model="data.fecha" class="form-control">
+                        <span class="help-block" v-for="(error, index) in errors.fecha" :key="index">{{ error }}</span>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div v-bind:class="{'form-group': true, 'has-error': errors.presupuesto}">
+                        <label for="administrador">Presupuesto* : <i>(Sin puntos ni signos de moneda)</i></label>
+                            <input type="text" v-model="data.presupuesto" class="form-control">
+                        <span class="help-block" v-for="(error, index) in errors.presupuesto" :key="index">{{ error }}</span>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div v-bind:class="{'form-group': true, 'has-error': errors.descripcion}">
+                        <label for="administrador">Descripcion* :</label>
+                            <input type="text" v-model="data.descripcion" class="form-control">
+                        <span class="help-block" v-for="(error, index) in errors.descripcion" :key="index">{{ error }}</span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <button v-on:click="enviar" class="btn btn-success" id="createOportunidad" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Enviando">Enviar</button>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+     
 </template> 
  
 <script> 
     export default { 
- 
+        props: ['negocio', 'token'],
         data () { 
-            return { 
-                user: { 
+            return {
+                errors: [],  
+                data: { 
                     nombre: '', 
                     email: '', 
                     negocio: '1', 
                     empresa: '', 
                     telefono: '', 
-                    nit: '', 
-                    dig: '', 
+                    nit: '',
                     cargo: '', 
                     fecha: '', 
                     presupuesto: '', 
                     descripcion: '' 
-                }, 
+                },
+                spinner: false, 
                  
             } 
+        },
+        created(){
+            this.data.negocio = this.negocio.id
         }, 
         methods: { 
             enviar(){ 
-                this.$http.post('/api/oportunidades', this.user).then(response => {                         
-                    console.log(response); 
-                   this.user.solicitante = '' 
-                   this.user.email = '' 
-                   this.user.negocio = ''  
-                   this.user.empresa = '' 
-                   this.user.telefono = '' 
-                   this.user.nit = '' 
-                   this.user.dig = ''
-                   this.user.fecha = ''
-                   this.user.presupuesto = ''
-                   this.user.descripcion = ''
+                var button = $('#createOportunidad');
+                button.button('loading');
+                this.$http.post('/api/oportunidades', this.data).then(response => {                         
+                    button.button('reset');
+                    toastr.success('Se ha guardado el requerimiento con exito.', 'Exito', {timeOut: 5000,closeButton:true});
+                    this.data.solicitante = '' 
+                    this.data.email = '' 
+                    this.data.empresa = '' 
+                    this.data.telefono = '' 
+                    this.data.nit = ''
+                    this.data.fecha = ''
+                    this.data.presupuesto = ''
+                    this.data.descripcion = ''
                 }, response => {                         
-                   console.log('error') 
+                    this.errors = response.data.errors;
+                    button.button('reset');
+                    toastr.error('Ocurrio un error', 'Error', {timeOut: 5000,closeButton:true}); 
                 }); 
             } 
         } 
