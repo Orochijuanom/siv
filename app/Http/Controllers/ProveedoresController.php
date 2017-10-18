@@ -12,11 +12,18 @@ class ProveedoresController extends Controller
         return view('proveedores.index');
     }
 
+    public function getProveedores(){
+        
+        $proveedores = Proveedore::with('negocio')->FilterPaginateOrder();
+
+        return response(['proveedores' => $proveedores], 200);
+
+    }
+
     public function storeProveedores(Request $request){
         $this->validate($request, [            
             'nombre' => 'required',
             'email' => 'required',
-            'negocio' => 'required', 
             'empresa' => 'required',
             'telefono' => 'required',
             'nit' => 'required', 
@@ -25,25 +32,19 @@ class ProveedoresController extends Controller
 
         
         try{
-            $negocio = Negocio::create([
-                'descripcion' => $request->negocio
-            ]);
 
-            if($negocio){
+
                 $nit = $request->nit."-".$request->dig;
                 $proveedores = Proveedore::Create([
                     'nombre' => $request->nombre,
                     'email' => $request->email,
-                    'negocio_id' => $negocio->id,
+                    'negocio_id' => 1,
                     'telefono' => $request->telefono,
                     'empresa' => $request->empresa,
                     'nit' => $nit
                 ]);
 
                 return response(['data' => 'exito'], 200);
-            }else{
-                return response(['data' => 'error'], 401);
-            }
         }catch(\Exception $e){
             return response(['data' => $e->getMessage()], 401); 
         }
