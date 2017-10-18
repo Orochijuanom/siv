@@ -26,6 +26,7 @@ Vue.component('Negocios', require('./components/grid/Negocios.vue'));
 
 Vue.component('Proveedores', require('./components/Proveedores.vue'));
 Vue.component('Oportunidades', require('./components/Oportunidades.vue')); 
+Vue.component('Users', require('./components/users/Users.vue')); 
 
 const app = new Vue({
     el: '#app',

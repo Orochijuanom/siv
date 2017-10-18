@@ -29,7 +29,7 @@ Route::group(['prefix' => 'superusuario', 'middleware' => 'superusuario'], funct
     //quitar
 
     Route::get('/', function () {
-        return view('superusuario.administradores');
+        return view('superusuario.negocios');
     });
 
     Route::get('/administradores', 'UserController@administradores');
@@ -39,6 +39,10 @@ Route::group(['prefix' => 'superusuario', 'middleware' => 'superusuario'], funct
 
 
 Route::group(['prefix' => 'negocio'], function () {
+
+    Route::get('/', function () {
+        return view('negocio.usuarios');
+    });
     
     Route::get('/empresas', 'EmpresasController@index');
     
@@ -46,4 +50,7 @@ Route::group(['prefix' => 'negocio'], function () {
 
     Route::get('/oportunidades','OportunidadesController@index'); 
 });
+
+
+Route::get('/oportunidades/negocio/{id}/', 'OportunidadesController@index');
 
