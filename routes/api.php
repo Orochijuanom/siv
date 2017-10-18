@@ -26,3 +26,14 @@ Route::post('/administrador', 'UserController@storeAdministrador');
 Route::post('/proveedores', 'ProveedoresController@storeProveedores');
 
 Route::post('/oportunidades', 'OportunidadesController@storeOportunidades');
+
+Route::get('/usuarios/negocio/{id}', 'UserController@userList');
+
+Route::get('/tipousers', function () {
+    $tipousers = App\Tipouser::where('id', '<>', '1')->get();
+
+    return response(['tipousers' => $tipousers], 200);
+
+});
+
+Route::post('/users', 'UserController@storeUser');
