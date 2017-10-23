@@ -25,6 +25,7 @@ Vue.component('Administradores', require('./components/Administradores.vue'));
 Vue.component('Negocios', require('./components/grid/Negocios.vue'));
 
 Vue.component('Proveedores', require('./components/grid/Proveedores.vue'));
+Vue.component('Empresas', require('./components/grid/Empresas.vue'));
 Vue.component('Oportunidades', require('./components/Oportunidades.vue')); 
 Vue.component('Users', require('./components/users/Users.vue')); 
 
