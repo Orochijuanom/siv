@@ -358,8 +358,7 @@ body .container.body .right_col {
     float: left;
     background: #2A3F54;
     border-radius: 0;
-    height: 57px;    
-    background-image: url('../../img/hapydesk.png');
+    height: 57px;        
     background-repeat: no-repeat;
     background-position: center;    
 }

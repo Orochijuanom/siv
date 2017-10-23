@@ -1,4 +1,4 @@
-@extends('layouts.super')
+@extends('layouts.negocio')
 
 @section('content')
 <div class="container">
