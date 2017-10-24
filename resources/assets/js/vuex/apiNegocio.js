@@ -72,6 +72,13 @@ const actions = {
             }      
         });
     },
+    getOportunidadesAbiertas:({commit}) => {
+        return Vue.http.get('/api/get_oportunidades_abiertas').then(response => {
+            if(response.status === 200){
+                commit('SET_OPORTUNIDADES_ABIERTAS', response.body.oportunidades_abiertas);
+            }
+        });
+    }
 
 }
 

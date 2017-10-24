@@ -11259,7 +11259,7 @@ var index_esm = {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(4);
-module.exports = __webpack_require__(44);
+module.exports = __webpack_require__(47);
 
 
 /***/ }),
@@ -11295,6 +11295,7 @@ Vue.component('Negocios', __webpack_require__(14));
 Vue.component('Proveedores', __webpack_require__(23));
 Vue.component('Oportunidades', __webpack_require__(32));
 Vue.component('Users', __webpack_require__(35));
+Vue.component('Oportunidadesabiertas', __webpack_require__(44));
 
 var app = new Vue({
   el: '#app',
@@ -13064,6 +13065,15 @@ var actions = {
         return __WEBPACK_IMPORTED_MODULE_0_vue___default.a.http.get('/api/tipousers').then(function (response) {
             if (response.status === 200) {
                 commit('SET_TIPOUSERS', response.body.tipousers);
+            }
+        });
+    },
+    getOportunidadesAbiertas: function getOportunidadesAbiertas(_ref4) {
+        var commit = _ref4.commit;
+
+        return __WEBPACK_IMPORTED_MODULE_0_vue___default.a.http.get('/api/get_oportunidades_abiertas').then(function (response) {
+            if (response.status === 200) {
+                commit('SET_OPORTUNIDADES_ABIERTAS', response.body.oportunidades_abiertas);
             }
         });
     }
@@ -17580,6 +17590,504 @@ if (false) {
 
 /***/ }),
 /* 44 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(45)
+/* template */
+var __vue_template__ = __webpack_require__(46)
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/negocios/OportunidadesAbiertas.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] OportunidadesAbiertas.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5edde668", Component.options)
+  } else {
+    hotAPI.reload("data-v-5edde668", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 45 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(2);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['token'],
+    data: function data() {
+        return {
+            proveedorProp: [],
+            column: 'id',
+            direction: 'desc',
+            per_page: '10',
+            page: '1',
+            search_operator: 'like',
+            search_column: 'descripcion',
+            search_query_1: '',
+            search_query_2: ''
+        };
+    },
+    created: function created() {
+        this.getOportunidadesAbiertas();
+    },
+
+    computed: Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapState */])({
+        apiNegocio: function apiNegocio(state) {
+            return state.apiNegocio;
+        }
+    }),
+    methods: {
+        getOportunidadesAbiertas: function getOportunidadesAbiertas() {
+            this.$store.dispatch('getOportunidadesAbiertas', {
+                column: this.column,
+                direction: this.direction,
+                per_page: this.per_page,
+                page: this.page,
+                search_operator: this.search_operator,
+                search_column: this.search_column,
+                search_query_1: this.search_query_1,
+                search_query_2: this.search_query_2,
+                headers: this.headers
+            });
+        },
+        sort: function sort(column) {
+            if (column === this.column) {
+                if (this.direction === 'desc') {
+                    this.direction = 'asc';
+                } else {
+                    this.direction = 'desc';
+                }
+            } else {
+                this.column = column;
+                this.direction = 'asc';
+            }
+            this.getOportunidadesAbiertas();
+        },
+        next: function next() {
+            if (this.apiNegocio.proveedores.next_page_url) {
+                this.page++;
+                this.getOportunidadesAbiertas();
+            }
+        },
+        prev: function prev() {
+            if (this.apiNegocio.proveedores.prev_page_url) {
+
+                this.page--;
+                this.getOportunidadesAbiertas();
+            }
+        }
+    }
+
+});
+
+/***/ }),
+/* 46 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _vm.apiNegocio.loadingSuperusuario
+        ? [
+            _c("i", { staticClass: "fa fa-spinner fa-spin" }),
+            _vm._v(" "),
+            _c("span", [_vm._v("Cargando ...")])
+          ]
+        : _vm._e(),
+      _vm._v(" "),
+      _c("div", { staticClass: "x_panel" }, [
+        _c("div", { staticClass: "x_title" }, [
+          _c("h2", [_vm._v("Proveedores")]),
+          _vm._v(" "),
+          _c("ul", { staticClass: "nav navbar-right panel_toolbox" }, [
+            _c("li", [
+              _c(
+                "a",
+                {
+                  staticClass: "btn btn-info btn-sm",
+                  attrs: {
+                    "data-toggle": "modal",
+                    "data-target": "#modal-negocio"
+                  },
+                  on: {
+                    click: function($event) {
+                      _vm.proveedorProp = []
+                    }
+                  }
+                },
+                [
+                  _c("i", { staticClass: "fa fa-user-plus" }),
+                  _vm._v(" Crear proveedor")
+                ]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "clearfix" })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "input-group col-sm-12" }, [
+          _c("label", [_vm._v("Buscar: ")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.search_query_1,
+                expression: "search_query_1"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text", debounce: "500" },
+            domProps: { value: _vm.search_query_1 },
+            on: {
+              keyup: _vm.getProveedores,
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.search_query_1 = $event.target.value
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "container" },
+          [
+            _vm.apiNegocio.proveedores.data
+              ? _c(
+                  "table",
+                  { staticClass: "table table-striped" },
+                  [
+                    _c("thead", [
+                      _c("tr", [
+                        _c("th", [_vm._v("Nº")]),
+                        _vm._v(" "),
+                        _c("th", [
+                          _c(
+                            "a",
+                            {
+                              on: {
+                                click: function($event) {
+                                  _vm.sort("nit")
+                                }
+                              }
+                            },
+                            [_vm._v("Nit")]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("th", [
+                          _c(
+                            "a",
+                            {
+                              on: {
+                                click: function($event) {
+                                  _vm.sort("nombre")
+                                }
+                              }
+                            },
+                            [_vm._v("Nombre")]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("th", [
+                          _c(
+                            "a",
+                            {
+                              on: {
+                                click: function($event) {
+                                  _vm.sort("empresa")
+                                }
+                              }
+                            },
+                            [_vm._v("Empresa")]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("th", [
+                          _c(
+                            "a",
+                            {
+                              on: {
+                                click: function($event) {
+                                  _vm.sort("email")
+                                }
+                              }
+                            },
+                            [_vm._v("Email")]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("th", [
+                          _c(
+                            "a",
+                            {
+                              on: {
+                                click: function($event) {
+                                  _vm.sort("telefono")
+                                }
+                              }
+                            },
+                            [_vm._v("Telefono")]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Acciones")])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.apiNegocio.proveedores.data, function(
+                      proveedor,
+                      index
+                    ) {
+                      return _c("Proveedor", {
+                        key: index,
+                        attrs: { index: index, proveedor: proveedor },
+                        on: {
+                          verProveedor: function($event) {
+                            _vm.verProveedor($event)
+                          },
+                          crearusuario: function($event) {
+                            _vm.proveedorProp = $event
+                          },
+                          editproveedor: function($event) {
+                            _vm.editproveedor = $event
+                          }
+                        }
+                      })
+                    })
+                  ],
+                  2
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _c("span", [_vm._v("Registros por página:")]),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.per_page,
+                    expression: "per_page"
+                  }
+                ],
+                on: {
+                  change: [
+                    function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.per_page = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    },
+                    _vm.getProveedores
+                  ]
+                }
+              },
+              [
+                _c("option", { attrs: { value: "5" } }, [_vm._v("5")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "10" } }, [_vm._v("10")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "20" } }, [_vm._v("20")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "25" } }, [_vm._v("25")])
+              ]
+            ),
+            _vm._v("\n            |\n            "),
+            _c("span", [
+              _vm._v(
+                "Mostrando " +
+                  _vm._s(_vm.apiNegocio.proveedores.from) +
+                  " - " +
+                  _vm._s(_vm.apiNegocio.proveedores.to) +
+                  " de " +
+                  _vm._s(_vm.apiNegocio.proveedores.total)
+              )
+            ]),
+            _vm._v("\n            |\n            "),
+            _c("span", [
+              _vm._v("Página actual "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.page,
+                    expression: "page"
+                  }
+                ],
+                attrs: { size: "2", type: "text" },
+                domProps: { value: _vm.page },
+                on: {
+                  keyup: function($event) {
+                    if (
+                      !("button" in $event) &&
+                      _vm._k($event.keyCode, "enter", 13)
+                    ) {
+                      return null
+                    }
+                    _vm.getProveedores($event)
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.page = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" de " + _vm._s(_vm.apiNegocio.proveedores.last_page))
+            ]),
+            _vm._v("\n            |\n            "),
+            _c("span", [
+              _c("button", { on: { click: _vm.next } }, [_vm._v("Siguiente")])
+            ]),
+            _vm._v(" "),
+            _c("span", [
+              _c("button", { on: { click: _vm.prev } }, [_vm._v("Anterior")])
+            ]),
+            _vm._v(" "),
+            _c("ProveedorForm", {
+              attrs: { negocioData: _vm.proveedorProp },
+              on: {
+                negocioCreated: function($event) {
+                  _vm.getProveedores()
+                }
+              }
+            })
+          ],
+          1
+        )
+      ])
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-5edde668", module.exports)
+  }
+}
+
+/***/ }),
+/* 47 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

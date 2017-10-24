@@ -46,9 +46,19 @@ Route::group(['prefix' => 'negocio'], function () {
     
     Route::get('/empresas', 'EmpresasController@index');
     
-    Route::get('/proveedores','ProveedoresController@index');
+    Route::get('/proveedores','NegocioController@proveedores');
 
-    Route::get('/oportunidades','OportunidadesController@index'); 
+    Route::get('/oportunidades/abiertas', function(){
+        return view('negocio.oportunidades_abiertas');
+    });
+
+    Route::get('/oportunidades/cerradas', function(){
+        return view('negocio.oportunidades_cerradas');
+    });
+
+    Route::get('/oportunidades/seguimiento',function(){
+        return view('negocio.oportunidades_seguimiento');
+    }); 
 });
 
 

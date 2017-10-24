@@ -17,6 +17,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::group(['prefix' => 'negocio', 'middleware' => 'auth:api'], function () {  
+
+    Route::get('/get_oportunidades_abiertas','NegocioController@get_oportunidades_abiertas');
+    
+
+});
 Route::get('/negocios', 'SuperusuarioController@getNegocios');
 
 Route::post('/negocios', 'SuperusuarioController@storeNegocios');
