@@ -3,8 +3,21 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Support\FilterPaginateOrder;
 
 class Producto extends Model
 {
-    protected $fillable = ['descripcion', 'proveedore_id', 'categoria_id', 'negocio_id'];
+    use FilterPaginateOrder;
+
+    protected $fillable = ['descripcion',  'categoria_id', 'negocio_id','estado'];
+
+    protected $filter = ['id', 'descripcion'];
+    
+    public function negocio(){
+        return $this->belongsTo('App\Negocio');
+    }
+
+    public function categoria(){
+        return $this->belongsTo('App\Categoria');
+    }
 }
