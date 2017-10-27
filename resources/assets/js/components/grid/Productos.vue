@@ -1,0 +1,130 @@
+<template>
+    <div>
+        <template v-if="apiNegocio.loadingSuperusuario">
+            <i class="fa fa-spinner fa-spin"></i>
+            <span>Cargando ...</span>
+        </template>
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Productos</h2>        
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a v-on:click="productoProp = []" data-toggle="modal" data-target="#modal-negocio" class="btn btn-info btn-sm"><i class="fa fa-user-plus"></i> Crear producto</a></li>        
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="input-group col-sm-12">
+                <label>Buscar: </label>
+                <input type="text" v-model="search_query_1" v-on:keyup="getProductos" debounce="500" class="form-control">
+            </div> 
+            <div class="container">
+                <table v-if="apiNegocio.productos.data"  class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nº</th>
+                            <th><a @click="sort('descripcion')">Descripcion</a></th>
+                            <th><a @click="sort('categoria_id')">Categoria</a></th>
+                            <th><a @click="sort('estado')">Estado</a></th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <Producto v-on:verProducto="verProducto($event)" v-for="(producto,index) in apiNegocio.productos.data" :key="index" v-bind:index="index" v-bind:producto="producto"
+                    v-on:crearusuario="productoProp = $event"
+                    v-on:editproducto="editproducto = $event"
+                    >
+                    </Producto>    
+                
+                </table>
+                <span>Registros por página:</span>
+
+                <select v-model="per_page" v-on:change="getProductos">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="25">25</option>
+                </select>
+                |
+                <span>Mostrando {{apiNegocio.productos.from}} - {{apiNegocio.productos.to}} de {{apiNegocio.productos.total}}</span>
+                |
+                <span>Página actual <input size="2" type="text" v-model="page" v-on:keyup.enter="getProductos"> de {{apiNegocio.productos.last_page}}</span>
+                |
+                <span><button v-on:click="next">Siguiente</button></span>
+                <span><button v-on:click="prev">Anterior</button></span>
+                <ProductosForm v-bind:negocioData="productoProp" @negocioCreated="getProductos()"></ProductosForm>     
+                
+            </div>
+        </div>
+    </div>
+   
+</template>
+
+<script>
+    import Vue from 'vue';
+    import {mapState} from 'vuex';
+    import Producto from './Producto.vue';
+    import ProductosForm from '../modals/ProductosForm.vue'; 
+    export default {
+        props: ['token'],
+        components:{ Producto, ProductosForm },
+        data(){
+            return {
+                productoProp : [],
+                column: 'id',
+                direction: 'desc',
+                per_page: '10',
+                page: '1',
+                search_operator: 'like',
+                search_column: 'descripcion',
+                search_query_1: '',
+                search_query_2: '',
+            }
+        },
+        created(){
+            this.getProductos();
+        },
+        computed: mapState({
+            apiNegocio: state => state.apiNegocio
+        }),
+        methods: {
+            getProductos(){
+                this.$store.dispatch('getProductos', {
+                    column: this.column,
+                    direction: this.direction,
+                    per_page: this.per_page,
+                    page: this.page,
+                    search_operator: this.search_operator,
+                    search_column: this.search_column,
+                    search_query_1: this.search_query_1,
+                    search_query_2: this.search_query_2,
+                    headers: this.headers
+                });
+            },
+            sort(column){
+                if(column === this.column) {
+                    if(this.direction === 'desc') {
+                        this.direction = 'asc'
+                    } else {
+                        this.direction = 'desc'
+                    }
+                } else {
+                        this.column = column
+                        this.direction = 'asc'
+                }
+                this.getProductos()
+            },
+            next(){
+            if(this.apiNegocio.productos.next_page_url){                
+                this.page++
+                this.getProductos()
+            }
+            },
+            prev(){
+                if(this.apiNegocio.productos.prev_page_url){
+                    
+                    this.page--
+                    this.getProductos()
+                }
+            },
+        }
+    
+    }
+</script>

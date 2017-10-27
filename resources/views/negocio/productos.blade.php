@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <Proveedores token="{{session('user_token')}}"></Proveedores>       
+        <Productos token="{{session('user_token')}}"></Productos>       
     </div>
 </div>
 @endsection
