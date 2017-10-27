@@ -17,6 +17,7 @@ class CreateStocksTable extends Migration
             $table->increments('id');
             $table->integer('categoria_id')->unsigned();
             $table->integer('producto_id')->unsigned();
+            $table->integer('proveedore_id')->unsigned();
             $table->boolean('estado');
             $table->bigInteger('valor');
             $table->date('fecha_entrega');
@@ -29,6 +30,10 @@ class CreateStocksTable extends Migration
 
             $table->foreign('producto_id')
             ->references('id')->on('productos')
+            ->onDelete('restrict');
+
+            $table->foreign('proveedore_id')
+            ->references('id')->on('proveedores')
             ->onDelete('restrict');
         });
     }

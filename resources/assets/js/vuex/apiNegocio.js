@@ -8,6 +8,7 @@ const state = {
     categorias: [],
     usuarios: [],
     tipousers: [],
+    monedas: [],
     loadingNegocio: true,
 }
 
@@ -35,6 +36,10 @@ const mutations = {
 
     SET_TIPOUSERS(state, tipousers){
         state.tipousers = tipousers;
+    },
+
+    SET_MONEDAS(state, monedas){
+        state.monedas = monedas;
     },
 
     SET_LOADING(state, status){
@@ -145,6 +150,15 @@ const actions = {
             }      
         });
     },
+
+    getMonedas: ({commit}, params) => {
+        return Vue.http.get('/api/monedas').then(response => {
+            if (response.status === 200){
+                commit('SET_MONEDAS', response.body.monedas);
+            }      
+        });
+    },
+
     getOportunidadesAbiertas:({commit}) => {
         return Vue.http.get('/api/get_oportunidades_abiertas').then(response => {
             if(response.status === 200){
