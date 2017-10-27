@@ -29,11 +29,11 @@
                             <th>Acciones</th>
                         </tr>
                     </thead>
-                    <empresa v-on:verempresa="verempresa($event)" v-for="(empresa,index) in apiNegocio.empresas.data" :key="index" v-bind:index="index" v-bind:empresa="empresa"
+                    <Empresa v-on:verempresa="verempresa($event)" v-for="(empresa,index) in apiNegocio.empresas.data" :key="index" v-bind:index="index" v-bind:empresa="empresa"
                     v-on:crearusuario="empresaProp = $event"
                     v-on:editempresa="editempresa = $event"
                     >
-                    </empresa>    
+                    </Empresa>    
                 
                 </table>
                 <span>Registros por página:</span>
@@ -51,7 +51,7 @@
                 |
                 <span><button v-on:click="next">Siguiente</button></span>
                 <span><button v-on:click="prev">Anterior</button></span>
-                <empresaForm v-bind:negocioData="empresaProp" @negocioCreated="getEmpresas()"></empresaForm>     
+                <EmpresaForm v-bind:negocioData="empresaProp" @negocioCreated="getEmpresas()"></EmpresaForm>     
                 
             </div>
         </div>
@@ -62,11 +62,11 @@
 <script>
     import Vue from 'vue';
     import {mapState} from 'vuex';
-    import empresa from './empresa.vue';
-    import empresaForm from '../modals/empresaForm.vue'; 
+    import Empresa from './Empresa.vue';
+    import EmpresaForm from '../modals/EmpresaForm.vue'; 
     export default {
         props: ['token'],
-        components:{ empresa, empresaForm },
+        components:{ Empresa, EmpresaForm },
         data(){
             return {
                 empresaProp : [],

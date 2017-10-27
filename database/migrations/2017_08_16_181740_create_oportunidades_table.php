@@ -25,7 +25,8 @@ class CreateOportunidadesTable extends Migration
             $table->integer('user_id')->unsigned()->nullable();
             $table->datetime('fecha_requerida');
             $table->datetime('fecha_atencion')->nullable();
-            $table->string('presupuesto');
+            $table->bigInteger('presupuesto');
+            $table->integer('moneda_id')->unsigned();
             $table->text('observaciones')->nullable();
             
             $table->timestamps();
@@ -33,6 +34,11 @@ class CreateOportunidadesTable extends Migration
             $table->integer('negocio_id')->unsigned();
             $table->foreign('negocio_id')
                 ->references('id')->on('negocios')
+                ->onDelete('restrict');
+
+                
+            $table->foreign('moneda_id')
+                ->references('id')->on('monedas')
                 ->onDelete('restrict');
         });
     }

@@ -26,7 +26,8 @@ class OportunidadesController extends Controller
             'descripcion' => 'required', 
             'cargo' => 'required', 
             'fecha' => 'required', 
-            'presupuesto' => 'required|numeric'             
+            'presupuesto' => 'required|numeric',
+            'moneda' => 'required'             
         ]); 
  
          
@@ -42,7 +43,8 @@ class OportunidadesController extends Controller
                 'descripcion' => $request->descripcion, 
                 'cargo' => $request->cargo, 
                 'fecha_requerida' => $request->fecha, 
-                'presupuesto' => $request->presupuesto 
+                'presupuesto' => $request->presupuesto,
+                'moneda_id' => $request->moneda 
 
             ]); 
 

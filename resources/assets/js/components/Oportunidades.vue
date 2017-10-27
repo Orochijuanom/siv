@@ -76,6 +76,16 @@
                 </div>
 
                 <div class="col-md-12">
+                    <div v-bind:class="{'form-group': true, 'has-error': errors.moneda}">
+                        <label for="moneda" class="control-label">Moneda : <span class="required">*</span></label>
+                        <select class="form-control" id="moneda" v-model="data.moneda">
+                            <option :value="moneda.id" v-for="(moneda, index) in apiNegocio.monedas" :key="index">{{moneda.simbolo}} {{moneda.siglas}}</option>  
+                        </select>                                       
+                        <span class="help-block" v-for="(error, index) in errors.municipio" :key="index">{{ error }}</span>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
                     <div v-bind:class="{'form-group': true, 'has-error': errors.descripcion}">
                         <label for="administrador">Descripcion* :</label>
                             <input type="text" v-model="data.descripcion" class="form-control">
@@ -94,7 +104,8 @@
      
 </template> 
  
-<script> 
+<script>
+    import {mapState} from 'vuex';
     export default { 
         props: ['negocio', 'token'],
         data () { 
@@ -109,7 +120,8 @@
                     nit: '',
                     cargo: '', 
                     fecha: '', 
-                    presupuesto: '', 
+                    presupuesto: '',
+                    moneda: '', 
                     descripcion: '' 
                 },
                 spinner: false, 
@@ -117,8 +129,12 @@
             } 
         },
         created(){
+            this.$store.dispatch('getMonedas')
             this.data.negocio = this.negocio.id
         }, 
+        computed: mapState({
+            apiNegocio: state => state.apiNegocio
+        }),
         methods: { 
             enviar(){ 
                 var button = $('#createOportunidad');
@@ -133,6 +149,7 @@
                     this.data.nit = ''
                     this.data.fecha = ''
                     this.data.presupuesto = ''
+                    this.data.moneda = ''
                     this.data.descripcion = ''
                 }, response => {                         
                     this.errors = response.data.errors;

@@ -17,11 +17,12 @@ class CreateProductosTable extends Migration
             $table->increments('id');
             $table->string('descripcion');
             $table->boolean('estado');
+            $table->timestamps();
+
             $table->integer('categoria_id')->unsigned();
             $table->foreign('categoria_id')
-            ->references('id')->on('categoria')
-            ->onDelete('restrict');
-            $table->timestamps();
+                ->references('id')->on('categorias')
+                ->onDelete('restrict');
 
             $table->integer('negocio_id')->unsigned();
             $table->foreign('negocio_id')

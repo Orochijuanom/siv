@@ -54,4 +54,11 @@ Route::get('/tipousers', function () {
 
 });
 
+Route::get('/monedas', function () {
+    $monedas = App\Moneda::all();
+
+    return response(['monedas' => $monedas], 200);
+
+});
+
 Route::post('/users', 'UserController@storeUser');
