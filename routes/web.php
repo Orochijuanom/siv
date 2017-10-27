@@ -48,6 +48,8 @@ Route::group(['prefix' => 'negocio'], function () {
     
     Route::get('/proveedores','NegocioController@proveedores');
 
+    Route::get('/oportunidades/{id}','OportunidadesController@index'); 
+
     Route::get('/productos','NegocioController@productos');
 
     Route::get('/oportunidades/abiertas', function(){
