@@ -20,8 +20,8 @@ class CreateProductosTable extends Migration
             $table->timestamps();
 
             $table->integer('categoria_id')->unsigned();
-                $table->foreign('categoria_id')
-                ->references('id')->on('categoria')
+            $table->foreign('categoria_id')
+                ->references('id')->on('categorias')
                 ->onDelete('restrict');
 
             $table->integer('negocio_id')->unsigned();
