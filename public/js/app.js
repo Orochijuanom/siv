@@ -11308,8 +11308,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue_resource__["a" /* default */]);
 Vue.component('Administradores', __webpack_require__(11));
 Vue.component('Negocios', __webpack_require__(14));
 Vue.component('Proveedores', __webpack_require__(23));
-Vue.component('Productos', __webpack_require__(70));
-Vue.component('Empresas', __webpack_require__(57));
+
 Vue.component('Oportunidades', __webpack_require__(32));
 Vue.component('Users', __webpack_require__(35));
 Vue.component('Oportunidadesabiertas', __webpack_require__(44));
@@ -13162,18 +13161,6 @@ var actions = {
         });
     },
 
-    getMonedas: function getMonedas(_ref7, params) {
-        var commit = _ref7.commit;
-
-        return __WEBPACK_IMPORTED_MODULE_0_vue___default.a.http.get('/api/monedas').then(function (response) {
-            if (response.status === 200) {
-                commit('SET_MONEDAS', response.body.monedas);
-            }
-        });
-    },
-
-    getOportunidadesAbiertas: function getOportunidadesAbiertas(_ref8) {
-        var commit = _ref8.commit;
 
         return __WEBPACK_IMPORTED_MODULE_0_vue___default.a.http.get('/api/get_oportunidades_abiertas').then(function (response) {
             if (response.status === 200) {
