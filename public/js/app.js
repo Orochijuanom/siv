@@ -11293,6 +11293,7 @@ Vue.component('Administradores', __webpack_require__(11));
 Vue.component('Negocios', __webpack_require__(14));
 
 Vue.component('Proveedores', __webpack_require__(23));
+
 Vue.component('Oportunidades', __webpack_require__(32));
 Vue.component('Users', __webpack_require__(35));
 Vue.component('Oportunidadesabiertas', __webpack_require__(44));
@@ -12999,6 +13000,9 @@ var actions = {
 var state = {
 
     proveedores: [],
+    empresas: [],
+    productos: [],
+    categorias: [],
     usuarios: [],
     tipousers: [],
     loadingNegocio: true
@@ -13007,6 +13011,15 @@ var state = {
 var mutations = {
     SET_PROVEEDORES: function SET_PROVEEDORES(state, proveedores) {
         state.proveedores = proveedores;
+    },
+    SET_EMPRESAS: function SET_EMPRESAS(state, empresas) {
+        state.empresas = empresas;
+    },
+    SET_PRODUCTOS: function SET_PRODUCTOS(state, productos) {
+        state.productos = productos;
+    },
+    SET_CATEGORIAS: function SET_CATEGORIAS(state, categorias) {
+        state.categorias = categorias;
     },
     SET_USUARIOS: function SET_USUARIOS(state, usuarios) {
         state.usuarios = usuarios;
@@ -13040,8 +13053,68 @@ var actions = {
         });
     },
 
-    getUsuarios: function getUsuarios(_ref2, params) {
+    getEmpresas: function getEmpresas(_ref2, params) {
         var commit = _ref2.commit;
+
+        commit('SET_LOADING', true);
+        var url = '';
+        if (params.search_query_1 == '') {
+            url = '/api/empresas?column=' + params.column + '&direction=' + params.direction + '&per_page=' + params.per_page + '&page=' + params.page + '&search_operator=' + params.search_operator + '&search_column=' + params.search_column;
+        } else {
+            url = '/api/empresas?column=' + params.column + '&direction=' + params.direction + '&per_page=' + params.per_page + '&page=' + params.page + '&search_operator=' + params.search_operator + '&search_column=' + params.search_column + '&search_query_1=' + params.search_query_1;
+        }
+        return __WEBPACK_IMPORTED_MODULE_0_vue___default.a.http.get(url).then(function (response) {
+            if (response.status === 200) {
+                commit('SET_EMPRESAS', response.body.empresas);
+                commit('SET_LOADING', false);
+            }
+        }, function (response) {
+            console.log('Error');
+        });
+    },
+
+    getProductos: function getProductos(_ref3, params) {
+        var commit = _ref3.commit;
+
+        commit('SET_LOADING', true);
+        var url = '';
+        if (params.search_query_1 == '') {
+            url = '/api/productos?column=' + params.column + '&direction=' + params.direction + '&per_page=' + params.per_page + '&page=' + params.page + '&search_operator=' + params.search_operator + '&search_column=' + params.search_column;
+        } else {
+            url = '/api/productos?column=' + params.column + '&direction=' + params.direction + '&per_page=' + params.per_page + '&page=' + params.page + '&search_operator=' + params.search_operator + '&search_column=' + params.search_column + '&search_query_1=' + params.search_query_1;
+        }
+        return __WEBPACK_IMPORTED_MODULE_0_vue___default.a.http.get(url).then(function (response) {
+            if (response.status === 200) {
+                commit('SET_PRODUCTOS', response.body.productos);
+                commit('SET_LOADING', false);
+            }
+        }, function (response) {
+            console.log('Error');
+        });
+    },
+
+    getCategorias: function getCategorias(_ref4, params) {
+        var commit = _ref4.commit;
+
+        commit('SET_LOADING', true);
+        var url = '';
+        if (params.search_query_1 == '') {
+            url = '/api/categorias?column=' + params.column + '&direction=' + params.direction + '&per_page=' + params.per_page + '&page=' + params.page + '&search_operator=' + params.search_operator + '&search_column=' + params.search_column;
+        } else {
+            url = '/api/categorias?column=' + params.column + '&direction=' + params.direction + '&per_page=' + params.per_page + '&page=' + params.page + '&search_operator=' + params.search_operator + '&search_column=' + params.search_column + '&search_query_1=' + params.search_query_1;
+        }
+        return __WEBPACK_IMPORTED_MODULE_0_vue___default.a.http.get(url).then(function (response) {
+            if (response.status === 200) {
+                commit('SET_CATEGORIAS', response.body.categorias);
+                commit('SET_LOADING', false);
+            }
+        }, function (response) {
+            console.log('Error');
+        });
+    },
+
+    getUsuarios: function getUsuarios(_ref5, params) {
+        var commit = _ref5.commit;
 
         commit('SET_LOADING', true);
         var url = '';
@@ -13059,8 +13132,8 @@ var actions = {
             console.log('Error');
         });
     },
-    getTipousers: function getTipousers(_ref3, params) {
-        var commit = _ref3.commit;
+    getTipousers: function getTipousers(_ref6, params) {
+        var commit = _ref6.commit;
 
         return __WEBPACK_IMPORTED_MODULE_0_vue___default.a.http.get('/api/tipousers').then(function (response) {
             if (response.status === 200) {
@@ -13068,8 +13141,8 @@ var actions = {
             }
         });
     },
-    getOportunidadesAbiertas: function getOportunidadesAbiertas(_ref4) {
-        var commit = _ref4.commit;
+    getOportunidadesAbiertas: function getOportunidadesAbiertas(_ref7) {
+        var commit = _ref7.commit;
 
         return __WEBPACK_IMPORTED_MODULE_0_vue___default.a.http.get('/api/get_oportunidades_abiertas').then(function (response) {
             if (response.status === 200) {

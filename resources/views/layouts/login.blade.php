@@ -1,5 +1,10 @@
+<!--Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
 <!DOCTYPE HTML>
-<html lang="{{ app()->getLocale() }}">
+<html lang="en">
 <head>
 <title>Online Login Form Responsive Widget Template :: w3layouts</title>
 <!-- Meta tag Keywords -->
@@ -10,8 +15,8 @@
 function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- Meta tag Keywords -->
 <!-- css files -->
-<link rel="stylesheet" href="/css/login/style.css" type="text/css" media="all" /> <!-- Style-CSS --> 
-<link rel="stylesheet" href="css/login/font-awesome.css"> <!-- Font-Awesome-Icons-CSS -->
+<link rel="stylesheet" href="css/style.css" type="text/css" media="all" /> <!-- Style-CSS --> 
+<link rel="stylesheet" href="css/font-awesome.css"> <!-- Font-Awesome-Icons-CSS -->
 <!-- //css files -->
 <!-- online-fonts -->
 <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese" rel="stylesheet">
@@ -23,15 +28,15 @@ function hideURLbar(){ window.scrollTo(0,1); } </script>
 <div class="center-container">
 	<!--header-->
 	<div class="header-w3l">
-		<h1>SIV</h1>
+		<h1>Online Login Form</h1>
 	</div>
 	<!--//header-->
 	<div class="main-content-agile">
 		<div class="sub-main-w3">	
 			<div class="wthree-pro">
-				<h2>Inicio de sesión</h2>
+				<h2>Login Quick</h2>
 			</div>
-			<form action="/login" method="post">
+			<form action="#" method="post">
 				<div class="pom-agile">
 					<input placeholder="E-mail" name="Name" class="user" type="email" required="">
 					<span class="icon1"><i class="fa fa-user" aria-hidden="true"></i></span>
@@ -41,7 +46,7 @@ function hideURLbar(){ window.scrollTo(0,1); } </script>
 					<span class="icon2"><i class="fa fa-unlock" aria-hidden="true"></i></span>
 				</div>
 				<div class="sub-w3l">
-					<h6><a href="#">Olvido su contraseña?</a></h6>
+					<h6><a href="#">Forgot Password?</a></h6>
 					<div class="right-w3l">
 						<input type="submit" value="Login">
 					</div>
@@ -50,11 +55,11 @@ function hideURLbar(){ window.scrollTo(0,1); } </script>
 		</div>
 	</div>
 	<!--//main-->
-	<!--
+	<!--footer-->
 	<div class="footer">
 		<p>&copy; 2017 Online Login Form. All rights reserved | Design by <a href="http://w3layouts.com">W3layouts</a></p>
 	</div>
-	-->
+	<!--//footer-->
 </div>
 </body>
 </html>
