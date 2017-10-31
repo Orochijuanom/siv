@@ -107,23 +107,19 @@ const actions = {
     },
 
     getCategorias: ({commit}, params) =>{
-        commit('SET_LOADING', true)
-        var url = '';  
-        if(params.search_query_1 == ''){
-          url = '/api/categorias?column='+params.column+'&direction='+params.direction+'&per_page='+params.per_page+'&page='+params.page+'&search_operator='+params.search_operator+'&search_column='+params.search_column
-        }else{
-          url = '/api/categorias?column='+params.column+'&direction='+params.direction+'&per_page='+params.per_page+'&page='+params.page+'&search_operator='+params.search_operator+'&search_column='+params.search_column+'&search_query_1='+params.search_query_1
-        } 
-        return Vue.http.get(url).then(response => {
-            if (response.status === 200) {                
+         return Vue.http.get('/api/categorias').then(response => {
+            if (response.status === 200){
                 commit('SET_CATEGORIAS', response.body.categorias);
-                commit('SET_LOADING', false)
-                              
-            }
-        },response => {
-            console.log('Error');
+            }      
         });
     },
+    getProductosSelect: ({commit}, params) =>{
+        return Vue.http.get('/api/prductosselect').then(response => {
+           if (response.status === 200){
+               commit('SET_PRODUCTOS', response.body.productos);
+           }      
+       });
+   },
 
     getUsuarios: ({commit}, params) =>{
         commit('SET_LOADING', true)

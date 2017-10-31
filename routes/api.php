@@ -54,6 +54,11 @@ Route::get('/tipousers', function () {
 
 });
 
+Route::get('/prductosselect', function () {
+    $productos = App\Producto::all();
+    return response(['productos' => $productos], 200);
+});
+
 Route::get('/monedas', function () {
     $monedas = App\Moneda::all();
 

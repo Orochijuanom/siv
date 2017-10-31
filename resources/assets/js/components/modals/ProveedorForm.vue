@@ -68,6 +68,16 @@
                             <span class="help-block" v-for="(error, index) in errors.email" :key="index">{{ error }}</span>
                         </div>
                     </div>
+                    <div class="col-md-12">
+                        <div v-bind:class="{'form-group': true, 'has-error': errors.productos}">
+                            <label for="email">Productos (Para selecionar varios presione CTRL y haga clic sobre los productos deseados) :</label>
+                            <select  v-model="data.productos" class="form-control selectpicker" data-live-search="true" multiple>
+                                <option value="">Selecione...</option>
+                                <option :value="producto.id" v-for="(producto, index) in apiNegocio.productos" :key="index">{{producto.descripcion}}</option>  
+                            </select>
+                            <span class="help-block" v-for="(error, index) in errors.productos" :key="index">{{ error }}</span>
+                        </div>
+                    </div>
 
                     <div class="form-group col-md-12">
                         <button type="submit" class="btn btn-success" id="createNegocio" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Enviando">Crear Negocio</button>
@@ -119,7 +129,8 @@
                     empresa: '',
                     telefono: '',
                     nit: '',
-                    dig: ''
+                    dig: '',
+                    productos: []
 
                 },
                 
@@ -131,15 +142,22 @@
                 
             }
         },
+
+        created(){
+            this.$store.dispatch('getProductosSelect', {});
+        },
+        computed: mapState({
+            apiNegocio: state => state.apiNegocio
+        }),
+
         methods: {
-            
-            
+
             createProveedor(){
                 var button = $('#createProveedor');
                 button.button('loading');
                 this.$http.post('/api/proveedores', this.data).then(response => {
                     this.$emit('negocioCreated'); 
-                    this.data = {nombre: '',email: '',empresa: '',telefono: '', nit: '', dig: ''};
+                    this.data = {nombre: '',email: '',empresa: '',telefono: '', nit: '', dig: '', productos: []};
                     if (this.errors) {
                         this.errors = [];
                     }
