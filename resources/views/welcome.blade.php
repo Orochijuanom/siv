@@ -23,7 +23,7 @@ function hideURLbar(){ window.scrollTo(0,1); } </script>
 <div class="center-container">
 	<!--header-->
 	<div class="header-w3l">
-		<img src="/img/logocolor.jpg" width="150px"></img>
+		<img src="/img/logocolor.png" width="150px"></img>
 	</div>
 	<!--//header-->
 	<div class="main-content-agile">
