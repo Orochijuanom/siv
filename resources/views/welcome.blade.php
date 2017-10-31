@@ -23,7 +23,7 @@ function hideURLbar(){ window.scrollTo(0,1); } </script>
 <div class="center-container">
 	<!--header-->
 	<div class="header-w3l">
-		<h1>SIV</h1>
+		<img src="/img/logocolor.jpg" width="150px"></img>
 	</div>
 	<!--//header-->
 	<div class="main-content-agile">
@@ -31,19 +31,30 @@ function hideURLbar(){ window.scrollTo(0,1); } </script>
 			<div class="wthree-pro">
 				<h2>Inicio de sesión</h2>
 			</div>
-			<form action="/login" method="post">
+			<form method="POST" action="{{ route('login') }}">
+                {{ csrf_field() }}
 				<div class="pom-agile">
-					<input placeholder="E-mail" name="Name" class="user" type="email" required="">
+					<input id="email" placeholder="Email" type="email" name="email" value="{{ old('email') }}" required>
 					<span class="icon1"><i class="fa fa-user" aria-hidden="true"></i></span>
+					@if ($errors->has('email'))
+						<span class="help-block">
+							<strong>{{ $errors->first('email') }}</strong>
+						</span>
+					@endif
 				</div>
 				<div class="pom-agile">
-					<input  placeholder="Password" name="Password" class="pass" type="password" required="">
+					<input  placeholder="Password" id="password" type="password" class="form-control" name="password" required>
 					<span class="icon2"><i class="fa fa-unlock" aria-hidden="true"></i></span>
+					@if ($errors->has('password'))
+						<span class="help-block">
+							<strong>{{ $errors->first('password') }}</strong>
+						</span>
+					@endif
 				</div>
 				<div class="sub-w3l">
-					<h6><a href="#">Olvido su contraseña?</a></h6>
+					<h6><a href="{{ route('password.request') }}">Olvido su contraseña?</a></h6>
 					<div class="right-w3l">
-						<input type="submit" value="Login">
+						<input type="submit" value="Ingresar">
 					</div>
 				</div>
 			</form>

@@ -22,7 +22,7 @@ class checkSuperusuario
                 return response::view('errors/401',array() ,401);
             }
         }else{
-            return redirect()->guest('login');
+            return redirect()->guest('home');
         }
 
         return $next($request);

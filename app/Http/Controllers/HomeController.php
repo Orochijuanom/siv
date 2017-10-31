@@ -28,7 +28,7 @@ class HomeController extends Controller
                 return Response::view('errors.missing',array() ,401);
             } 
         }else{
-            return redirect()->guest('login');
+            return redirect()->guest('/');
         }
     }
 }

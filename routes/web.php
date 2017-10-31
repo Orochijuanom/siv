@@ -38,7 +38,7 @@ Route::group(['prefix' => 'superusuario', 'middleware' => 'superusuario'], funct
 });
 
 
-Route::group(['prefix' => 'negocio'], function () {
+Route::group(['prefix' => 'negocio', 'middleware' => 'administrador'], function () {
 
     Route::get('/', function () {
         return view('negocio.usuarios');
