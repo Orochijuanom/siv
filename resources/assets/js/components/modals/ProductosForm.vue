@@ -31,9 +31,10 @@
                     <div class="col-md-12" v-show="show">
                         <div v-bind:class="{'form-group': true, 'has-error': errors.categoria}">
                             <label for="categoria">Categoria :</label>
-                            <input type="text" v-model="data.categoria_id" class="form-control" placeholder="Categoria">
                             <select  v-model="data.categoria_id" class="form-control selectpicker" data-live-search="true" >
-                                <option v-for="(categoria,index) in apiNegocio.categorias" :key="index" v-bind:value="categoria[0]" >{{ categoria[1] }}</option>
+                                <option value="">Selecione...</option>
+                                <option :value="categoria.id" v-for="(categoria, index) in apiNegocio.categorias" :key="index">{{categoria.descripcion}}</option>  
+
                             </select>
                             <span class="help-block" v-for="(error, index) in errors.categoria" :key="index">{{ error }}</span>
                         </div>
@@ -96,7 +97,7 @@
                 errors: [],
                 data: {
                     descripcion: '',
-                    categoria_id: '',
+                    categoria: '',
                     negocio: '1',
                     estado: ''
 

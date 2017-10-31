@@ -21,7 +21,7 @@ class HomeController extends Controller
             if (Auth::user()->tipouser_id == 1) {
                 return redirect('/superusuario');
             }elseif(Auth::user()->tipouser_id == 2){
-                return redirect('/administrador'); 
+                return redirect('/negocio'); 
             }elseif(Auth::user()->tipouser_id == 3){
                 return redirect('/vendedor');
             }else{

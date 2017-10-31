@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Proveedore;
 use App\Producto;
 use App\Categoria;
+use App\Stock;
 
 class NegocioController extends Controller
 {
@@ -49,15 +50,29 @@ class NegocioController extends Controller
         ]);
         
         try{
-            $nit = $request->nit."-".$request->dig;
+
             $proveedores = Proveedore::Create([
                 'nombre' => $request->nombre,
                 'email' => $request->email,
-                'negocio_id' => 1,
+                'negocio_id' => Auth::user()->negocio_id,
                 'telefono' => $request->telefono,
                 'empresa' => $request->empresa,
-                'nit' => $nit
+                'nit' => $request->nit
             ]);
+
+            for($i =0;$i < count($request->productos); $i++){
+                $producto = Producto::where('id',$request->productos[$i])->first();
+                $categoria = Categoria::where('id',$producto->id)->first();
+                $stock = Stock::Create([
+                    'categoria_id' => $categoria->id,
+                    'producto_id' => $request->productos[$i],
+                    'proveedore_id' => $proveedores->id,
+                    'estado' => '1',
+                    'valor' => 0,
+                    'fecha_entrega' => "2017-01-01",
+                    'forma_entrega' => "Casa"
+                ]);
+            }
 
             return response(['data' => 'exito'], 200);
         }catch(\Exception $e){
@@ -67,8 +82,8 @@ class NegocioController extends Controller
 
     public function getCategorias()
     {        
-        $categoria = Categoria::get();
-        return response(['categoria' => $categoria], 200);
+        $categorias = Categoria::all();
+        return response(['categorias' => $categorias], 200);
     }
 
     public function productos(Request $request)
