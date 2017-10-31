@@ -50,15 +50,16 @@ class NegocioController extends Controller
         ]);
         
         try{
-            $nit = $request->nit."-".$request->dig;
+
             $proveedores = Proveedore::Create([
                 'nombre' => $request->nombre,
                 'email' => $request->email,
-                'negocio_id' => 1,
+                'negocio_id' => Auth::user()->negocio_id,
                 'telefono' => $request->telefono,
                 'empresa' => $request->empresa,
-                'nit' => $nit
+                'nit' => $request->nit
             ]);
+
             for($i =0;$i < count($request->productos); $i++){
                 $producto = Producto::where('id',$request->productos[$i])->first();
                 $categoria = Categoria::where('id',$producto->id)->first();

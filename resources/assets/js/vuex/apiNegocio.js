@@ -42,6 +42,10 @@ const mutations = {
         state.monedas = monedas;
     },
 
+    SET_PRODUCTOS_SEARCH(state, productos){
+        state.productos = productos
+    },
+
     SET_LOADING(state, status){
         state.loadingNegocio = status;
     }   
@@ -161,7 +165,23 @@ const actions = {
                 commit('SET_OPORTUNIDADES_ABIERTAS', response.body.oportunidades_abiertas);
             }
         });
-    }
+    },
+
+    searchProductos: ({commit}, params) => {
+        commit('SET_LOADING', true);
+        var url = '/api/search_producto';
+        if (params.query.length > 0)           
+            url = url  + '/' + params.query;                
+        return Vue.http.get(url).then(response => {
+            if (response.status === 200) {                
+                commit('SET_PRODUCTOS_SEARCH', response.body.productos);
+                commit('SET_LOADING', false)                
+            }
+        },response => {
+            console.log('Error');
+            commit('SET_LOADING', false);
+        });
+    },
 
 }
 

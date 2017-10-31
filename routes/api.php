@@ -59,6 +59,17 @@ Route::get('/prductosselect', function () {
     return response(['productos' => $productos], 200);
 });
 
+Route::get('/search_producto/{query?}', function($query = null) {
+    if($query == null){
+          $productos = null;
+    }else{
+          $productos = App\Producto::with('categoria')->where('estado', 1)->where('descripcion', 'like', '%'.$query.'%')->get();
+    
+    }
+    return response(['productos' => $productos], 200);
+
+});
+
 Route::get('/monedas', function () {
     $monedas = App\Moneda::all();
 
