@@ -1,122 +1,210 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'SIV') }}</title>
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="/css/dashboard/nprogress.css" rel="stylesheet">
-    <link href="/css/dashboard/custom.min.css" rel="stylesheet">    
-    <link rel="stylesheet" href="https://unpkg.com/vue-toastr-2/dist/vue-toastr-2.min.css">    
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
+    <title>SIV</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="/css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="/css/dashboard/style.css" rel="stylesheet">
+    <!-- You can change the theme colors from here -->
+    <link href="/css/dashboard/colors/blue.css" id="theme" rel="stylesheet">
     <!-- Scripts -->
     <script>
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
         ]) !!};
     </script>
-  </head>
-  <body class="nav-md">
-    <div id="app">
-      <div class="container body">
-        <div class="main_container">
-          <div class="col-md-3 left_col">
-            <div class="left_col scroll-view">
-              <div class="navbar nav_title" id="logo" style="border: 0;">                
-              </div>
-              <div class="clearfix"></div>
-              <!-- sidebar menu -->
-              <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-                <div class="menu_section">
-                    
-                    @yield('sidebar')
-                    
-                </div>
-              
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
 
-            </div>
-              <!-- /sidebar menu -->              
-            </div>
-          </div>
-
-          <!-- top navigation -->
-          <div class="top_nav">
-            <div class="nav_menu">
-              <nav>
-                <div class="nav toggle">
-                  <a id="menu_toggle"><i class="fa fa-bars"></i></a>
-                </div>
-
-                <ul class="nav navbar-nav navbar-right">
-                  
-                  <li class="">
-                    <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    {{ Auth::user()->name }}<span class="caret"> </span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-usermenu pull-right">
-                     
-                      <li>
-                          <a href="/logout"
-                              onclick="event.preventDefault();
-                                          document.getElementById('logout-form').submit();">
-                              <i class="fa fa-sign-out pull-right"></i> Salir</a>
-                          </a>
-                          <form id="logout-form" action="/logout" method="POST" style="display: none;">
-                              {{ csrf_field() }}
-                          </form>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-          <!-- /top navigation -->
-          <!-- page content -->
-          <div class="right_col" role="main">
-              <div class="row">
-                <div class="col-md-12">
-                  @yield('content')
-              </div>
-              </div>
-            </div>
-          </div>
-          <!-- /page content -->
-
-          <!-- footer content -->
-          <footer>
-            <div class="pull-right">
-              SIV <a href="localhost:8000">SIV</a>              
-            </div>
-            <div class="clearfix"></div>
-          </footer>
-          <!-- /footer content -->
-        </div>
-      </div>
+<body class="fix-header fix-sidebar card-no-border">
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>
     </div>
-      <script src="https://unpkg.com/vue-toastr-2/dist/vue-toastr-2.js"></script>
-      <script src="/js/app.js"></script>
-      <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-      <script src="/js/dashboard/nprogress.js"></script>
-      <script src="/js/dashboard/custom.min.js"></script>      
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-      <script>
-      $(".modal-fullscreen").on('show.bs.modal', function () {
-          setTimeout( function() {
-              $(".modal-backdrop").addClass("modal-backdrop-fullscreen");
-          }, 0);
-      });
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <header class="topbar">
+            <nav class="navbar top-navbar navbar-toggleable-sm navbar-light">
+                <!-- ============================================================== -->
+                <!-- Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">
+                        <!-- Logo icon -->
+                        <b>
+                            <img src="../assets/images/logo-icon.png" alt="homepage" class="dark-logo" />                            
+                        </b>                        
+                    </a>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-collapse">
+                    <!-- ============================================================== -->
+                    <!-- toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav mr-auto mt-md-0 ">
+                        <!-- This is  -->
+                        <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
+                        <li class="nav-item hidden-sm-down">
+                            <form class="app-search p-l-20">
+                                <input type="text" class="form-control" placeholder="Search for..."> <a class="srh-btn"><i class="ti-search"></i></a>
+                            </form>
+                        </li>
+                    </ul>
+                    <!-- ============================================================== -->
+                    <!-- User profile and search -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav my-lg-0">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Markarn Doe</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <aside class="left-sidebar">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar">
+                <!-- Sidebar navigation-->
+                @yield('sidebar')                
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
+        </aside>
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Bread crumb and right sidebar toggle -->
+                <!-- ============================================================== -->
+                <div class="row page-titles">
+                    <div class="col-md-6 col-8 align-self-center">
+                        <h3 class="text-themecolor m-b-0 m-t-0">Dashboard</h3>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                            <li class="breadcrumb-item active">Dashboard</li>
+                        </ol>
+                    </div>
+                    <div class="col-md-6 col-4 align-self-center">
+                        <a href="#" class="btn pull-right hidden-sm-down btn-success"> Agregar</a>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Bread crumb and right sidebar toggle -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <!-- Row -->
+                <div class="row">
+                    <!-- Column -->
+                    <div class="col-sm-12">
+                        @yield('content')
+                    </div>                    
+                    <!-- Column -->
+                </div>
+                <!-- Row -->
+                <!-- Row -->
+                <div class="row">
+                    <!-- column -->
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-block">
+                                <h4 class="card-title">Revenue Statistics</h4>
+                                <div class="flot-chart">
+                                    <div class="flot-chart-content" id="flot-line-chart"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- column -->
+                </div>
+                <!-- Row -->
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <footer class="footer text-center">
+                © 2017 SIV
+            </footer>
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="/js/jquery/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="/js/bootstrap/tether.min.js"></script>
+    <script src="/js/bootstrap/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="/js/admin/jquery.slimscroll.js"></script>
+    <!--Wave Effects -->
+    <script src="/js/admin/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="/js/admin/sidebarmenu.js"></script>
+    <!--stickey kit -->
+    <script src="/js/sticky-kit-master/dist/sticky-kit.min.js"></script>
+    <!--Custom JavaScript -->
+    <script src="/js/admin/custom.min.js"></script>
+    <!-- ============================================================== -->
+    <!-- This page plugins -->
+    <!-- ============================================================== -->
+    <!-- Flot Charts JavaScript -->
+    <script src="/js/flot/jquery.flot.js"></script>
+    <script src="/js/flot.tooltip/js/jquery.flot.tooltip.min.js"></script>    
+</body>
 
-      $(".modal-fullscreen").on('hidden.bs.modal', function () {
-          $(".modal-backdrop").addClass("modal-backdrop-fullscreen");
-      });
-      </script>
-      @yield('scripts')
-
-  </body>
 </html>
