@@ -29,9 +29,11 @@ Route::post('/negocios', 'SuperusuarioController@storeNegocios');
 
 Route::post('/administrador', 'UserController@storeAdministrador');
 
-Route::get('/empresas', 'EmpresasController@getEmpresas');
+Route::get('/empresas', 'NegocioController@getEmpresas');
 
-Route::post('/empresas', 'EmpresasController@storeEmpresas');
+Route::post('/empresas', 'NegocioController@storeEmpresas');
+
+Route::post('/updateEmpresas', 'NegocioController@updateEmpresas');
 
 Route::get('/proveedores', 'NegocioController@getProveedores');
 
