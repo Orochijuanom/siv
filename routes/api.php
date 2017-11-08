@@ -49,6 +49,9 @@ Route::post('/oportunidades', 'OportunidadesController@storeOportunidades');
 
 Route::get('/usuarios/negocio/{id}', 'UserController@userList');
 
+Route::post('/updateUsers', 'UserController@updateUsers');
+
+
 Route::get('/tipousers', function () {
     $tipousers = App\Tipouser::where('id', '<>', '1')->get();
 

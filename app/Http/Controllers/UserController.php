@@ -81,4 +81,28 @@ class UserController extends Controller
             return response(['data' => $e->getMessage()], 401); 
         }
     }
+
+    public function updateUsers(Request $request){
+        $this->validate($request, [            
+            'tipousuario' => 'required',
+            'nombre' => 'required',
+            'email' => 'required',
+            'negocio' => 'required', 
+
+        ]);
+        try{
+            $nit = $request->nit;
+            $usersDatos = [
+                'tipouser_id' => $request->tipousuario,
+                'name' => $request->nombre,
+                'email' => $request->email,
+                'negocio_id' => $request->negocio
+            ];
+            $UserData = User::updateOrCreate(['id'=> $request->id], $usersDatos);
+            //\LogActivity::addToLog('EMPRESA Id:'.$empresaData->id);
+            return response(['data' => 'exito'], 200);
+        }catch(\Exception $e){
+            return response(['data' => $e->getMessage()], 401); 
+        }
+    }
 }
