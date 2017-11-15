@@ -120,6 +120,26 @@ class NegocioController extends Controller
             return response(['data' => $e->getMessage()], 401); 
         }
     }
+    public function updateProductos(Request $request){
+        $this->validate($request, [            
+            'descripcion' => 'required',
+            'id' => 'required',
+            'categoria_id' => 'required',
+            'estado' => 'required',
+        ]);
+        try{
+            $productosDatos = [
+                'descripcion' => $request->descripcion,
+                'categoria_id' => $request->categoria_id,
+                'estado' => $request->estado,
+            ];
+            $productosData = Producto::updateOrCreate(['id'=> $request->id], $productosDatos);
+            //\LogActivity::addToLog('EMPRESA Id:'.$empresaData->id);
+            return response(['data' => 'exito'], 200);
+        }catch(\Exception $e){
+            return response(['data' => $e->getMessage()], 401); 
+        }
+    }
 
     public function getEmpresas(){
         

@@ -45,6 +45,8 @@ Route::get('/productos', 'NegocioController@getProductos');
 
 Route::post('/productos', 'NegocioController@storeProductos');
 
+Route::post('/updateProductos', 'NegocioController@updateProductos');
+
 Route::post('/oportunidades', 'OportunidadesController@storeOportunidades');
 
 Route::get('/usuarios/negocio/{id}', 'UserController@userList');
