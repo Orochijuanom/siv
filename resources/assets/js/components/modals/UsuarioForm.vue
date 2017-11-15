@@ -1,12 +1,14 @@
 <template>
-    <div class="modal fade modal-fullscreen" id="modal-usuarios" tabindex="-1" role="dialog" aria-hidden="true">    
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Agregar usuario</h4>
-            </div>
-            <div class="modal-body">
-                
+    <div class="modal fade" id="modal-usuarios">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Agregar usuario</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
                     <div class="input-group col-md-12">
                         <div v-bind:class="{'form-group': true, 'has-error': errors.nombre}">
                             <label for="negocio">Nombre :</label>
@@ -32,19 +34,12 @@
                             <span class="help-block" v-for="(error, index) in errors.municipio" :key="index">{{ error }}</span>
                         </div>
                     </div>
-
-
                     <div class="input-group col-md-12">
-                        <button v-on:click="createUser" class="btn btn-success" id="createUser" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Enviando">Crear Negocio</button>
-                    </div>
-                    
-                
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>                
+                        <button v-on:click="createUser" class="btn btn-success" id="createUser" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Enviando">Crear Usuario</button>
+                    </div>                                    
+                </div>           
             </div>
         </div>
-        <!-- /.modal-content -->    
     </div>
 </template>
 

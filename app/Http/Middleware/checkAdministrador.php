@@ -18,11 +18,11 @@ class checkAdministrador
     public function handle($request, Closure $next)
     {   
         if (Auth::check()) {
-            if (Auth::user()->tipouser_id != 3) {
+            if (Auth::user()->tipouser_id != 2) {
                 return response::view('errors/401',array() ,401);
             }
         }else{
-            return redirect()->guest('login');
+            return redirect()->guest('home');
         }
 
         return $next($request);

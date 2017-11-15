@@ -32,6 +32,7 @@
 </head>
 
 <body class="fix-header fix-sidebar card-no-border">
+<div id="app">
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
     <!-- ============================================================== -->
@@ -59,25 +60,10 @@
                         </b>                        
                     </a>
                 </div>
-                <!-- ============================================================== -->
-                <!-- End Logo -->
-                <!-- ============================================================== -->
                 <div class="navbar-collapse">
-                    <!-- ============================================================== -->
-                    <!-- toggle and nav items -->
-                    <!-- ============================================================== -->
-                    <ul class="navbar-nav mr-auto mt-md-0 ">
-                        <!-- This is  -->
-                        <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
-                        <li class="nav-item hidden-sm-down">
-                            <form class="app-search p-l-20">
-                                <input type="text" class="form-control" placeholder="Search for..."> <a class="srh-btn"><i class="ti-search"></i></a>
-                            </form>
-                        </li>
+                    <ul class="navbar-nav mr-auto mt-md-0 ">                        
+                        <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-menu"></i></a> </li>                        
                     </ul>
-                    <!-- ============================================================== -->
-                    <!-- User profile and search -->
-                    <!-- ============================================================== -->
                     <ul class="navbar-nav my-lg-0">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Markarn Doe</a>
@@ -112,62 +98,8 @@
             <!-- Container fluid  -->
             <!-- ============================================================== -->
             <div class="container-fluid">
-                <!-- ============================================================== -->
-                <!-- Bread crumb and right sidebar toggle -->
-                <!-- ============================================================== -->
-                <div class="row page-titles">
-                    <div class="col-md-6 col-8 align-self-center">
-                        <h3 class="text-themecolor m-b-0 m-t-0">Dashboard</h3>
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                            <li class="breadcrumb-item active">Dashboard</li>
-                        </ol>
-                    </div>
-                    <div class="col-md-6 col-4 align-self-center">
-                        <a href="#" class="btn pull-right hidden-sm-down btn-success"> Agregar</a>
-                    </div>
-                </div>
-                <!-- ============================================================== -->
-                <!-- End Bread crumb and right sidebar toggle -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- Start Page Content -->
-                <!-- ============================================================== -->
-                <!-- Row -->
-                <div class="row">
-                    <!-- Column -->
-                    <div class="col-sm-12">
-                        @yield('content')
-                    </div>                    
-                    <!-- Column -->
-                </div>
-                <!-- Row -->
-                <!-- Row -->
-                <div class="row">
-                    <!-- column -->
-                    <div class="col-sm-12">
-                        <div class="card">
-                            <div class="card-block">
-                                <h4 class="card-title">Revenue Statistics</h4>
-                                <div class="flot-chart">
-                                    <div class="flot-chart-content" id="flot-line-chart"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- column -->
-                </div>
-                <!-- Row -->
-                <!-- ============================================================== -->
-                <!-- End PAge Content -->
-                <!-- ============================================================== -->
-            </div>
-            <!-- ============================================================== -->
-            <!-- End Container fluid  -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- footer -->
-            <!-- ============================================================== -->
+                @yield('content')
+            </div>    
             <footer class="footer text-center">
                 © 2017 SIV
             </footer>
@@ -199,12 +131,14 @@
     <script src="/js/sticky-kit-master/dist/sticky-kit.min.js"></script>
     <!--Custom JavaScript -->
     <script src="/js/admin/custom.min.js"></script>
+    <script src="/js/app.js"></script>
     <!-- ============================================================== -->
     <!-- This page plugins -->
     <!-- ============================================================== -->
     <!-- Flot Charts JavaScript -->
     <script src="/js/flot/jquery.flot.js"></script>
-    <script src="/js/flot.tooltip/js/jquery.flot.tooltip.min.js"></script>    
+    <script src="/js/flot.tooltip/js/jquery.flot.tooltip.min.js"></script>
+    </div>    
 </body>
 
 </html>

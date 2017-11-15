@@ -1,8 +1,8 @@
 @extends('layouts.negocio')
 
 @section('content')
-<div class="container">
-    <div class="row">
+<div class="card">
+    <div class="card-block">        
         <Proveedores token="{{session('user_token')}}"></Proveedores>       
     </div>
 </div>

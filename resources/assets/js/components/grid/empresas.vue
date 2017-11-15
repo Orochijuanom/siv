@@ -3,15 +3,18 @@
         <template v-if="apiNegocio.loadingSuperusuario">
             <i class="fa fa-spinner fa-spin"></i>
             <span>Cargando ...</span>
-        </template>
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>empresas</h2>        
-                <ul class="nav navbar-right panel_toolbox">
-                    <li><a v-on:click="empresaProp = []" data-toggle="modal" data-target="#modal-negocio" class="btn btn-info btn-sm"><i class="fa fa-user-plus"></i> Crear empresa</a></li>        
-                </ul>
-                <div class="clearfix"></div>
+        </template>                    
+        <div class="row">            
+             <div class="col-md-6 col-4 align-self-center">                            
+                <h2>Empresas</h2>                  
+             </div>   
+            <div class="col-md-6 col-4 align-self-center">                
+                <a v-on:click="empresaProp = []" data-toggle="modal" data-target="#modal-negocio" class="btn pull-right hidden-sm-down btn-success"><i class="fa fa-user-plus"></i> Crear empresa</a>
             </div>
+        </div>    
+        <div class="clearfix"></div>
+        <hr/>
+        <div class="row">    
             <div class="input-group col-sm-12">
                 <label>Buscar: </label>
                 <input type="text" v-model="search_query_1" v-on:keyup="getEmpresas" debounce="500" class="form-control">
@@ -51,12 +54,10 @@
                 |
                 <span><button v-on:click="next">Siguiente</button></span>
                 <span><button v-on:click="prev">Anterior</button></span>
-                <EmpresaForm v-bind:negocioData="empresaProp" @negocioCreated="getEmpresas()"></EmpresaForm>     
-                
+                <EmpresaForm v-bind:negocioData="empresaProp" @negocioCreated="getEmpresas()"></EmpresaForm>                         
             </div>
         </div>
-    </div>
-   
+    </div>   
 </template>
 
 <script>

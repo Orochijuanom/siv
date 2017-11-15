@@ -4,14 +4,16 @@
             <i class="fa fa-spinner fa-spin"></i>
             <span>Cargando ...</span>
         </template>
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>Usuarios</h2>        
-                <ul class="nav navbar-right panel_toolbox">
-                    <li><a data-toggle="modal" data-target="#modal-usuarios" class="btn btn-info btn-sm"><i class="fa fa-user-plus"></i> Crear usuario</a></li>        
-                </ul>
-                <div class="clearfix"></div>
+            <div class="row">            
+                <div class="col-md-6 col-4 align-self-center">                            
+                <h2>Usuarios</h2>                  
+             </div>   
+            <div class="col-md-6 col-4 align-self-center">                
+                <a data-toggle="modal" data-target="#modal-usuarios" class="btn pull-right hidden-sm-down btn-success"><i class="fa fa-user-plus"></i> Crear usuario</a>
             </div>
+            </div>   
+            <hr/>
+            <div class="clearfix"></div>            
             <div class="input-group col-sm-12">
                 <label>Buscar: </label>
                 <input type="text" v-model="search_query_1" v-on:keyup="getUsuarios" debounce="500" class="form-control">
@@ -53,8 +55,7 @@
                     
                 
             </div>
-        </div>
-    </div>
+        </div>    
    
 </template>
 

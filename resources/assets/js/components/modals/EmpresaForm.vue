@@ -1,102 +1,96 @@
 <template>
-    <div class="modal fade modal-fullscreen"  id="modal-negocio" tabindex="-1" role="dialog" aria-hidden="true">    
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Agregar Empresa</h4>
+<div class="modal fade" id="modal-negocio">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Agregar Empresa</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form v-on:submit.prevent="createEmpresas" method="post">
+            <div class="col-md-12" v-show="!show">
+                <br/>
+                <label for="pariente" class="control-label">Negocio:</label>
+                <br/>
+                <span class="tag" v-if="negocio.nombre != ''">
+                <span>{{negocio.nombre}}</span>
+                
+                </span>
+                <br/>
+                <br/>
             </div>
-            <div class="modal-body">
-                <form v-on:submit.prevent="createEmpresas" method="post">
-
-                    <div class="col-md-12" v-show="!show">
-                        <br/>
-                        <label for="pariente" class="control-label">Negocio:</label>
-                        <br/>
-                        <span class="tag" v-if="negocio.nombre != ''">
-                        <span>{{negocio.nombre}}</span>
-                        
-                        </span>
-                        <br/>
-                        <br/>
-                    </div>
-
-                    <div class="col-md-12" v-show="show">
-                        <div v-bind:class="{'form-group': true, 'has-error': errors.nombre}">
-                            <label for="nit">Nit :</label>
-                            <input type="number" v-model="data.nit" class="form-control" placeholder="Nit">
-                            <span class="help-block" v-for="(error, index) in errors.nit" :key="index">{{ error }}</span>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-12" v-show="show">
-                        <div v-bind:class="{'form-group': true, 'has-error': errors.nombre}">
-                            <label for="nombre">Digito Verificacion :</label>
-                            <input type="text" v-model="data.dig" class="form-control" placeholder="Digito">
-                            <span class="help-block" v-for="(error, index) in errors.dig" :key="index">{{ error }}</span>
-                        </div>
-                    </div>
-
-
-                    <div class="col-md-12" v-show="show">
-                        <div v-bind:class="{'form-group': true, 'has-error': errors.nombre}">
-                            <label for="nombre">Descripcion :</label>
-                            <input type="text" v-model="data.descripcion" class="form-control" placeholder="Nombre">
-                            <span class="help-block" v-for="(error, index) in errors.nombre" :key="index">{{ error }}</span>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12" v-show="show">
-                        <div v-bind:class="{'form-group': true, 'has-error': errors.logo}">
-                            <label for="nombre">Logo :</label>
-                            <input type="text" v-model="data.logo" class="form-control" placeholder="Logo">
-                            <div v-if="!image">
-                                <h2>Select an image</h2>
-                                <input type="file" @change="onFileChange">
-                            </div>
-                            <div v-else>
-                                <img :src="image" />
-                                <button @click="removeImage">Remove image</button>
-                            </div>
-                            <span class="help-block" v-for="(error, index) in errors.empresa" :key="index">{{ error }}</span>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12" v-show="show">
-                        <div v-bind:class="{'form-group': true, 'has-error': errors.direccion}">
-                            <label for="nombre">Direccion :</label>
-                            <input type="text" v-model="data.direccion" class="form-control" placeholder="Direccion">
-                            <span class="help-block" v-for="(error, index) in errors.empresa" :key="index">{{ error }}</span>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12" v-show="show">
-                        <div v-bind:class="{'form-group': true, 'has-error': errors.nombre}">
-                            <label for="nombre">Telefono :</label>
-                            <input type="number" v-model="data.telefono" class="form-control" placeholder="Telefono">
-                            <span class="help-block" v-for="(error, index) in errors.telefono" :key="index">{{ error }}</span>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12">
-                        <div v-bind:class="{'form-group': true, 'has-error': errors.email}">
-                            <label for="email">Email :</label>
-                            <input type="email" v-model="data.email" class="form-control" placeholder="Email">
-                            <span class="help-block" v-for="(error, index) in errors.email" :key="index">{{ error }}</span>
-                        </div>
-                    </div>
-
-                    <div class="form-group col-md-12">
-                        <button type="submit" class="btn btn-success" id="createEmpresa" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Enviando">Crear Empresa</button>
-                    </div>
-                    
-                </form>
+            <div class="col-md-12" v-show="show">
+                <div v-bind:class="{'form-group': true, 'has-error': errors.nombre}">
+                    <label for="nit">Nit :</label>
+                    <input type="number" v-model="data.nit" class="form-control" placeholder="Nit">
+                    <span class="help-block" v-for="(error, index) in errors.nit" :key="index">{{ error }}</span>
+                </div>
             </div>
-            <div class="modal-footer" >
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>                
+            
+            <div class="col-md-12" v-show="show">
+                <div v-bind:class="{'form-group': true, 'has-error': errors.nombre}">
+                    <label for="nombre">Digito Verificacion :</label>
+                    <input type="text" v-model="data.dig" class="form-control" placeholder="Digito">
+                    <span class="help-block" v-for="(error, index) in errors.dig" :key="index">{{ error }}</span>
+                </div>
             </div>
-        </div>
-        <!-- /.modal-content -->    
+            <div class="col-md-12" v-show="show">
+                <div v-bind:class="{'form-group': true, 'has-error': errors.nombre}">
+                    <label for="nombre">Descripcion :</label>
+                    <input type="text" v-model="data.descripcion" class="form-control" placeholder="Nombre">
+                    <span class="help-block" v-for="(error, index) in errors.nombre" :key="index">{{ error }}</span>
+                </div>
+            </div>
+            <div class="col-md-12" v-show="show">
+                <div v-bind:class="{'form-group': true, 'has-error': errors.logo}">
+                    <label for="nombre">Logo :</label>
+                    <input type="text" v-model="data.logo" class="form-control" placeholder="Logo">
+                    <div v-if="!image">
+                        <h2>Select an image</h2>
+                        <input type="file" @change="onFileChange">
+                    </div>
+                    <div v-else>
+                        <img :src="image" />
+                        <button @click="removeImage">Remove image</button>
+                    </div>
+                    <span class="help-block" v-for="(error, index) in errors.empresa" :key="index">{{ error }}</span>
+                </div>
+            </div>
+
+            <div class="col-md-12" v-show="show">
+                <div v-bind:class="{'form-group': true, 'has-error': errors.direccion}">
+                    <label for="nombre">Direccion :</label>
+                    <input type="text" v-model="data.direccion" class="form-control" placeholder="Direccion">
+                    <span class="help-block" v-for="(error, index) in errors.empresa" :key="index">{{ error }}</span>
+                </div>
+            </div>
+
+            <div class="col-md-12" v-show="show">
+                <div v-bind:class="{'form-group': true, 'has-error': errors.nombre}">
+                    <label for="nombre">Telefono :</label>
+                    <input type="number" v-model="data.telefono" class="form-control" placeholder="Telefono">
+                    <span class="help-block" v-for="(error, index) in errors.telefono" :key="index">{{ error }}</span>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div v-bind:class="{'form-group': true, 'has-error': errors.email}">
+                    <label for="email">Email :</label>
+                    <input type="email" v-model="data.email" class="form-control" placeholder="Email">
+                    <span class="help-block" v-for="(error, index) in errors.email" :key="index">{{ error }}</span>
+                </div>
+            </div>
+            <div class="form-group col-md-12">
+                <button type="submit" class="btn btn-success" id="createEmpresa" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Enviando">Crear Empresa</button>
+            </div>            
+        </form>
+      </div>      
     </div>
+  </div>
+</div>
+    
 </template>
 
 <script>
