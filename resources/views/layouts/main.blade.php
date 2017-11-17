@@ -66,8 +66,17 @@
                     </ul>
                     <ul class="navbar-nav my-lg-0">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Markarn Doe</a>
-                        </li>
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }}</a>                            
+                        </li>                        
+                        <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="/logout"
+                              onclick="event.preventDefault();
+                                          document.getElementById('logout-form').submit();">Salir</a>
+                          </a>
+                          <form id="logout-form" action="/logout" method="POST" style="display: none;">
+                              {{ csrf_field() }}
+                          </form>                            
+                        </li>                        
                     </ul>
                 </div>
             </nav>
