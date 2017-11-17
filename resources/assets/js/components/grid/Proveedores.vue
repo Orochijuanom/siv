@@ -31,7 +31,7 @@
                     </thead>
                     <Proveedor v-on:verProveedor="verProveedor($event)" v-for="(proveedor,index) in apiNegocio.proveedores.data" :key="index" v-bind:index="index" v-bind:proveedor="proveedor"
                     v-on:crearusuario="proveedorProp = $event"
-                    v-on:editproveedor="editproveedor = $event"
+                    v-on:editproveedor="proveedorEdit = $event"
                     >
                     </Proveedor>    
                 
@@ -52,6 +52,7 @@
                 <span><button v-on:click="next">Siguiente</button></span>
                 <span><button v-on:click="prev">Anterior</button></span>
                 <ProveedorForm v-bind:negocioData="proveedorProp" @negocioCreated="getProveedores()"></ProveedorForm>     
+                <ProveedorEditForm v-bind:proveedorData="proveedorEdit" @negocioEdit="getProveedores()"></ProveedorEditForm>     
                 
             </div>
         </div>
@@ -64,11 +65,13 @@
     import {mapState} from 'vuex';
     import Proveedor from './Proveedor.vue';
     import ProveedorForm from '../modals/ProveedorForm.vue'; 
+    import ProveedorEditForm from '../modals/ProveedorEditForm.vue'; 
     export default {
         props: ['token'],
-        components:{ Proveedor, ProveedorForm },
+        components:{ Proveedor, ProveedorForm,ProveedorEditForm },
         data(){
             return {
+                proveedorEdit: [],
                 proveedorProp : [],
                 column: 'id',
                 direction: 'desc',

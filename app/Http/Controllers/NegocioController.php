@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
 use App\Empresa;
 use App\Proveedore;
 use App\Producto;
@@ -40,6 +41,28 @@ class NegocioController extends Controller
         return response(['proveedores' => $proveedores], 200);
     }
 
+    public function getStockRela(Request $request)
+    {     
+        $condicion = array("1", "=" , "1");
+        if($request->tipo == "Producto"){
+            $condicion = array("stocks.producto_id", "=",$request->id);
+        }
+        if($request->tipo == "Proveedor"){
+            $condicion = array("stocks.proveedore_id","=",$request->id);
+        }
+        $select = "stocks.*";
+        if($request->tipo == "Proveedor"){
+            $select = "productos.id as id, productos.descripcion";
+        }
+        if($request->tipo == "Producto"){
+            $select = "proveedores.id as id";
+        }
+        $stock = Stock::join("productos","stocks.producto_id","=","productos.id")->
+        join("proveedores","stocks.proveedore_id","=","proveedores.id")->
+        where(DB::raw($condicion[0]),$condicion[1],$condicion[2])->select(DB::raw($select))->get();
+        return response(['stock' => $stock], 200);
+    }
+
     public function storeProveedores(Request $request){
         $this->validate($request, [            
             'nombre' => 'required',
@@ -55,7 +78,7 @@ class NegocioController extends Controller
             $proveedores = Proveedore::Create([
                 'nombre' => $request->nombre,
                 'email' => $request->email,
-                'negocio_id' => Auth::user()->negocio_id,
+                'negocio_id' => "1",
                 'telefono' => $request->telefono,
                 'empresa' => $request->empresa,
                 'nit' => $request->nit
@@ -66,7 +89,7 @@ class NegocioController extends Controller
                 $categoria = Categoria::where('id',$producto->id)->first();
                 $stock = Stock::Create([
                     'categoria_id' => $categoria->id,
-                    'producto_id' => $request->productos[$i],
+                    'producto_id' => $request->productos[$i][0],
                     'proveedore_id' => $proveedores->id,
                     'estado' => '1',
                     'valor' => 0,
@@ -75,6 +98,45 @@ class NegocioController extends Controller
                 ]);
             }
 
+            return response(['data' => 'exito'], 200);
+        }catch(\Exception $e){
+            return response(['data' => $e->getMessage()], 401); 
+        }
+    }
+
+    public function updateProveedores(Request $request){
+        $this->validate($request, [            
+            'nombre' => 'required',
+            'email' => 'required',
+            'empresa' => 'required',
+            'telefono' => 'required',
+            'nit' => 'required', 
+        ]);
+        try{
+            $proveedoresDatos = [
+                'nombre' => $request->nombre,
+                'email' => $request->email,
+                'negocio_id' => "1",
+                'telefono' => $request->telefono,
+                'empresa' => $request->empresa,
+                'nit' => $request->nit
+            ];
+            $proveedoresData = Proveedore::updateOrCreate(['id'=> $request->id], $proveedoresDatos);
+            //\LogActivity::addToLog('EMPRESA Id:'.$empresaData->id);
+            Stock::where('proveedore_id',$request->id)->delete();
+            for($i =0;$i < count($request->productos); $i++){
+                $producto = Producto::where('id',$request->productos[$i])->first();
+                $categoria = Categoria::where('id',$producto->id)->first();
+                $stock = Stock::Create([
+                    'categoria_id' => $categoria->id,
+                    'producto_id' => $request->productos[$i][0],
+                    'proveedore_id' => $request->id,
+                    'estado' => '1',
+                    'valor' => 0,
+                    'fecha_entrega' => "2017-01-01",
+                    'forma_entrega' => "Casa"
+                ]);
+            }
             return response(['data' => 'exito'], 200);
         }catch(\Exception $e){
             return response(['data' => $e->getMessage()], 401); 

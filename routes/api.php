@@ -39,6 +39,10 @@ Route::get('/proveedores', 'NegocioController@getProveedores');
 
 Route::post('/proveedores', 'NegocioController@storeProveedores');
 
+Route::post('/updateProveedores', 'NegocioController@updateProveedores');
+
+Route::post('/getStockRela', 'NegocioController@getStockRela');
+
 Route::get('/categorias', 'NegocioController@getCategorias');
 
 Route::get('/productos', 'NegocioController@getProductos');
