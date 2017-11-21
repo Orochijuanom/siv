@@ -52,13 +52,9 @@
                 <!-- ============================================================== -->
                 <!-- Logo -->
                 <!-- ============================================================== -->
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">
-                        <!-- Logo icon -->
-                        <b>
-                            <img src="../assets/images/logo-icon.png" alt="homepage" class="dark-logo" />                            
-                        </b>                        
-                    </a>
+                <div class="" id="logo">
+                    <!-- Just an image -->                                        
+                    <!--<img src="/img/logo_blanco.png" alt="logo">-->                    
                 </div>
                 <div class="navbar-collapse">
                     <ul class="navbar-nav mr-auto mt-md-0 ">                        

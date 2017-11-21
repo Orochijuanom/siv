@@ -20525,7 +20525,7 @@ var render = function() {
                   },
                   on: { click: _vm.createUser }
                 },
-                [_vm._v("Crear Negocio")]
+                [_vm._v("Crear Usuario")]
               )
             ])
           ])

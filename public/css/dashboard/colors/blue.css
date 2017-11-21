@@ -46,8 +46,7 @@ File: scss
   /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 }
 
-.topbar .navbar-header {
-  background: #ffffff;
+.topbar .navbar-header {  
   box-shadow: 4px -4px 10px rgba(0, 0, 0, 0.05);
 }
 
