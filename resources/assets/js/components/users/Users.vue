@@ -30,7 +30,7 @@
                         </tr>
                     </thead>
                     <User  v-for="(usuario,index) in apiNegocio.usuarios.data" :key="index" v-bind:index="index" v-bind:usuario="usuario"
-                    v-on:editusuario="editusuario = $event">
+                    v-on:editUsuario="useredit = $event">
                     </user>    
                 
                 </table>
@@ -50,7 +50,8 @@
                 <span><button v-on:click="next">Siguiente</button></span>
                 <span><button v-on:click="prev">Anterior</button></span>
                 <UsuarioForm v-bind:negocio_id="negocio" @usuarioCreated="getUsuario()"></UsuarioForm>  
-                    
+                <UsuarioEditForm  v-bind:userData="useredit"  @userEdited="getUsuarios()"></UsuarioEditForm>     
+  
                 
             </div>
         </div>
@@ -62,10 +63,11 @@
     import Vue from 'vue';
     import User from './User.vue';
     import UsuarioForm from '../Modals/UsuarioForm.vue';
+    import UsuarioEditForm from '../Modals/UsuarioEditForm.vue';
     import {mapState} from 'vuex';
     export default {
         props: ['negocio', 'token'],
-        components: {User, UsuarioForm},
+        components: {User, UsuarioForm,UsuarioEditForm},
         data(){
             return {
                 column: 'id',
@@ -76,6 +78,7 @@
                 search_column: 'name',
                 search_query_1: '',
                 search_query_2: '',
+                useredit: [],
             }
         },
         created(){

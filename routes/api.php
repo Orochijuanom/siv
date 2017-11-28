@@ -29,13 +29,19 @@ Route::post('/negocios', 'SuperusuarioController@storeNegocios');
 
 Route::post('/administrador', 'UserController@storeAdministrador');
 
-Route::get('/empresas', 'EmpresasController@getEmpresas');
+Route::get('/empresas', 'NegocioController@getEmpresas');
 
-Route::post('/empresas', 'EmpresasController@storeEmpresas');
+Route::post('/empresas', 'NegocioController@storeEmpresas');
+
+Route::post('/updateEmpresas', 'NegocioController@updateEmpresas');
 
 Route::get('/proveedores', 'NegocioController@getProveedores');
 
 Route::post('/proveedores', 'NegocioController@storeProveedores');
+
+Route::post('/updateProveedores', 'NegocioController@updateProveedores');
+
+Route::post('/getStockRela', 'NegocioController@getStockRela');
 
 Route::get('/categorias', 'NegocioController@getCategorias');
 
@@ -43,9 +49,14 @@ Route::get('/productos', 'NegocioController@getProductos');
 
 Route::post('/productos', 'NegocioController@storeProductos');
 
+Route::post('/updateProductos', 'NegocioController@updateProductos');
+
 Route::post('/oportunidades', 'OportunidadesController@storeOportunidades');
 
 Route::get('/usuarios/negocio/{id}', 'UserController@userList');
+
+Route::post('/updateUsers', 'UserController@updateUsers');
+
 
 Route::get('/tipousers', function () {
     $tipousers = App\Tipouser::where('id', '<>', '1')->get();

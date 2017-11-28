@@ -29,7 +29,7 @@
                     </thead>
                     <Producto v-on:verProducto="verProducto($event)" v-for="(producto,index) in apiNegocio.productos.data" :key="index" v-bind:index="index" v-bind:producto="producto"
                     v-on:crearusuario="productoProp = $event"
-                    v-on:editproducto="editproducto = $event"
+                    v-on:editproducto="productoEdit = $event"
                     >
                     </Producto>    
                 
@@ -50,6 +50,7 @@
                 <span><button v-on:click="next">Siguiente</button></span>
                 <span><button v-on:click="prev">Anterior</button></span>
                 <ProductosForm v-bind:negocioData="productoProp" @negocioCreated="getProductos()"></ProductosForm>     
+                <ProductosEditForm v-bind:producto="productoEdit" @productoEdit="getProductos()"></ProductosEditForm>     
                 
             </div>
         </div>
@@ -62,11 +63,13 @@
     import {mapState} from 'vuex';
     import Producto from './Producto.vue';
     import ProductosForm from '../modals/ProductosForm.vue'; 
+    import ProductosEditForm from '../modals/ProductosEditForm.vue'; 
     export default {
         props: ['token'],
-        components:{ Producto, ProductosForm },
+        components:{ Producto, ProductosForm, ProductosEditForm },
         data(){
             return {
+                productoEdit:[],
                 productoProp : [],
                 column: 'id',
                 direction: 'desc',

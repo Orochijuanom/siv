@@ -29,23 +29,18 @@ class EmpresasController extends Controller
             'email' => 'required', 
 
         ]);
-
-        
         try{
-
-
-                $nit = $request->nit."-".$request->dig;
-                $empresas = Empresa::Create([
-                    'descripcion' => $request->descripcion,
-                    'email' => $request->email,
-                    'negocio_id' => 1,
-                    'logo' => $request->logo,
-                    'direccion' => $request->direccion,
-                    'telefono' => $request->telefono,
-                    'nit' => $nit
-                ]);
-
-                return response(['data' => 'exito'], 200);
+            $nit = $request->nit;
+            $empresas = Empresa::Create([
+                'descripcion' => $request->descripcion,
+                'email' => $request->email,
+                'negocio_id' => 1,
+                'logo' => $request->logo,
+                'direccion' => $request->direccion,
+                'telefono' => $request->telefono,
+                'nit' => $nit
+            ]);
+            return response(['data' => 'exito'], 200);
         }catch(\Exception $e){
             return response(['data' => $e->getMessage()], 401); 
         }

@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade modal-fullscreen"  id="modal-negocio" tabindex="-1" role="dialog" aria-hidden="true">    
+    <div class="modal fade modal-fullscreen"  id="modal-edit" tabindex="-1" role="dialog" aria-hidden="true">    
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -23,14 +23,12 @@
                     <div class="col-md-12" v-show="show">
                         <div v-bind:class="{'form-group': true, 'has-error': errors.nombre}">
                             <label for="nit">Nit :</label>
-                            <input type="number" v-model="data.nit" class="form-control" placeholder="Nit">
+                            <input type="text" v-model="data.nit" class="form-control" placeholder="Nit">
                             <span class="help-block" v-for="(error, index) in errors.nit" :key="index">{{ error }}</span>
                         </div>
                     </div>
                     
                    
-
-
                     <div class="col-md-12" v-show="show">
                         <div v-bind:class="{'form-group': true, 'has-error': errors.nombre}">
                             <label for="nombre">Descripcion :</label>
@@ -98,7 +96,7 @@
     import Vue from 'vue';
 
     export default {
-        props: ['negocioData'],
+        props: ['negocioData','empresaData'],
         watch: {
             negocioData: function() {
                 this.errors = []
@@ -106,16 +104,39 @@
                     this.negocio.nombre = this.negocioData.descripcion
                     this.data.negocio_id = this.negocioData.id
                     this.show = false
-                
-                    
                 }else{
                     this.negocio.nombre = ''
                     this.data.negocio = ''
                     this.data.negocio_id = ''
                     this.data.email = ''
                     this.show  = true
-
+                }
+            },
+            empresaData: function() {
+                this.errors = []
+                console.log("LLEGA" + this.empresaData.length)
+                console.log("LLEGA" + this.empresaData.email)
+                if(this.empresaData.id != ''){
+                    this.data.id = this.empresaData.id
+                    this.data.descripcion = this.empresaData.descripcion
+                    this.data.email = this.empresaData.email
+                    this.data.direccion= this.empresaData.direccion
+                    this.data.negocio= this.empresaData.negocio
+                    this.data.logo= this.empresaData.logo
+                    this.data.telefono= this.empresaData.telefono
+                    this.data.nit= this.empresaData.nit
                     
+                    //this.show = false
+                }else{
+                    this.data.id = ''
+                    this.data.descripcion = ""
+                    this.data.email = ""
+                    this.data.direccion= ""
+                    this.data.negocio= ""
+                    this.data.logo= ""
+                    this.data.telefono= ""
+                    this.data.nit= ""
+                    this.show  = true   
                 }
             },
         },
@@ -123,6 +144,7 @@
             return {
                 errors: [],
                 data: {
+                    id:'',
                     descripcion: '',
                     email: '',
                     direccion: '',
@@ -131,10 +153,10 @@
                     telefono: '',
                     nit: '',
                     image: '',
-
                 },
                 image: '',
-
+                
+                
                 negocio:{
                     nombre: '',
                 },
@@ -149,17 +171,15 @@
             createEmpresas(){
                 var button = $('#createEmpresas');
                 button.button('loading');
-                this.$http.post('/api/empresas', this.data).then(response => {
-                    this.$emit('negocioCreated'); 
-                    this.data = {descripcion: '',email: '',logo: '',telefono: '', nit: ''};
+                this.$http.post('/api/updateEmpresas', this.data).then(response => {
+                    this.$emit('negocioEdited'); 
                     if (this.errors) {
                         this.errors = [];
                     }
                     button.button('reset');
-                    toastr.success('Se ha creado la empresa con exito.', 'Exito', {timeOut: 5000,closeButton:true});
-                }, response => {  
-                                     
-                    this.errors = response.data.errors;
+                    toastr.success('Se ha modificado la empresa con exito.', 'Exito', {timeOut: 5000,closeButton:true});
+                }, response => {                                
+                    this.errors = response.data;
                     button.button('reset');
                     toastr.error('Ocurrio un error', 'Error', {timeOut: 5000,closeButton:true});
                 });

@@ -31,7 +31,7 @@
                     </thead>
                     <Empresa v-on:verempresa="verempresa($event)" v-for="(empresa,index) in apiNegocio.empresas.data" :key="index" v-bind:index="index" v-bind:empresa="empresa"
                     v-on:crearusuario="empresaProp = $event"
-                    v-on:editempresa="editempresa = $event"
+                    v-on:editempresa="empresaedit = $event"
                     >
                     </Empresa>    
                 
@@ -51,7 +51,8 @@
                 |
                 <span><button v-on:click="next">Siguiente</button></span>
                 <span><button v-on:click="prev">Anterior</button></span>
-                <EmpresaForm v-bind:negocioData="empresaProp" @negocioCreated="getEmpresas()"></EmpresaForm>     
+                <EmpresaForm v-bind:negocioData="empresaProp" @negocioCreated="getEmpresas()"></EmpresaForm>
+                <EmpresaEditForm  v-bind:empresaData="empresaedit" v-bind:negocioData="empresaProp" @negocioEdited="getEmpresas()"></EmpresaEditForm>     
                 
             </div>
         </div>
@@ -64,9 +65,10 @@
     import {mapState} from 'vuex';
     import Empresa from './Empresa.vue';
     import EmpresaForm from '../modals/EmpresaForm.vue'; 
+    import EmpresaEditForm from '../modals/EmpresaEditForm.vue'; 
     export default {
         props: ['token'],
-        components:{ Empresa, EmpresaForm },
+        components:{ Empresa, EmpresaForm,EmpresaEditForm },
         data(){
             return {
                 empresaProp : [],
@@ -78,6 +80,7 @@
                 search_column: 'descripcion',
                 search_query_1: '',
                 search_query_2: '',
+                empresaedit:[],
             }
         },
         created(){
