@@ -164,7 +164,8 @@ class NegocioController extends Controller
         $this->validate($request, [            
             'descripcion' => 'required',
             'categoria_id' => 'required',
-            'estado' => 'required', 
+            'estado' => 'required',
+            'negocio' => 'required' 
 
         ]);
         
@@ -173,7 +174,7 @@ class NegocioController extends Controller
             $proveedores = Producto::Create([
                 'descripcion' => $request->descripcion,
                 'categoria_id' => $request->categoria_id,
-                'negocio_id' => 1,
+                'negocio_id' => $request->negocio,
                 'estado' => $request->estado
             ]);
 
@@ -217,19 +218,21 @@ class NegocioController extends Controller
             'logo' => 'required',
             'direccion' => 'required',
             'telefono' => 'required',
-            'email' => 'required', 
+            'email' => 'required',
+            'negocio' => 'required',
+            'nit' => 'required' 
 
         ]);
         try{
-            $nit = $request->nit;
+
             $empresas = Empresa::Create([
                 'descripcion' => $request->descripcion,
                 'email' => $request->email,
-                'negocio_id' => 1,
+                'negocio_id' => $request->negocio,
                 'logo' => $request->logo,
                 'direccion' => $request->direccion,
                 'telefono' => $request->telefono,
-                'nit' => $nit
+                'nit' => $request->nit
             ]);
             return response(['data' => 'exito'], 200);
         }catch(\Exception $e){
@@ -243,19 +246,18 @@ class NegocioController extends Controller
             'logo' => 'required',
             'direccion' => 'required',
             'telefono' => 'required',
-            'email' => 'required', 
+            'email' => 'required',
+            'nit' => 'required' 
 
         ]);
         try{
-            $nit = $request->nit;
             $empresasDatos = [
                 'descripcion' => $request->descripcion,
                 'email' => $request->email,
-                'negocio_id' => 1,
                 'logo' => $request->logo,
                 'direccion' => $request->direccion,
                 'telefono' => $request->telefono,
-                'nit' => $nit
+                'nit' => $request->nit
             ];
             $empresaData = Empresa::updateOrCreate(['id'=> $request->id], $empresasDatos);
             //\LogActivity::addToLog('EMPRESA Id:'.$empresaData->id);

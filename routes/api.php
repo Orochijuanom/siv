@@ -29,11 +29,21 @@ Route::post('/negocios', 'SuperusuarioController@storeNegocios');
 
 Route::post('/administrador', 'UserController@storeAdministrador');
 
+Route::post('/users', 'UserController@storeUser');
+
+Route::post('/updateUsers', 'UserController@updateUsers');
+
 Route::get('/empresas', 'NegocioController@getEmpresas');
 
 Route::post('/empresas', 'NegocioController@storeEmpresas');
 
 Route::post('/updateEmpresas', 'NegocioController@updateEmpresas');
+
+Route::get('/productos', 'NegocioController@getProductos');
+
+Route::post('/productos', 'NegocioController@storeProductos');
+
+Route::post('/updateProductos', 'NegocioController@updateProductos');
 
 Route::get('/proveedores', 'NegocioController@getProveedores');
 
@@ -45,17 +55,11 @@ Route::post('/getStockRela', 'NegocioController@getStockRela');
 
 Route::get('/categorias', 'NegocioController@getCategorias');
 
-Route::get('/productos', 'NegocioController@getProductos');
-
-Route::post('/productos', 'NegocioController@storeProductos');
-
-Route::post('/updateProductos', 'NegocioController@updateProductos');
-
 Route::post('/oportunidades', 'OportunidadesController@storeOportunidades');
 
 Route::get('/usuarios/negocio/{id}', 'UserController@userList');
 
-Route::post('/updateUsers', 'UserController@updateUsers');
+
 
 
 Route::get('/tipousers', function () {
@@ -87,5 +91,3 @@ Route::get('/monedas', function () {
     return response(['monedas' => $monedas], 200);
 
 });
-
-Route::post('/users', 'UserController@storeUser');

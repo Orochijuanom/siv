@@ -49,7 +49,7 @@
                 |
                 <span><button v-on:click="next">Siguiente</button></span>
                 <span><button v-on:click="prev">Anterior</button></span>
-                <UsuarioForm v-bind:negocio_id="negocio" @usuarioCreated="getUsuario()"></UsuarioForm>  
+                <UsuarioForm v-bind:negocio_id="negocio" @usuarioCreated="getUsuarios()"></UsuarioForm>  
                 <UsuarioEditForm  v-bind:userData="useredit"  @userEdited="getUsuarios()"></UsuarioEditForm>     
   
                 

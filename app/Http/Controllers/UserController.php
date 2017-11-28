@@ -91,7 +91,7 @@ class UserController extends Controller
 
         ]);
         try{
-            $nit = $request->nit;
+    
             $usersDatos = [
                 'tipouser_id' => $request->tipousuario,
                 'name' => $request->nombre,

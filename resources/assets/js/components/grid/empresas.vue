@@ -51,8 +51,8 @@
                 |
                 <span><button v-on:click="next">Siguiente</button></span>
                 <span><button v-on:click="prev">Anterior</button></span>
-                <EmpresaForm v-bind:negocioData="empresaProp" @negocioCreated="getEmpresas()"></EmpresaForm>
-                <EmpresaEditForm  v-bind:empresaData="empresaedit" v-bind:negocioData="empresaProp" @negocioEdited="getEmpresas()"></EmpresaEditForm>     
+                <EmpresaForm v-bind:negocio_id="negocio" @empresaCreated="getEmpresas()"></EmpresaForm>
+                <EmpresaEditForm  v-bind:empresaData="empresaedit" @empresaEdited="getEmpresas()"></EmpresaEditForm>     
                 
             </div>
         </div>
@@ -67,7 +67,7 @@
     import EmpresaForm from '../modals/EmpresaForm.vue'; 
     import EmpresaEditForm from '../modals/EmpresaEditForm.vue'; 
     export default {
-        props: ['token'],
+        props: ['negocio', 'token'],
         components:{ Empresa, EmpresaForm,EmpresaEditForm },
         data(){
             return {

@@ -49,7 +49,7 @@
                 |
                 <span><button v-on:click="next">Siguiente</button></span>
                 <span><button v-on:click="prev">Anterior</button></span>
-                <ProductosForm v-bind:negocioData="productoProp" @negocioCreated="getProductos()"></ProductosForm>     
+                <ProductosForm v-bind:negocio_id="negocio" @productoCreated="getProductos()"></ProductosForm>     
                 <ProductosEditForm v-bind:producto="productoEdit" @productoEdit="getProductos()"></ProductosEditForm>     
                 
             </div>
@@ -65,7 +65,7 @@
     import ProductosForm from '../modals/ProductosForm.vue'; 
     import ProductosEditForm from '../modals/ProductosEditForm.vue'; 
     export default {
-        props: ['token'],
+        props: ['negocio','token'],
         components:{ Producto, ProductosForm, ProductosEditForm },
         data(){
             return {

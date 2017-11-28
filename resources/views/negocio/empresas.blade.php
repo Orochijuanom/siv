@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <Empresas token="{{session('user_token')}}"></Empresas>       
+        <Empresas negocio="{{Auth::user()->negocio_id}}" token="{{session('user_token')}}"></Empresas>       
     </div>
 </div>
 @endsection
