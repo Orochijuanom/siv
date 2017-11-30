@@ -11,7 +11,7 @@
 
 
                         <div class="col-md-12">
-                            <div v-bind:class="{'form-group': true, 'has-error': errors.nombre}">
+                            <div v-bind:class="{'form-group': true, 'has-error': errors.nit}">
                                 <label for="nit">Nit :</label>
                                 <input type="number" v-model="data.nit" class="form-control">
                                 <span class="help-block" v-for="(error, index) in errors.nit" :key="index">{{ error }}</span>
@@ -27,7 +27,7 @@
                         </div>
 
                         <div class="col-md-12">
-                            <div v-bind:class="{'form-group': true, 'has-error': errors.nombre}">
+                            <div v-bind:class="{'form-group': true, 'has-error': errors.empresa}">
                                 <label for="nombre">Empresa :</label>
                                 <input type="text" v-model="data.empresa" class="form-control" >
                                 <span class="help-block" v-for="(error, index) in errors.empresa" :key="index">{{ error }}</span>
@@ -35,7 +35,7 @@
                         </div>
 
                         <div class="col-md-12">
-                            <div v-bind:class="{'form-group': true, 'has-error': errors.nombre}">
+                            <div v-bind:class="{'form-group': true, 'has-error': errors.telefono}">
                                 <label for="nombre">Telefono :</label>
                                 <input type="text" v-model="data.telefono" class="form-control" >
                                 <span class="help-block" v-for="(error, index) in errors.telefono" :key="index">{{ error }}</span>
@@ -197,7 +197,7 @@
                     button.button('reset');
                     toastr.success('Se ha modificado proveedor con exito.', 'Exito', {timeOut: 5000,closeButton:true});
                 }, response => {                                
-                    this.errors = response.data;
+                    this.errors = response.data.errors;
                     button.button('reset');
                     toastr.error('Ocurrio un error', 'Error', {timeOut: 5000,closeButton:true});
                 });

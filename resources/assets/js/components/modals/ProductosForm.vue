@@ -30,14 +30,14 @@
                         </div>
 
                         <div class="col-md-12" v-show="show">
-                            <div v-bind:class="{'form-group': true, 'has-error': errors.categoria}">
+                            <div v-bind:class="{'form-group': true, 'has-error': errors.categoria_id}">
                                 <label for="categoria">Categoria :</label>
                                 <select  v-model="data.categoria_id" class="form-control selectpicker" data-live-search="true" >
                                     <option value="">Selecione...</option>
                                     <option :value="categoria.id" v-for="(categoria, index) in apiNegocio.categorias" :key="index">{{categoria.descripcion}}</option>  
 
                                 </select>
-                                <span class="help-block" v-for="(error, index) in errors.categoria" :key="index">{{ error }}</span>
+                                <span class="help-block" v-for="(error, index) in errors.categoria_id" :key="index">{{ error }}</span>
                             </div>
                         </div>
 

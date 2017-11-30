@@ -10,7 +10,7 @@
                     <form v-on:submit.prevent="createEmpresas" method="post">
 
                         <div class="col-md-12" >
-                            <div v-bind:class="{'form-group': true, 'has-error': errors.nombre}">
+                            <div v-bind:class="{'form-group': true, 'has-error': errors.nit}">
                                 <label for="nit">Nit :</label>
                                 <input type="number" v-model="data.nit" class="form-control">
                                 <span class="help-block" v-for="(error, index) in errors.nit" :key="index">{{ error }}</span>
@@ -21,10 +21,10 @@
 
 
                         <div class="col-md-12" >
-                            <div v-bind:class="{'form-group': true, 'has-error': errors.nombre}">
+                            <div v-bind:class="{'form-group': true, 'has-error': errors.descripcion}">
                                 <label for="nombre">Descripcion :</label>
                                 <input type="text" v-model="data.descripcion" class="form-control">
-                                <span class="help-block" v-for="(error, index) in errors.nombre" :key="index">{{ error }}</span>
+                                <span class="help-block" v-for="(error, index) in errors.descripcion" :key="index">{{ error }}</span>
                             </div>
                         </div>
 
@@ -40,7 +40,7 @@
                                     <img :src="image" style="width: 400px; height: 200px; padding: 20px;" />
                                     <button @click="removeImage">Remove image</button>
                                 </div>
-                                <span class="help-block" v-for="(error, index) in errors.empresa" :key="index">{{ error }}</span>
+                                <span class="help-block" v-for="(error, index) in errors.logo" :key="index">{{ error }}</span>
                             </div>
                         </div>
 
@@ -48,12 +48,12 @@
                             <div v-bind:class="{'form-group': true, 'has-error': errors.direccion}">
                                 <label for="nombre">Direccion :</label>
                                 <input type="text" v-model="data.direccion" class="form-control">
-                                <span class="help-block" v-for="(error, index) in errors.empresa" :key="index">{{ error }}</span>
+                                <span class="help-block" v-for="(error, index) in errors.direccion" :key="index">{{ error }}</span>
                             </div>
                         </div>
 
                         <div class="col-md-12" >
-                            <div v-bind:class="{'form-group': true, 'has-error': errors.nombre}">
+                            <div v-bind:class="{'form-group': true, 'has-error': errors.telefono}">
                                 <label for="nombre">Telefono :</label>
                                 <input type="number" v-model="data.telefono" class="form-control" >
                                 <span class="help-block" v-for="(error, index) in errors.telefono" :key="index">{{ error }}</span>

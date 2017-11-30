@@ -117,7 +117,7 @@
                     button.button('reset');
                     toastr.success('Se ha modificado el usuario con exito.', 'Exito', {timeOut: 5000,closeButton:true});
                 }, response => {                                
-                    this.errors = response.data;
+                    this.errors = response.data.errors;
                     button.button('reset');
                     toastr.error('Ocurrio un error', 'Error', {timeOut: 5000,closeButton:true});
                 });
