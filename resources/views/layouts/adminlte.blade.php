@@ -19,6 +19,8 @@
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="/css/adminlte/_all-skins.min.css">
 
+  <link rel="stylesheet" href="https://unpkg.com/vue-toastr-2/dist/vue-toastr-2.min.css">  
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -36,7 +38,7 @@
     </script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
-<div class="wrapper">
+<div class="wrapper" id="app">
 
   <header class="main-header">
     <!-- Logo -->
@@ -209,7 +211,7 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="img/logoblanco.png" class="img-circle" alt="User Image">
+          <img src="/img/logoblanco.png" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p>{{ Auth::user()->name }}</p>
@@ -241,29 +243,7 @@
     <!-- Main content -->
     <section class="content">
 
-      <!-- Default box -->
-      <div class="box">
-        <div class="box-header with-border">
-          <h3 class="box-title">Title</h3>
-
-          <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
-                    title="Collapse">
-              <i class="fa fa-minus"></i></button>
-            <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-              <i class="fa fa-times"></i></button>
-          </div>
-        </div>
-        <div class="box-body">
-          Start creating your amazing application!
-        </div>
-        <!-- /.box-body -->
-        <div class="box-footer">
-          Footer
-        </div>
-        <!-- /.box-footer-->
-      </div>
-      <!-- /.box -->
+      @yield('content')
 
     </section>
     <!-- /.content -->
@@ -392,9 +372,7 @@
 
       </div>
       <!-- /.tab-pane -->
-      <!-- Stats tab content -->
-      <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
-      <!-- /.tab-pane -->
+
       <!-- Settings tab content -->
       <div class="tab-pane" id="control-sidebar-settings-tab">
         <form method="post">
@@ -487,6 +465,11 @@
 <script src="/js/adminlte/fastclick.js"></script>
 <!-- AdminLTE App -->
 <script src="/js/adminlte/adminlte.min.js"></script>
+
+<script src="https://unpkg.com/vue-toastr-2/dist/vue-toastr-2.js"></script>
+<script src="/js/app.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+@yield('scripts')
 
 </body>
 </html>
