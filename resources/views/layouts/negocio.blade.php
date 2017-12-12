@@ -23,6 +23,7 @@
             </ul>
         </li>
         <li><a href="/negocio/cotizaciones"><i class="fa fa-file-word-o"></i> Reportes</a></li>
+        <li><a href="/negocio/oportunidades/oportunidades" class="btn btn-info btn-sm"><i class="fa fa-share-square-o"></i> Posibilidad</a></li>
     </ul>
 @endsection
 
