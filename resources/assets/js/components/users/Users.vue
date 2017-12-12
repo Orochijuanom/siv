@@ -4,55 +4,63 @@
             <i class="fa fa-spinner fa-spin"></i>
             <span>Cargando ...</span>
         </template>
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>Usuarios</h2>        
-                <ul class="nav navbar-right panel_toolbox">
-                    <li><a data-toggle="modal" data-target="#modal-usuarios" class="btn btn-info btn-sm"><i class="fa fa-user-plus"></i> Crear usuario</a></li>        
-                </ul>
-                <div class="clearfix"></div>
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Usuarios</h3> 
+                <div class="box-tools pull-right">     
+                   <a data-toggle="modal" data-target="#modal-usuarios" class="btn btn-info btn-sm"><i class="fa fa-user-plus"></i> Crear usuario</a>
+                </div>
             </div>
-            <div class="input-group col-sm-12">
-                <label>Buscar: </label>
-                <input type="text" v-model="search_query_1" v-on:keyup="getUsuarios" debounce="500" class="form-control">
-            </div> 
-            <div class="container">
-                <table v-if="apiNegocio.usuarios.data"  class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Nº</th>
-                            <th><a @click="sort('name')">Nombre</a></th>
-                            <th>Email</th>
-                            <th>Tipo de usuario</th>
-                            <th>Activo</th>
-                            <th>Creado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <User  v-for="(usuario,index) in apiNegocio.usuarios.data" :key="index" v-bind:index="index" v-bind:usuario="usuario"
-                    v-on:editUsuario="useredit = $event">
-                    </user>    
-                
-                </table>
-                <span>Registros por página:</span>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <span>Registros por página:</span>
 
-                <select v-model="per_page" v-on:change="getUsuarios">
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                    <option value="20">20</option>
-                    <option value="25">25</option>
-                </select>
-                |
-                <span>Mostrando {{apiNegocio.usuarios.from}} - {{apiNegocio.usuarios.to}} de {{apiNegocio.usuarios.total}}</span>
-                |
-                <span>Página actual <input size="2" type="text" v-model="page" v-on:keyup.enter="getUsuarios"> de {{apiNegocio.usuarios.last_page}}</span>
-                |
-                <span><button v-on:click="next">Siguiente</button></span>
-                <span><button v-on:click="prev">Anterior</button></span>
-                <UsuarioForm v-bind:negocio_id="negocio" @usuarioCreated="getUsuarios()"></UsuarioForm>  
-                <UsuarioEditForm  v-bind:userData="useredit"  @userEdited="getUsuarios()"></UsuarioEditForm>     
-  
-                
+                        <select v-model="per_page" v-on:change="getUsuarios">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="25">25</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="input-group col-sm-12">
+                            <label>Buscar: </label>
+                            <input type="text" v-model="search_query_1" v-on:keyup="getUsuarios" debounce="500" class="form-control">
+                        </div>
+                        <table v-if="apiNegocio.usuarios.data"  class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Nº</th>
+                                    <th><a @click="sort('name')">Nombre</a></th>
+                                    <th>Email</th>
+                                    <th>Tipo de usuario</th>
+                                    <th>Activo</th>
+                                    <th>Creado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <User  v-for="(usuario,index) in apiNegocio.usuarios.data" :key="index" v-bind:index="index" v-bind:usuario="usuario"
+                            v-on:editUsuario="useredit = $event">
+                            </user>    
+                        
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <span>Mostrando {{apiNegocio.usuarios.from}} - {{apiNegocio.usuarios.to}} de {{apiNegocio.usuarios.total}}</span>
+                        |
+                        <span>Página actual <input size="2" type="text" v-model="page" v-on:keyup.enter="getUsuarios"> de {{apiNegocio.usuarios.last_page}}</span>
+                        |
+                        <span><button v-on:click="next">Siguiente</button></span>
+                        <span><button v-on:click="prev">Anterior</button></span>
+                        <UsuarioForm v-bind:negocio_id="negocio" @usuarioCreated="getUsuarios()"></UsuarioForm>  
+                        <UsuarioEditForm  v-bind:userData="useredit"  @userEdited="getUsuarios()"></UsuarioEditForm> 
+                    </div>
+                </div>
             </div>
         </div>
     </div>

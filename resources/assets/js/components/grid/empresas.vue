@@ -1,60 +1,70 @@
 <template>
     <div>
-        <template v-if="apiNegocio.loadingSuperusuario">
+        <template v-if="apiNegocio.loadingNegocio">
             <i class="fa fa-spinner fa-spin"></i>
             <span>Cargando ...</span>
         </template>
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>empresas</h2>        
-                <ul class="nav navbar-right panel_toolbox">
-                    <li><a v-on:click="empresaProp = []" data-toggle="modal" data-target="#modal-negocio" class="btn btn-info btn-sm"><i class="fa fa-user-plus"></i> Crear empresa</a></li>        
-                </ul>
-                <div class="clearfix"></div>
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Empresas</h3> 
+                <div class="box-tools pull-right">     
+                    <a v-on:click="empresaProp = []" data-toggle="modal" data-target="#modal-negocio" class="btn btn-info btn-sm"><i class="fa fa-user-plus"></i> Crear empresa</a>
+                </div>
             </div>
-            <div class="input-group col-sm-12">
-                <label>Buscar: </label>
-                <input type="text" v-model="search_query_1" v-on:keyup="getEmpresas" debounce="500" class="form-control">
-            </div> 
-            <div class="container">
-                <table v-if="apiNegocio.empresas.data"  class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Nº</th>
-                            <th><a @click="sort('nit')">Nit</a></th>
-                            <th><a @click="sort('nombre')">Nombre</a></th>
-                            <th><a @click="sort('empresa')">Empresa</a></th>
-                            <th><a @click="sort('email')">Email</a></th>
-                            <th><a @click="sort('telefono')">Telefono</a></th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <Empresa v-on:verempresa="verempresa($event)" v-for="(empresa,index) in apiNegocio.empresas.data" :key="index" v-bind:index="index" v-bind:empresa="empresa"
-                    v-on:crearusuario="empresaProp = $event"
-                    v-on:editempresa="empresaedit = $event"
-                    >
-                    </Empresa>    
-                
-                </table>
-                <span>Registros por página:</span>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <span>Registros por página:</span>
 
-                <select v-model="per_page" v-on:change="getEmpresas">
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                    <option value="20">20</option>
-                    <option value="25">25</option>
-                </select>
-                |
-                <span>Mostrando {{apiNegocio.empresas.from}} - {{apiNegocio.empresas.to}} de {{apiNegocio.empresas.total}}</span>
-                |
-                <span>Página actual <input size="2" type="text" v-model="page" v-on:keyup.enter="getEmpresas"> de {{apiNegocio.empresas.last_page}}</span>
-                |
-                <span><button v-on:click="next">Siguiente</button></span>
-                <span><button v-on:click="prev">Anterior</button></span>
-                <EmpresaForm v-bind:negocio_id="negocio" @empresaCreated="getEmpresas()"></EmpresaForm>
-                <EmpresaEditForm  v-bind:empresaData="empresaedit" @empresaEdited="getEmpresas()"></EmpresaEditForm>     
-                
+                        <select v-model="per_page" v-on:change="getEmpresas">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="25">25</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="input-group col-xs-12">
+                            <label>Buscar: </label>
+                            <input type="text" v-model="search_query_1" v-on:keyup="getEmpresas" debounce="500" class="form-control">
+                        </div> 
+                        <table v-if="apiNegocio.empresas.data"  class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Nº</th>
+                                    <th><a @click="sort('nit')">Nit</a></th>
+                                    <th><a @click="sort('nombre')">Nombre</a></th>
+                                    <th><a @click="sort('empresa')">Empresa</a></th>
+                                    <th><a @click="sort('email')">Email</a></th>
+                                    <th><a @click="sort('telefono')">Telefono</a></th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <Empresa v-on:verempresa="verempresa($event)" v-for="(empresa,index) in apiNegocio.empresas.data" :key="index" v-bind:index="index" v-bind:empresa="empresa"
+                            v-on:crearusuario="empresaProp = $event"
+                            v-on:editempresa="empresaedit = $event"
+                            >
+                            </Empresa>    
+
+                        </table>
+                    </div>
+                </div>                
+                <div class="row">
+                    <div class="col-sm-6">
+                        <span>Mostrando {{apiNegocio.empresas.from}} - {{apiNegocio.empresas.to}} de {{apiNegocio.empresas.total}}</span>
+                        |
+                        <span>Página actual <input size="2" type="text" v-model="page" v-on:keyup.enter="getEmpresas"> de {{apiNegocio.empresas.last_page}}</span>
+                        |
+                        <span><button v-on:click="prev">Anterior</button></span>
+                        <span><button v-on:click="next">Siguiente</button></span>
+                        <EmpresaForm v-bind:negocio_id="negocio" @empresaCreated="getEmpresas()"></EmpresaForm>
+                        <EmpresaEditForm  v-bind:empresaData="empresaedit" @empresaEdited="getEmpresas()"></EmpresaEditForm> 
+                    </div> 
+                </div>
             </div>
+            <!-- /.box-body -->  
         </div>
     </div>
    
