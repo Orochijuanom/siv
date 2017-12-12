@@ -32,7 +32,7 @@ class NegocioController extends Controller
 
     public function proveedores(Request $request)
     {
-        return view('proveedores.index');
+        return view('negocio.proveedores');
     }
 
     public function getProveedores()
