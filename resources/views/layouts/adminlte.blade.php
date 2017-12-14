@@ -46,7 +46,7 @@
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>S</b>IV</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Siv</b>IT</span>
+      <span class="logo-lg">SIV<b>IT</b></font></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -442,6 +442,7 @@
 <!-- ./wrapper -->
 
 <!-- jQuery 3 -->
+<script src="https://unpkg.com/vue-toastr-2/dist/vue-toastr-2.js"></script>
 <script src="/js/adminlte/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="/js/adminlte/jquery-ui.min.js"></script>
@@ -456,7 +457,8 @@
 <!-- AdminLTE App -->
 <script src="/js/adminlte/adminlte.min.js"></script>
 
-<script src="https://unpkg.com/vue-toastr-2/dist/vue-toastr-2.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="/js/adminlte/demo.js"></script>
 <script src="/js/app.js"></script>
 
 @yield('scripts')

@@ -36,7 +36,7 @@
 
 
                         <div class="input-group col-md-12">
-                            <button v-on:click="createUser" class="btn btn-success" id="createUser" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Enviando">Crear Negocio</button>
+                            <button v-on:click="createUser" class="btn btn-success" id="createUser" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Enviando">Crear Usuario</button>
                         </div>
                         
                     

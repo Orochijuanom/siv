@@ -9,7 +9,7 @@ class Producto extends Model
 {
     use FilterPaginateOrder;
 
-    protected $fillable = ['descripcion',  'categoria_id', 'negocio_id','estado'];
+    protected $fillable = ['descripcion', 'categoria_id' ,'negocio_id','estado', 'nparte', 'fabricante'];
 
     protected $filter = ['id', 'descripcion'];
     

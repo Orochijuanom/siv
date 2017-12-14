@@ -3,6 +3,8 @@
         <tr>
             <td><span>{{ index + 1 }}</span></td>
             <td><span>{{ producto.descripcion }}</span></td>
+            <td><span>{{ producto.nparte }}</span></td>
+            <td><span>{{ producto.fabricante }}</span></td>
             <td><span>{{ producto.categoria_id }} - {{ producto.categoria.descripcion }}</span></td>
             <td><span v-if="producto.estado == 1">Activo</span><span v-else>Inactivo</span></td>
             <td>

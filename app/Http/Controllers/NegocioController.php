@@ -85,10 +85,7 @@ class NegocioController extends Controller
             ]);
 
             for($i =0;$i < count($request->productos); $i++){
-                $producto = Producto::where('id',$request->productos[$i])->first();
-                $categoria = Categoria::where('id',$producto->id)->first();
                 $stock = Stock::Create([
-                    'categoria_id' => $categoria->id,
                     'producto_id' => $request->productos[$i][0],
                     'proveedore_id' => $proveedores->id,
                     'estado' => '1',
@@ -164,6 +161,8 @@ class NegocioController extends Controller
         $this->validate($request, [            
             'descripcion' => 'required',
             'categoria_id' => 'required',
+            'parte' => 'required',
+            'fabricante' => 'required',
             'estado' => 'required',
             'negocio' => 'required' 
 
@@ -171,9 +170,11 @@ class NegocioController extends Controller
         
         try{
             $nit = $request->nit."-".$request->dig;
-            $proveedores = Producto::Create([
+            $productos = Producto::Create([
                 'descripcion' => $request->descripcion,
                 'categoria_id' => $request->categoria_id,
+                'nparte' => $request->parte,
+                'fabricante' => $request->fabricante,
                 'negocio_id' => $request->negocio,
                 'estado' => $request->estado
             ]);
@@ -187,12 +188,16 @@ class NegocioController extends Controller
         $this->validate($request, [            
             'descripcion' => 'required',
             'id' => 'required',
+            'parte' => 'required',
+            'fabricante' => 'required',
             'categoria_id' => 'required',
             'estado' => 'required',
         ]);
         try{
             $productosDatos = [
                 'descripcion' => $request->descripcion,
+                'nparte' => $request->parte,
+                'fabricante' => $request->fabricante,
                 'categoria_id' => $request->categoria_id,
                 'estado' => $request->estado,
             ];

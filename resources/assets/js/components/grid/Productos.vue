@@ -34,9 +34,11 @@
                             <thead>
                                 <tr>
                                     <th>Nº</th>
-                                    <th><a @click="sort('descripcion')">Descripcion</a></th>
-                                    <th><a @click="sort('categoria_id')">Categoria</a></th>
-                                    <th><a @click="sort('estado')">Estado</a></th>
+                                    <th>>Descripcion</th>
+                                    <th>Número de parte</th>
+                                    <th>Fabricante</th>
+                                    <th>Categoria</th>
+                                    <th>Estado</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>

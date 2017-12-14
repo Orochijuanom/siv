@@ -108,6 +108,7 @@
             
             createUser(){
                 var button = $('#editUser');
+                console.log(button);
                 button.button('loading');
                 this.$http.post('/api/updateUsers', this.data).then(response => {
                     this.$emit('userEdited'); 
