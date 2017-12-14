@@ -172,7 +172,7 @@ trait AuthenticatesUsers
         $this->guard()->logout();
         $request->session()->flush();
         $request->session()->regenerate();
-        return redirect('/');
+        return redirect('/login');
     }
 
     /**

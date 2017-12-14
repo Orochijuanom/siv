@@ -34,7 +34,7 @@
                             <thead>
                                 <tr>
                                     <th>Nº</th>
-                                    <th>>Descripcion</th>
+                                    <th>Descripcion</th>
                                     <th>Número de parte</th>
                                     <th>Fabricante</th>
                                     <th>Categoria</th>

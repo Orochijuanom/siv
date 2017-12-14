@@ -114,7 +114,7 @@
                 data: { 
                     nombre: '', 
                     email: '', 
-                    negocio: '1', 
+                    negocio: this.negocio, 
                     empresa: '', 
                     telefono: '', 
                     nit: '',

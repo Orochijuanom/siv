@@ -13,7 +13,6 @@
     <a href="#">{{Auth::user()->negocio->descripcion}}</a>
 @endsection
 @section('sidebar')
-    <h3>{{Auth::user()->negocio->descripcion}}</h3>
     <li><a href="/negocio"><i class="fa fa-home"></i> <span>Usuarios</span></a></li>
     <li><a href="/negocio/empresas"><i class="fa fa-building-o"></i> <span>Empresas</span></a></li>
     <li><a href="/negocio/proveedores"><i class="fa fa-handshake-o"></i> <span>Proveedores</span></a></li>
@@ -45,7 +44,7 @@
         </ul>
     </li>
     <li><a href="/negocio/cotizaciones"><i class="fa fa-file-word-o"></i> <span>Reportes</span></a></li>
-    <li><a href="/negocio/oportunidades/oportunidades" class="btn btn-info btn-sm"><i class="fa fa-share-square-o"></i> Posibilidad</a></li>
+    <li><a href="/negocio/oportunidades/oportunidades" ><i class="fa fa-share-square-o"></i> Oportunidad</a></li>
 @endsection
 
 @section('content')
