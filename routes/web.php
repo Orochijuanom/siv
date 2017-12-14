@@ -15,6 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
@@ -51,6 +52,11 @@ Route::group(['prefix' => 'negocio', 'middleware' => 'administrador'], function 
     Route::get('/oportunidades/negocio/{id}','OportunidadesController@index'); 
 
     Route::get('/productos','NegocioController@productos');
+
+    Route::get('/oportunidades/oportunidades', function(){
+        return view('negocio.oportunidades');
+    });
+
 
     Route::get('/oportunidades/abiertas', function(){
         return view('negocio.oportunidades_abiertas');
