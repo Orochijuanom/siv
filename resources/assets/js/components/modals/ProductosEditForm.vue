@@ -9,27 +9,31 @@
                 <div class="modal-body">
                     <form v-on:submit.prevent="createProducto" method="post">
 
-                        <div class="col-md-12" v-show="!show">
-                            <br/>
-                            <label for="pariente" class="control-label">Negocio:</label>
-                            <br/>
-                            <span class="tag" v-if="negocio.descripcion != ''">
-                            <span>{{negocio.descripcion}}</span>
-                            
-                            </span>
-                            <br/>
-                            <br/>
-                        </div>
-
-                        <div class="col-md-12" v-show="show">
+                        <div class="col-md-12">
                             <div v-bind:class="{'form-group': true, 'has-error': errors.descripcion}">
                                 <label for="descripcion">Descripcion :</label>
-                                <input type="text" v-model="data.descripcion" class="form-control" placeholder="Descripcion">
+                                <input type="text" v-model="data.descripcion" class="form-control" >
                                 <span class="help-block" v-for="(error, index) in errors.descripcion" :key="index">{{ error }}</span>
                             </div>
                         </div>
 
-                        <div class="col-md-12" v-show="show">
+                        <div class="col-md-12">
+                            <div v-bind:class="{'form-group': true, 'has-error': errors.parte}">
+                                <label for="parte">Número de parte :</label>
+                                <input type="text" v-model="data.parte" class="form-control" >
+                                <span class="help-block" v-for="(error, index) in errors.parte" :key="index">{{ error }}</span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div v-bind:class="{'form-group': true, 'has-error': errors.fabricante}">
+                                <label for="fabricante">Fabricante :</label>
+                                <input type="text" v-model="data.fabricante" class="form-control">
+                                <span class="help-block" v-for="(error, index) in errors.fabricante" :key="index">{{ error }}</span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
                             <div v-bind:class="{'form-group': true, 'has-error': errors.categoria_id}">
                                 <label for="categoria">Categoria :</label>
                                 <select  v-model="data.categoria_id" class="form-control selectpicker" data-live-search="true" >
@@ -41,7 +45,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-12" v-show="show">
+                        <div class="col-md-12">
                             <div v-bind:class="{'form-group': true, 'has-error': errors.estado}">
                                 <label for="estado">Estado :</label>
                                 <select  v-model="data.estado" class="form-control selectpicker" data-live-search="true">
@@ -82,6 +86,8 @@
                 if(this.producto != ""){
                     this.data.id = this.producto.id
                     this.data.descripcion = this.producto.descripcion
+                    this.data.parte = this.producto.nparte
+                    this.data.fabricante = this.producto.fabricante
                     this.data.categoria_id = this.producto.categoria_id
                     this.data.estado = this.producto.estado
                     this.data.negocio = this.producto.negocio
