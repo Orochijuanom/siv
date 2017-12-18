@@ -14,7 +14,7 @@ class NegocioController extends Controller
 {
     
 
-    public function oportunidades_abiertas(Request $request)
+    public function getOportunidadesAbiertas(Request $request)
     {
         
     }

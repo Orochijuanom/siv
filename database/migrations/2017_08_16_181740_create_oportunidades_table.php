@@ -28,13 +28,19 @@ class CreateOportunidadesTable extends Migration
             $table->bigInteger('presupuesto');
             $table->integer('moneda_id')->unsigned();
             $table->text('observaciones')->nullable();
+            $table->integer('negocio_id')->unsigned();
+            $table->integer('estado_id')->unsigned();
             
             $table->timestamps();
 
-            $table->integer('negocio_id')->unsigned();
+            
             $table->foreign('negocio_id')
                 ->references('id')->on('negocios')
                 ->onDelete('restrict');
+
+            $table->foreign('estado_id')
+                  ->references('id')->on('estados')
+                  ->onDelete('restrict');
 
                 
             $table->foreign('moneda_id')
