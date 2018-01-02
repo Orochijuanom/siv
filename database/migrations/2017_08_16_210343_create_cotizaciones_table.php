@@ -18,7 +18,7 @@ class CreateCotizacionesTable extends Migration
             $table->integer('oportunidade_id')->unsigned();
             $table->integer('estado_id')->unsigned();
             $table->string('version');
-            $table->integer('moneda_id')->unsigned();
+            
             $table->string('descuento');
             $table->boolean('showdescuento');
             $table->timestamps();
@@ -29,11 +29,7 @@ class CreateCotizacionesTable extends Migration
 
             $table->foreign('estado_id')
                 ->references('id')->on('estados')
-                ->onDelete('restrict');
-            
-            $table->foreign('moneda_id')
-                ->references('id')->on('monedas')
-                ->onDelete('restrict');
+                ->onDelete('restrict');                        
         });
     }
 

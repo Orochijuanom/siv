@@ -4,6 +4,7 @@
             <i class="fa fa-spinner fa-spin"></i>
             <span>Cargando ...</span>
         </template>
+        <a data-toggle="modal" data-target="#modal-cotizacion" class="btn btn-info btn-sm"><i class="fa fa-user-plus"></i> Crear usuario</a>
         <div class="x_panel">
             <div class="x_title">
                 <h2>Proveedores</h2>        
@@ -25,7 +26,7 @@
                             <th><a @click="sort('nombre')">Nombre</a></th>
                             <th><a @click="sort('empresa')">Empresa</a></th>
                             <th><a @click="sort('email')">Email</a></th>
-                            <th><a @click="sort('telefono')">Telefono</a></th>
+                            <th><a @click="sort('telefono')">Teléfono</a></th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -52,7 +53,7 @@
                 <span><button v-on:click="next">Siguiente</button></span>
                 <span><button v-on:click="prev">Anterior</button></span>
                 <ProveedorForm v-bind:negocioData="proveedorProp" @negocioCreated="getProveedores()"></ProveedorForm>     
-                
+                <AgregarCotizacionForm></AgregarCotizacionForm>  
             </div>
         </div>
     </div>
@@ -62,8 +63,10 @@
 <script>
     import Vue from 'vue';
     import {mapState} from 'vuex';
+    import AgregarCotizacionForm from '../Modals/AgregarCotizacionForm.vue';
     export default {
         props: ['token'],    
+        components: {AgregarCotizacionForm},
         data(){
             return {
                 proveedorProp : [],
@@ -117,8 +120,7 @@
             }
             },
             prev(){
-                if(this.apiNegocio.proveedores.prev_page_url){
-                    
+                if(this.apiNegocio.proveedores.prev_page_url){                    
                     this.page--
                     this.getOportunidadesAbiertas()
                 }

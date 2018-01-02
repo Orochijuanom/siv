@@ -15,7 +15,6 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <span>Registros por página:</span>
-
                         <select v-model="per_page" v-on:change="getUsuarios">
                             <option value="5">5</option>
                             <option value="10">10</option>

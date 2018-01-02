@@ -16,6 +16,7 @@ class CreateCotizadosproductosTable extends Migration
         Schema::create('cotizadosproductos', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('stock_id')->unsigned();
+            $table->text('cantidad');
             $table->bigInteger('valor');
             $table->integer('cotizacione_id')->unsigned();
             $table->integer('moneda_id')->unsigned();
