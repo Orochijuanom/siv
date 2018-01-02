@@ -40,7 +40,11 @@
               <span class="label pull-right bg-green">4</span>
             </span>
         </a></li>
-        
+        <li><a href="/negocio/oportunidades/vencidas"><i class="fa fa-circle-o text-red"></i> Vencidas
+            <span class="pull-right-container">
+              <span class="label pull-right bg-red">4</span>
+            </span>
+        </a></li>
         </ul>
     </li>
     <li><a href="/negocio/cotizaciones"><i class="fa fa-file-word-o"></i> <span>Reportes</span></a></li>

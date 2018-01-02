@@ -78,7 +78,7 @@
                         </div>
 
                         <div class="form-group col-md-12">
-                            <button type="submit" class="btn btn-success" id="createNegocio" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Enviando">Crear Proveedor</button>
+                            <button type="submit" class="btn btn-success" id="createNegocio" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Enviando">Guardar</button>
                         </div>
                         
                     </form>

@@ -9,6 +9,7 @@ use App\Proveedore;
 use App\Producto;
 use App\Categoria;
 use App\Stock;
+use App\Oportunidade;
 
 class NegocioController extends Controller
 {
@@ -16,7 +17,8 @@ class NegocioController extends Controller
 
     public function getOportunidadesAbiertas(Request $request)
     {
-        
+        $oportunidades_abiertas = Oportunidade::doesntHave('cotizaciones')->where('negocio_id', 1)->FilterPaginateOrder();
+        return response(['oportunidades_abiertas' => $oportunidades_abiertas], 200);
     }
 
     public function oportunidades_cerradas(Request $request)
@@ -89,9 +91,6 @@ class NegocioController extends Controller
                     'producto_id' => $request->productos[$i][0],
                     'proveedore_id' => $proveedores->id,
                     'estado' => '1',
-                    'valor' => 0,
-                    'fecha_entrega' => "2017-01-01",
-                    'forma_entrega' => "Casa"
                 ]);
             }
 
@@ -125,13 +124,9 @@ class NegocioController extends Controller
                 $producto = Producto::where('id',$request->productos[$i])->first();
                 $categoria = Categoria::where('id',$producto->id)->first();
                 $stock = Stock::Create([
-                    'categoria_id' => $categoria->id,
                     'producto_id' => $request->productos[$i][0],
                     'proveedore_id' => $request->id,
                     'estado' => '1',
-                    'valor' => 0,
-                    'fecha_entrega' => "2017-01-01",
-                    'forma_entrega' => "Casa"
                 ]);
             }
             return response(['data' => 'exito'], 200);

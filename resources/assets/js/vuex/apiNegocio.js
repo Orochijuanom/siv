@@ -9,6 +9,7 @@ const state = {
     usuarios: [],
     tipousers: [],
     monedas: [],
+    oportunidadesabiertas: [],
     loadingNegocio: true,
 }
 
@@ -44,6 +45,10 @@ const mutations = {
 
     SET_PRODUCTOS_SEARCH(state, productos){
         state.productos = productos
+    },
+
+    SET_OPORTUNIDADES_ABIERTAS(state, oportunidades){
+        state.oportunidadesabiertas = oportunidades
     },
 
     SET_LOADING(state, status){
@@ -159,11 +164,22 @@ const actions = {
         });
     },
 
-    getOportunidadesAbiertas:({commit}) => {
-        return Vue.http.get('/api/get_oportunidades_abiertas').then(response => {
-            if(response.status === 200){
+    getOportunidadesAbiertas:({commit}, params) => {
+        commit('SET_LOADING', true)
+        var url = '';  
+        if(params.search_query_1 == ''){
+          url = '/api/get_oportunidades_abiertas?column='+params.column+'&direction='+params.direction+'&per_page='+params.per_page+'&page='+params.page+'&search_operator='+params.search_operator+'&search_column='+params.search_column
+        }else{
+          url = '/api/get_oportunidades_abiertas?column='+params.column+'&direction='+params.direction+'&per_page='+params.per_page+'&page='+params.page+'&search_operator='+params.search_operator+'&search_column='+params.search_column+'&search_query_1='+params.search_query_1
+        } 
+        return Vue.http.get(url).then(response => {
+            if (response.status === 200) {                
                 commit('SET_OPORTUNIDADES_ABIERTAS', response.body.oportunidades_abiertas);
+                commit('SET_LOADING', false)
+                              
             }
+        },response => {
+            console.log('Error');
         });
     },
 
