@@ -60,6 +60,8 @@ Route::post('/oportunidades', 'OportunidadesController@storeOportunidades');
 
 Route::get('/usuarios/negocio/{id}', 'UserController@userList');
 
+Route::get('/get_oportunidades_abiertas','NegocioController@getOportunidadesAbiertas');
+
 
 
 

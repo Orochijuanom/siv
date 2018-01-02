@@ -15,18 +15,10 @@ class CreateStocksTable extends Migration
     {
         Schema::create('stocks', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('categoria_id')->unsigned();
             $table->integer('producto_id')->unsigned();
             $table->integer('proveedore_id')->unsigned();
             $table->boolean('estado');
-            $table->bigInteger('valor');
-            $table->date('fecha_entrega');
-            $table->text('forma_entrega');
             $table->timestamps();
-
-            $table->foreign('categoria_id')
-            ->references('id')->on('categorias')
-            ->onDelete('restrict');
 
             $table->foreign('producto_id')
             ->references('id')->on('productos')
