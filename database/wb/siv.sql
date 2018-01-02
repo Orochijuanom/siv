@@ -10,9 +10,9 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 
 -- -----------------------------------------------------
--- Table `siv`.`categorias`
+-- Table `categorias`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `siv`.`categorias` (
+CREATE TABLE IF NOT EXISTS `categorias` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `descripcion` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
   `created_at` TIMESTAMP NULL DEFAULT NULL,
@@ -25,9 +25,9 @@ COLLATE = utf8_unicode_ci;
 
 
 -- -----------------------------------------------------
--- Table `siv`.`ventaformas`
+-- Table `ventaformas`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `siv`.`ventaformas` (
+CREATE TABLE IF NOT EXISTS `ventaformas` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `descripcion` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
   `created_at` TIMESTAMP NULL DEFAULT NULL,
@@ -40,9 +40,9 @@ COLLATE = utf8_unicode_ci;
 
 
 -- -----------------------------------------------------
--- Table `siv`.`cierres`
+-- Table `cierres`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `siv`.`cierres` (
+CREATE TABLE IF NOT EXISTS `cierres` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `cotizacione_id` INT(10) UNSIGNED NOT NULL,
   `porcentaje` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
@@ -53,16 +53,16 @@ CREATE TABLE IF NOT EXISTS `siv`.`cierres` (
   INDEX `cierres_cotizacione_id_foreign` (`cotizacione_id` ASC),
   CONSTRAINT `cierres_cotizacione_id_foreign`
     FOREIGN KEY (`cotizacione_id`)
-    REFERENCES `siv`.`ventaformas` (`id`))
+    REFERENCES `ventaformas` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
 
 -- -----------------------------------------------------
--- Table `siv`.`estados`
+-- Table `estados`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `siv`.`estados` (
+CREATE TABLE IF NOT EXISTS `estados` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `descripcion` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
   `created_at` TIMESTAMP NULL DEFAULT NULL,
@@ -75,9 +75,9 @@ COLLATE = utf8_unicode_ci;
 
 
 -- -----------------------------------------------------
--- Table `siv`.`monedas`
+-- Table `monedas`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `siv`.`monedas` (
+CREATE TABLE IF NOT EXISTS `monedas` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `descripcion` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
   `siglas` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
@@ -92,9 +92,9 @@ COLLATE = utf8_unicode_ci;
 
 
 -- -----------------------------------------------------
--- Table `siv`.`negocios`
+-- Table `negocios`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `siv`.`negocios` (
+CREATE TABLE IF NOT EXISTS `negocios` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `descripcion` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
   `created_at` TIMESTAMP NULL DEFAULT NULL,
@@ -107,9 +107,9 @@ COLLATE = utf8_unicode_ci;
 
 
 -- -----------------------------------------------------
--- Table `siv`.`oportunidades`
+-- Table `oportunidades`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `siv`.`oportunidades` (
+CREATE TABLE IF NOT EXISTS `oportunidades` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `descripcion` TEXT CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
   `solicitante` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
@@ -132,19 +132,19 @@ CREATE TABLE IF NOT EXISTS `siv`.`oportunidades` (
   INDEX `oportunidades_moneda_id_foreign` (`moneda_id` ASC),
   CONSTRAINT `oportunidades_moneda_id_foreign`
     FOREIGN KEY (`moneda_id`)
-    REFERENCES `siv`.`monedas` (`id`),
+    REFERENCES `monedas` (`id`),
   CONSTRAINT `oportunidades_negocio_id_foreign`
     FOREIGN KEY (`negocio_id`)
-    REFERENCES `siv`.`negocios` (`id`))
+    REFERENCES `negocios` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
 
 -- -----------------------------------------------------
--- Table `siv`.`cotizaciones`
+-- Table `cotizaciones`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `siv`.`cotizaciones` (
+CREATE TABLE IF NOT EXISTS `cotizaciones` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `oportunidade_id` INT(10) UNSIGNED NOT NULL,
   `estado_id` INT(10) UNSIGNED NOT NULL,
@@ -160,22 +160,22 @@ CREATE TABLE IF NOT EXISTS `siv`.`cotizaciones` (
   INDEX `cotizaciones_moneda_id_foreign` (`moneda_id` ASC),
   CONSTRAINT `cotizaciones_estado_id_foreign`
     FOREIGN KEY (`estado_id`)
-    REFERENCES `siv`.`estados` (`id`),
+    REFERENCES `estados` (`id`),
   CONSTRAINT `cotizaciones_moneda_id_foreign`
     FOREIGN KEY (`moneda_id`)
-    REFERENCES `siv`.`monedas` (`id`),
+    REFERENCES `monedas` (`id`),
   CONSTRAINT `cotizaciones_oportunidade_id_foreign`
     FOREIGN KEY (`oportunidade_id`)
-    REFERENCES `siv`.`oportunidades` (`id`))
+    REFERENCES `oportunidades` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
 
 -- -----------------------------------------------------
--- Table `siv`.`productos`
+-- Table `productos`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `siv`.`productos` (
+CREATE TABLE IF NOT EXISTS `productos` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `nparte` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
   `fabricante` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
@@ -190,10 +190,10 @@ CREATE TABLE IF NOT EXISTS `siv`.`productos` (
   INDEX `productos_negocio_id_foreign` (`negocio_id` ASC),
   CONSTRAINT `productos_categoria_id_foreign`
     FOREIGN KEY (`categoria_id`)
-    REFERENCES `siv`.`categorias` (`id`),
+    REFERENCES `categorias` (`id`),
   CONSTRAINT `productos_negocio_id_foreign`
     FOREIGN KEY (`negocio_id`)
-    REFERENCES `siv`.`negocios` (`id`))
+    REFERENCES `negocios` (`id`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8
@@ -201,9 +201,9 @@ COLLATE = utf8_unicode_ci;
 
 
 -- -----------------------------------------------------
--- Table `siv`.`proveedores`
+-- Table `proveedores`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `siv`.`proveedores` (
+CREATE TABLE IF NOT EXISTS `proveedores` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
   `empresa` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
@@ -217,16 +217,16 @@ CREATE TABLE IF NOT EXISTS `siv`.`proveedores` (
   INDEX `proveedores_negocio_id_foreign` (`negocio_id` ASC),
   CONSTRAINT `proveedores_negocio_id_foreign`
     FOREIGN KEY (`negocio_id`)
-    REFERENCES `siv`.`negocios` (`id`))
+    REFERENCES `negocios` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
 
 -- -----------------------------------------------------
--- Table `siv`.`stocks`
+-- Table `stocks`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `siv`.`stocks` (
+CREATE TABLE IF NOT EXISTS `stocks` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `categoria_id` INT(10) UNSIGNED NOT NULL,
   `producto_id` INT(10) UNSIGNED NOT NULL,
@@ -243,22 +243,22 @@ CREATE TABLE IF NOT EXISTS `siv`.`stocks` (
   INDEX `stocks_proveedore_id_foreign` (`proveedore_id` ASC),
   CONSTRAINT `stocks_categoria_id_foreign`
     FOREIGN KEY (`categoria_id`)
-    REFERENCES `siv`.`categorias` (`id`),
+    REFERENCES `categorias` (`id`),
   CONSTRAINT `stocks_producto_id_foreign`
     FOREIGN KEY (`producto_id`)
-    REFERENCES `siv`.`productos` (`id`),
+    REFERENCES `productos` (`id`),
   CONSTRAINT `stocks_proveedore_id_foreign`
     FOREIGN KEY (`proveedore_id`)
-    REFERENCES `siv`.`proveedores` (`id`))
+    REFERENCES `proveedores` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
 
 -- -----------------------------------------------------
--- Table `siv`.`cotizadosproductos`
+-- Table `cotizadosproductos`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `siv`.`cotizadosproductos` (
+CREATE TABLE IF NOT EXISTS `cotizadosproductos` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `stock_id` INT(10) UNSIGNED NOT NULL,
   `valor` BIGINT(20) NOT NULL,
@@ -274,22 +274,22 @@ CREATE TABLE IF NOT EXISTS `siv`.`cotizadosproductos` (
   INDEX `cotizadosproductos_moneda_id_foreign` (`moneda_id` ASC),
   CONSTRAINT `cotizadosproductos_cotizacione_id_foreign`
     FOREIGN KEY (`cotizacione_id`)
-    REFERENCES `siv`.`cotizaciones` (`id`),
+    REFERENCES `cotizaciones` (`id`),
   CONSTRAINT `cotizadosproductos_moneda_id_foreign`
     FOREIGN KEY (`moneda_id`)
-    REFERENCES `siv`.`monedas` (`id`),
+    REFERENCES `monedas` (`id`),
   CONSTRAINT `cotizadosproductos_stock_id_foreign`
     FOREIGN KEY (`stock_id`)
-    REFERENCES `siv`.`stocks` (`id`))
+    REFERENCES `stocks` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
 
 -- -----------------------------------------------------
--- Table `siv`.`empresas`
+-- Table `empresas`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `siv`.`empresas` (
+CREATE TABLE IF NOT EXISTS `empresas` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `descripcion` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
   `logo` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
@@ -304,16 +304,16 @@ CREATE TABLE IF NOT EXISTS `siv`.`empresas` (
   INDEX `empresas_negocio_id_foreign` (`negocio_id` ASC),
   CONSTRAINT `empresas_negocio_id_foreign`
     FOREIGN KEY (`negocio_id`)
-    REFERENCES `siv`.`negocios` (`id`))
+    REFERENCES `negocios` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
 
 -- -----------------------------------------------------
--- Table `siv`.`migrations`
+-- Table `migrations`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `siv`.`migrations` (
+CREATE TABLE IF NOT EXISTS `migrations` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `migration` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
   `batch` INT(11) NOT NULL,
@@ -325,9 +325,9 @@ COLLATE = utf8_unicode_ci;
 
 
 -- -----------------------------------------------------
--- Table `siv`.`oauth_access_tokens`
+-- Table `oauth_access_tokens`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `siv`.`oauth_access_tokens` (
+CREATE TABLE IF NOT EXISTS `oauth_access_tokens` (
   `id` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
   `user_id` INT(11) NULL DEFAULT NULL,
   `client_id` INT(11) NOT NULL,
@@ -345,9 +345,9 @@ COLLATE = utf8_unicode_ci;
 
 
 -- -----------------------------------------------------
--- Table `siv`.`oauth_auth_codes`
+-- Table `oauth_auth_codes`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `siv`.`oauth_auth_codes` (
+CREATE TABLE IF NOT EXISTS `oauth_auth_codes` (
   `id` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
   `user_id` INT(11) NOT NULL,
   `client_id` INT(11) NOT NULL,
@@ -361,9 +361,9 @@ COLLATE = utf8_unicode_ci;
 
 
 -- -----------------------------------------------------
--- Table `siv`.`oauth_clients`
+-- Table `oauth_clients`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `siv`.`oauth_clients` (
+CREATE TABLE IF NOT EXISTS `oauth_clients` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_id` INT(11) NULL DEFAULT NULL,
   `name` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
@@ -383,9 +383,9 @@ COLLATE = utf8_unicode_ci;
 
 
 -- -----------------------------------------------------
--- Table `siv`.`oauth_personal_access_clients`
+-- Table `oauth_personal_access_clients`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `siv`.`oauth_personal_access_clients` (
+CREATE TABLE IF NOT EXISTS `oauth_personal_access_clients` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `client_id` INT(11) NOT NULL,
   `created_at` TIMESTAMP NULL DEFAULT NULL,
@@ -399,9 +399,9 @@ COLLATE = utf8_unicode_ci;
 
 
 -- -----------------------------------------------------
--- Table `siv`.`oauth_refresh_tokens`
+-- Table `oauth_refresh_tokens`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `siv`.`oauth_refresh_tokens` (
+CREATE TABLE IF NOT EXISTS `oauth_refresh_tokens` (
   `id` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
   `access_token_id` VARCHAR(100) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
   `revoked` TINYINT(1) NOT NULL,
@@ -414,9 +414,9 @@ COLLATE = utf8_unicode_ci;
 
 
 -- -----------------------------------------------------
--- Table `siv`.`password_resets`
+-- Table `password_resets`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `siv`.`password_resets` (
+CREATE TABLE IF NOT EXISTS `password_resets` (
   `email` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
   `token` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
   `created_at` TIMESTAMP NULL DEFAULT NULL,
@@ -427,9 +427,9 @@ COLLATE = utf8_unicode_ci;
 
 
 -- -----------------------------------------------------
--- Table `siv`.`tipousers`
+-- Table `tipousers`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `siv`.`tipousers` (
+CREATE TABLE IF NOT EXISTS `tipousers` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `descripcion` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
   `created_at` TIMESTAMP NULL DEFAULT NULL,
@@ -442,9 +442,9 @@ COLLATE = utf8_unicode_ci;
 
 
 -- -----------------------------------------------------
--- Table `siv`.`users`
+-- Table `users`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `siv`.`users` (
+CREATE TABLE IF NOT EXISTS `users` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
   `email` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
@@ -461,10 +461,10 @@ CREATE TABLE IF NOT EXISTS `siv`.`users` (
   INDEX `users_negocio_id_foreign` (`negocio_id` ASC),
   CONSTRAINT `users_negocio_id_foreign`
     FOREIGN KEY (`negocio_id`)
-    REFERENCES `siv`.`negocios` (`id`),
+    REFERENCES `negocios` (`id`),
   CONSTRAINT `users_tipouser_id_foreign`
     FOREIGN KEY (`tipouser_id`)
-    REFERENCES `siv`.`tipousers` (`id`))
+    REFERENCES `tipousers` (`id`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = utf8

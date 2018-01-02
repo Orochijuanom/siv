@@ -16,11 +16,16 @@ class CreateCierresTable extends Migration
         Schema::create('cierres', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('cotizacione_id')->unsigned();
+            $table->integer('ventaforma_id')->unsigned();
             $table->string('porcentaje');
             $table->date('fecha_facturacion');
             $table->timestamps();
 
             $table->foreign('cotizacione_id')
+                ->references('id')->on('cotizaciones')
+                ->onDelete('restrict');
+
+            $table->foreign('ventaforma_id')
                 ->references('id')->on('ventaformas')
                 ->onDelete('restrict');
         });

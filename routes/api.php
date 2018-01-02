@@ -23,6 +23,7 @@ Route::group(['prefix' => 'negocio', 'middleware' => 'auth:api'], function () {
     
 
 });
+
 Route::get('/negocios', 'SuperusuarioController@getNegocios');
 
 Route::post('/negocios', 'SuperusuarioController@storeNegocios');
@@ -58,6 +59,8 @@ Route::get('/categorias', 'NegocioController@getCategorias');
 Route::post('/oportunidades', 'OportunidadesController@storeOportunidades');
 
 Route::get('/usuarios/negocio/{id}', 'UserController@userList');
+
+Route::get('/get_oportunidades_abiertas','NegocioController@getOportunidadesAbiertas');
 
 
 
