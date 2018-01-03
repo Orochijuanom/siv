@@ -74,17 +74,11 @@
 <script>
     import Vue from 'vue';
     import {mapState} from 'vuex';
-<<<<<<< HEAD
-    import AgregarCotizacionForm from '../Modals/AgregarCotizacionForm.vue';
-    export default {
-        props: ['token'],    
-        components: {AgregarCotizacionForm},
-=======
     //import Oportunidad from './Oportunidad.vue';
     export default {
         props: ['negocio', 'token'],
         //components:{ Oportunidad},
->>>>>>> 38f9c01b3a203db6158384225ed1535d6ff67e43
+
         data(){
             return {
                 column: 'id',
@@ -138,12 +132,8 @@
             }
             },
             prev(){
-<<<<<<< HEAD
-                if(this.apiNegocio.proveedores.prev_page_url){                    
-=======
                 if(this.apiNegocio.oportunidadesabiertas.prev_page_url){
                     
->>>>>>> 38f9c01b3a203db6158384225ed1535d6ff67e43
                     this.page--
                     this.getOportunidadesAbiertas()
                 }
