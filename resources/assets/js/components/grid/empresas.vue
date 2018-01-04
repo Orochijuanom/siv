@@ -8,7 +8,7 @@
             <div class="box-header with-border">
                 <h3 class="box-title">Empresas</h3> 
                 <div class="box-tools pull-right">     
-                    <a v-on:click="empresaProp = []" data-toggle="modal" data-target="#modal-negocio" class="btn btn-info btn-sm"><i class="fa fa-user-plus"></i> Crear empresa</a>
+                    <a data-toggle="modal" data-target="#modal-negocio" class="btn btn-info btn-sm"><i class="fa fa-user-plus"></i> Crear empresa</a>
                 </div>
             </div>
             <div class="box-body">
@@ -59,8 +59,8 @@
                         |
                         <span><button v-on:click="prev">Anterior</button></span>
                         <span><button v-on:click="next">Siguiente</button></span>
-                        <EmpresaForm v-bind:negocio_id="negocio" @empresaCreated="getEmpresas()"></EmpresaForm>
-                        <EmpresaEditForm  v-bind:empresaData="empresaedit" @empresaEdited="getEmpresas()"></EmpresaEditForm> 
+                        <EmpresaForm v-bind:token="token" @empresaCreated="getEmpresas()"></EmpresaForm>
+                        <EmpresaEditForm v-bind:token="token"  v-bind:empresaData="empresaedit" @empresaEdited="getEmpresas()"></EmpresaEditForm> 
                     </div> 
                 </div>
             </div>
@@ -77,11 +77,10 @@
     import EmpresaForm from '../modals/EmpresaForm.vue'; 
     import EmpresaEditForm from '../modals/EmpresaEditForm.vue'; 
     export default {
-        props: ['negocio', 'token'],
+        props: ['token'],
         components:{ Empresa, EmpresaForm,EmpresaEditForm },
         data(){
             return {
-                empresaProp : [],
                 column: 'id',
                 direction: 'desc',
                 per_page: '10',
@@ -91,6 +90,10 @@
                 search_query_1: '',
                 search_query_2: '',
                 empresaedit:[],
+                headers:  {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + this.token
+                }
             }
         },
         created(){

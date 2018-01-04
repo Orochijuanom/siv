@@ -45,7 +45,7 @@ trait AuthenticatesUsers
         if ($this->attemptLogin($request)) {            
             $user = User::find(Auth::user()->id);
             
-            $token = $user->createToken('hapy_personal_token')->accessToken;
+            $token = $user->createToken('personal')->accessToken;
             session(['user_token' => $token]);
             return $this->sendLoginResponse($request);
         }

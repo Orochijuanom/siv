@@ -10,6 +10,7 @@ use App\Producto;
 use App\Categoria;
 use App\Stock;
 use App\Oportunidade;
+use Auth;
 
 class NegocioController extends Controller
 {
@@ -148,7 +149,7 @@ class NegocioController extends Controller
 
     public function getProductos()
     {        
-        $productos = Producto::with('negocio')->with('categoria')->FilterPaginateOrder();
+        $productos = Producto::where('negocio_id', Auth::user()->negocio_id)->with('negocio')->with('categoria')->FilterPaginateOrder();
         return response(['productos' => $productos], 200);
     }
 
@@ -159,7 +160,6 @@ class NegocioController extends Controller
             'parte' => 'required',
             'fabricante' => 'required',
             'estado' => 'required',
-            'negocio' => 'required' 
 
         ]);
         
@@ -170,7 +170,7 @@ class NegocioController extends Controller
                 'categoria_id' => $request->categoria_id,
                 'nparte' => $request->parte,
                 'fabricante' => $request->fabricante,
-                'negocio_id' => $request->negocio,
+                'negocio_id' => Auth::user()->negocio_id,
                 'estado' => $request->estado
             ]);
 
@@ -206,7 +206,7 @@ class NegocioController extends Controller
 
     public function getEmpresas(){
         
-        $empresas = Empresa::with('negocio')->FilterPaginateOrder();
+        $empresas = Empresa::where('negocio_id', Auth::user()->negocio_id)->with('negocio')->FilterPaginateOrder();
 
         return response(['empresas' => $empresas], 200);
 
@@ -219,7 +219,6 @@ class NegocioController extends Controller
             'direccion' => 'required',
             'telefono' => 'required',
             'email' => 'required',
-            'negocio' => 'required',
             'nit' => 'required' 
 
         ]);
@@ -228,7 +227,7 @@ class NegocioController extends Controller
             $empresas = Empresa::Create([
                 'descripcion' => $request->descripcion,
                 'email' => $request->email,
-                'negocio_id' => $request->negocio,
+                'negocio_id' => Auth::user()->negocio_id,
                 'logo' => $request->logo,
                 'direccion' => $request->direccion,
                 'telefono' => $request->telefono,

@@ -78,7 +78,7 @@
     import Vue from 'vue';
 
     export default {
-        props: ['negocio_id'],
+        props: ['token'],
         data(){
             return {
                 errors: [],
@@ -87,16 +87,17 @@
                     parte: '',
                     fabricante: '',
                     categoria_id: '',
-                    negocio: '',
                     estado: ''
 
                 },                
-                
+                headers:  {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + this.token
+                },
             }
         },
          created(){
             this.getCategorias();
-            this.data.negocio = this.negocio_id
         },
         computed: mapState({
             apiNegocio: state => state.apiNegocio
@@ -113,7 +114,7 @@
             createProducto(){
                 var button = $('#createProducto');
                 button.button('loading');
-                this.$http.post('/api/productos', this.data).then(response => {
+                this.$http.post('/api/productos', this.data, {headers: this.headers}).then(response => {
                     this.$emit('productoCreated'); 
                     this.data = {descripcion: '',categoria_id: '',estado: ''};
                     if (this.errors) {

@@ -56,7 +56,7 @@
     import Vue from 'vue';
 
     export default {
-        props: ['negocio_id','userData'],
+        props: ['token','userData'],
         data(){
             return {
                 errors: [],
@@ -64,11 +64,13 @@
                     id:'',
                     nombre: '',
                     email : '',
-                    negocio: '',
                     tipousuario: '',
-                    negocio:'',
 
                 },
+                headers:  {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + this.token
+                }
                 
                 
             }
@@ -81,15 +83,12 @@
                     this.data.nombre = this.userData.name
                     this.data.email = this.userData.email
                     this.data.tipousuario= this.userData.tipouser_id
-                    this.data.negocio= this.userData.negocio_id
                 }else{
                     this.data.id = ''
                     this.data.nombre = ""
                     this.data.email = ""
                     this.data.email= ""
-                    this.data.negocio= ""
                     this.data.tipousuario= ""
-                    this.data.negocio=""
                     this.show  = true   
                 }
             },
@@ -100,7 +99,6 @@
         created(){
      
             this.$store.dispatch('getTipousers')
-            this.data.negocio = this.negocio_id
             
         },
         methods: {
@@ -110,7 +108,7 @@
                 var button = $('#editUser');
                 console.log(button);
                 button.button('loading');
-                this.$http.post('/api/updateUsers', this.data).then(response => {
+                this.$http.post('/api/updateUsers', this.data, {headers: this.headers}).then(response => {
                     this.$emit('userEdited'); 
                     if (this.errors) {
                         this.errors = [];

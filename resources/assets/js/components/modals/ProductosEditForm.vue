@@ -79,7 +79,7 @@
     import Vue from 'vue';
 
     export default {
-        props: ['producto'],
+        props: ['producto', 'token'],
         watch: {
             producto: function() {
                 this.errors = []
@@ -90,7 +90,6 @@
                     this.data.fabricante = this.producto.fabricante
                     this.data.categoria_id = this.producto.categoria_id
                     this.data.estado = this.producto.estado
-                    this.data.negocio = this.producto.negocio
                     this.show = true
                 
                     
@@ -112,15 +111,13 @@
                     id: '',
                     descripcion: '',
                     categoria_id: '',
-                    negocio: '',
                     estado: ''
 
                 },
-                
-                negocio:{
-                    descripcion: '',
+                headers:  {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + this.token
                 },
-
                 categoria:{
                     descripcion: '',
                 },
@@ -141,14 +138,13 @@
                 this.$store.dispatch('getCategorias', {
                    
                 });
-                console.log(this.apiNegocio.categorias);
             },
             
             
             createProducto(){
                 var button = $('#editProducto');
                 button.button('loading');
-                this.$http.post('/api/updateProductos', this.data).then(response => {
+                this.$http.post('/api/updateProductos', this.data, {headers: this.headers}).then(response => {
                     this.$emit('productoEdit'); 
                     if (this.errors) {
                         this.errors = [];

@@ -17,9 +17,36 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['prefix' => 'negocio', 'middleware' => 'auth:api'], function () {  
+Route::group(['middleware' => 'auth:api'], function () {
+    
+    //retorna el listado de usuarios del negocio
+    Route::get('/usuarios', 'UserController@userList'); 
 
-    Route::get('/get_oportunidades_abiertas','NegocioController@get_oportunidades_abiertas');
+    //permite crear usuarios relacionados a un negocio
+    Route::post('/users', 'UserController@storeUser');
+
+    //permite editar los datos de los usuarios del negocio
+    Route::post('/updateUsers', 'UserController@updateUsers');
+
+    //retorna el listado de empresas
+    Route::get('/empresas', 'NegocioController@getEmpresas');
+
+    //permite crear empresas en un negocio
+    Route::post('/empresas', 'NegocioController@storeEmpresas');
+
+    //permite editar una empresa
+    Route::post('/updateEmpresas', 'NegocioController@updateEmpresas');
+
+    //retorna el listado de productos por negocio
+    Route::get('/productos', 'NegocioController@getProductos');
+
+    //permite crear los productos para un negocio
+    Route::post('/productos', 'NegocioController@storeProductos');
+
+    //permite editar un producto
+    Route::post('/updateProductos', 'NegocioController@updateProductos');
+
+    //Route::get('/get_oportunidades_abiertas','NegocioController@get_oportunidades_abiertas');
 });
 
 Route::post('/crearCotizacion','OportunidadesController@crearCotizacion');
@@ -29,22 +56,6 @@ Route::get('/negocios', 'SuperusuarioController@getNegocios');
 Route::post('/negocios', 'SuperusuarioController@storeNegocios');
 
 Route::post('/administrador', 'UserController@storeAdministrador');
-
-Route::post('/users', 'UserController@storeUser');
-
-Route::post('/updateUsers', 'UserController@updateUsers');
-
-Route::get('/empresas', 'NegocioController@getEmpresas');
-
-Route::post('/empresas', 'NegocioController@storeEmpresas');
-
-Route::post('/updateEmpresas', 'NegocioController@updateEmpresas');
-
-Route::get('/productos', 'NegocioController@getProductos');
-
-Route::post('/productos', 'NegocioController@storeProductos');
-
-Route::post('/updateProductos', 'NegocioController@updateProductos');
 
 Route::get('/proveedores', 'NegocioController@getProveedores');
 
@@ -58,7 +69,7 @@ Route::get('/categorias', 'NegocioController@getCategorias');
 
 Route::post('/oportunidades', 'OportunidadesController@storeOportunidades');
 
-Route::get('/usuarios/negocio/{id}', 'UserController@userList');
+
 
 Route::get('/get_oportunidades_abiertas','NegocioController@getOportunidadesAbiertas');
 

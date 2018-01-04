@@ -10,7 +10,7 @@
                     
                         <div class="input-group col-md-12">
                             <div v-bind:class="{'form-group': true, 'has-error': errors.nombre}">
-                                <label for="negocio">Nombre :</label>
+                                <label for="nombre">Nombre :</label>
                                 <input type="text" v-model="data.nombre" class="form-control">
                                 <span class="help-block" v-for="(error, index) in errors.nombre" :key="index">{{ error }}</span>
                             </div>
@@ -56,18 +56,20 @@
     import Vue from 'vue';
 
     export default {
-        props: ['negocio_id'],
+        props: ['token'],
         data(){
             return {
                 errors: [],
                 data: {
                     nombre: '',
                     email : '',
-                    negocio: '',
                     tipousuario: '',
 
                 },
-                
+                headers:  {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + this.token
+                }
                 
             }
         },
@@ -77,7 +79,6 @@
         created(){
      
             this.$store.dispatch('getTipousers')
-            this.data.negocio = this.negocio_id
             
         },
         methods: {
@@ -86,7 +87,7 @@
             createUser(){
                 var button = $('#createUser');
                 button.button('loading');
-                this.$http.post('/api/users', this.data).then(response => {
+                this.$http.post('/api/users', this.data, {headers: this.headers}).then(response => {
                     this.$emit('usuarioCreated'); 
                     this.data = {nombre: '',email: '',tipousuario: ''};
                     if (this.errors) {

@@ -7,7 +7,7 @@
                     <h4 class="modal-title">Editar Empresa</h4>
                 </div>
                 <div class="modal-body">
-                    <form v-on:submit.prevent="createEmpresas" method="post">
+                    <form v-on:submit.prevent="editEmpresa" method="post">
 
                         <div class="col-md-12" >
                             <div v-bind:class="{'form-group': true, 'has-error': errors.nit}">
@@ -87,7 +87,7 @@
     import Vue from 'vue';
 
     export default {
-        props: ['empresaData'],
+        props: ['empresaData', 'token'],
         watch: {
             empresaData: function() {
                 this.errors = []
@@ -97,7 +97,6 @@
                     this.data.descripcion = this.empresaData.descripcion
                     this.data.email = this.empresaData.email
                     this.data.direccion= this.empresaData.direccion
-                    this.data.negocio= this.empresaData.negocio
                     this.data.logo= this.empresaData.logo
                     this.data.telefono= this.empresaData.telefono
                     this.data.nit= this.empresaData.nit
@@ -108,7 +107,6 @@
                     this.data.descripcion = ""
                     this.data.email = ""
                     this.data.direccion= ""
-                    this.data.negocio= ""
                     this.data.logo= ""
                     this.data.telefono= ""
                     this.data.nit= ""  
@@ -123,11 +121,14 @@
                     descripcion: '',
                     email: '',
                     direccion: '',
-                    negocio: '',
                     logo: '',
                     telefono: '',
                     nit: '',
                     image: '',
+                },
+                headers:  {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + this.token
                 },
                 image: '',
                 
@@ -139,12 +140,11 @@
         methods: {
             
             
-            createEmpresas(){
+            editEmpresa(){
                 var button = $('#editEmpresa');
                 button.button('loading');
-                this.$http.post('/api/updateEmpresas', this.data).then(response => {
+                this.$http.post('/api/updateEmpresas', this.data, {headers: this.headers}).then(response => {
                     this.$emit('empresaEdited'); 
-                    this.data = {descripcion: '',email: '',logo: '',telefono: '', nit: ''};
                     if (this.errors) {
                         this.errors = [];
                     }

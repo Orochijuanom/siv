@@ -88,10 +88,7 @@
     import Vue from 'vue';
 
     export default {
-        props: ['negocio_id'],
-        created(){
-            this.data.negocio = this.negocio_id
-        },
+        props: ['token'],
         data(){
             return {
                 errors: [],
@@ -99,12 +96,15 @@
                     descripcion: '',
                     email: '',
                     direccion: '',
-                    negocio: '',
                     logo: '',
                     telefono: '',
                     nit: '',
                     image: '',
 
+                },
+                headers:  {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + this.token
                 },
                 image: '',
                 
@@ -116,7 +116,7 @@
             createEmpresas(){
                 var button = $('#createEmpresa');
                 button.button('loading');
-                this.$http.post('/api/empresas', this.data).then(response => {
+                this.$http.post('/api/empresas', this.data, {headers: this.headers}).then(response => {
                     this.$emit('empresaCreated'); 
                     this.data = {descripcion: '',email: '',logo: '',telefono: '', nit: ''};
                     if (this.errors) {

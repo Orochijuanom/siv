@@ -8,7 +8,7 @@
             <div class="box-header with-border">
                 <h3 class="box-title">Productos</h3> 
                 <div class="box-tools pull-right">     
-                    <a v-on:click="productoProp = []" data-toggle="modal" data-target="#modal-negocio" class="btn btn-info btn-sm"><i class="fa fa-user-plus"></i> Crear producto</a>
+                    <a data-toggle="modal" data-target="#modal-negocio" class="btn btn-info btn-sm"><i class="fa fa-user-plus"></i> Crear producto</a>
                 </div>
             </div>
             <div class="box-body">
@@ -59,8 +59,8 @@
                     |
                     <span><button v-on:click="next">Siguiente</button></span>
                     <span><button v-on:click="prev">Anterior</button></span>
-                    <ProductosForm v-bind:negocio_id="negocio" @productoCreated="getProductos()"></ProductosForm>     
-                    <ProductosEditForm v-bind:producto="productoEdit" @productoEdit="getProductos()"></ProductosEditForm>
+                    <ProductosForm v-bind:token="token" @productoCreated="getProductos()"></ProductosForm>     
+                    <ProductosEditForm v-bind:token="token" v-bind:producto="productoEdit" @productoEdit="getProductos()"></ProductosEditForm>
                     </div>
                 </div>
             </div>
@@ -76,12 +76,11 @@
     import ProductosForm from '../modals/ProductosForm.vue'; 
     import ProductosEditForm from '../modals/ProductosEditForm.vue'; 
     export default {
-        props: ['negocio','token'],
+        props: ['token'],
         components:{ Producto, ProductosForm, ProductosEditForm },
         data(){
             return {
                 productoEdit:[],
-                productoProp : [],
                 column: 'id',
                 direction: 'desc',
                 per_page: '10',
@@ -90,6 +89,10 @@
                 search_column: 'descripcion',
                 search_query_1: '',
                 search_query_2: '',
+                headers:  {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + this.token
+                }
             }
         },
         created(){

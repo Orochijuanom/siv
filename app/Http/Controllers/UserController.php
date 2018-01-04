@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Negocio;
 use App\User;
+use Auth;
 use Hash;
 
 class UserController extends Controller
@@ -48,8 +49,8 @@ class UserController extends Controller
 
     }
 
-    public function userList($negocio_id){
-        $usuarios = User::where('negocio_id', $negocio_id)->FilterPaginateOrder();
+    public function userList(){
+        $usuarios = User::where('negocio_id', Auth::user()->negocio_id)->FilterPaginateOrder();
 
         return response(['usuarios' => $usuarios], 200);
     }
@@ -58,7 +59,6 @@ class UserController extends Controller
         $this->validate($request, [            
             'nombre' => 'required',
             'email' => 'required|email',
-            'negocio' => 'required',
             'tipousuario' => 'required',                                         
         ]);
 
@@ -72,7 +72,7 @@ class UserController extends Controller
                 'name' => $request->nombre,
                 'email' => $request->email,
                 'password' => Hash::make($password),
-                'negocio_id' => $request->negocio
+                'negocio_id' => Auth::user()->negocio_id
             ]);
 
             return response(['data' => 'exito'], 200);
@@ -87,7 +87,6 @@ class UserController extends Controller
             'tipousuario' => 'required',
             'nombre' => 'required',
             'email' => 'required',
-            'negocio' => 'required', 
 
         ]);
         try{
@@ -96,7 +95,6 @@ class UserController extends Controller
                 'tipouser_id' => $request->tipousuario,
                 'name' => $request->nombre,
                 'email' => $request->email,
-                'negocio_id' => $request->negocio
             ];
             $UserData = User::updateOrCreate(['id'=> $request->id], $usersDatos);
             //\LogActivity::addToLog('EMPRESA Id:'.$empresaData->id);

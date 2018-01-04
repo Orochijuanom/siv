@@ -56,8 +56,8 @@
                         |
                         <span><button v-on:click="next">Siguiente</button></span>
                         <span><button v-on:click="prev">Anterior</button></span>
-                        <UsuarioForm v-bind:negocio_id="negocio" @usuarioCreated="getUsuarios()"></UsuarioForm>  
-                        <UsuarioEditForm  v-bind:userData="useredit"  @userEdited="getUsuarios()"></UsuarioEditForm> 
+                        <UsuarioForm v-bind:token="token" @usuarioCreated="getUsuarios()"></UsuarioForm>  
+                        <UsuarioEditForm  v-bind:token="token" v-bind:userData="useredit"  @userEdited="getUsuarios()"></UsuarioEditForm> 
                     </div>
                 </div>
             </div>
@@ -73,7 +73,7 @@
     import UsuarioEditForm from '../Modals/UsuarioEditForm.vue';
     import {mapState} from 'vuex';
     export default {
-        props: ['negocio', 'token'],
+        props: ['token'],
         components: {User, UsuarioForm,UsuarioEditForm},
         data(){
             return {
@@ -86,6 +86,10 @@
                 search_query_1: '',
                 search_query_2: '',
                 useredit: [],
+                headers:  {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + this.token
+                }
             }
         },
         created(){
@@ -97,7 +101,6 @@
         methods: {
             getUsuarios(){
                 this.$store.dispatch('getUsuarios', {
-                    negocio: this.negocio,
                     column: this.column,
                     direction: this.direction,
                     per_page: this.per_page,
