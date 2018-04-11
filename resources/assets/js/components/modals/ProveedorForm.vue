@@ -98,21 +98,23 @@
     import Vue from 'vue';
 
     export default {
-        
+        props: ['token'],
         data(){
             return {
                 errors: [],
                 data: {
                     nombre: '',
                     email: '',
-                    negocio: '1',
                     empresa: '',
                     telefono: '',
                     nit: '',
                     productos: []
 
                 },
-
+                headers:  {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + this.token
+                },
                 productoQuery: '',
                 
             }
@@ -140,8 +142,8 @@
             createProveedor(){
                 var button = $('#createProveedor');
                 button.button('loading');
-                this.$http.post('/api/proveedores', this.data).then(response => {
-                    this.$emit('negocioCreated'); 
+                this.$http.post('/api/proveedores', this.data, {headers: this.headers}).then(response => {
+                    this.$emit('proveedorCreated'); 
                     this.data = {nombre: '',email: '',empresa: '',telefono: '', nit: '', dig: '', productos: []};
                     if (this.errors) {
                         this.errors = [];

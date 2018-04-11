@@ -40,7 +40,7 @@ class NegocioController extends Controller
 
     public function getProveedores()
     {        
-        $proveedores = Proveedore::with('negocio')->FilterPaginateOrder();
+        $proveedores = Proveedore::where('negocio_id', Auth::user()->negocio_id)->with('negocio')->FilterPaginateOrder();
         return response(['proveedores' => $proveedores], 200);
     }
 
@@ -81,7 +81,7 @@ class NegocioController extends Controller
             $proveedores = Proveedore::Create([
                 'nombre' => $request->nombre,
                 'email' => $request->email,
-                'negocio_id' => "1",
+                'negocio_id' => Auth::user()->negocio_id,
                 'telefono' => $request->telefono,
                 'empresa' => $request->empresa,
                 'nit' => $request->nit
@@ -113,7 +113,6 @@ class NegocioController extends Controller
             $proveedoresDatos = [
                 'nombre' => $request->nombre,
                 'email' => $request->email,
-                'negocio_id' => "1",
                 'telefono' => $request->telefono,
                 'empresa' => $request->empresa,
                 'nit' => $request->nit

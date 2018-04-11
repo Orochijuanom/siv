@@ -44,11 +44,11 @@
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
-                            <!-- <Empresa v-on:verempresa="verempresa($event)" v-for="(empresa,index) in apiNegocio.empresas.data" :key="index" v-bind:index="index" v-bind:empresa="empresa"
+                            <Oportunidad v-on:verempresa="verempresa($event)" v-for="(oportunidad,index) in apiNegocio.oportunidadesabiertas.data" :key="index" v-bind:index="index" v-bind:oportunidad="oportunidad"
                             v-on:crearusuario="empresaProp = $event"
                             v-on:editempresa="empresaedit = $event"
                             >
-                            </Empresa> -->    
+                            </Oportunidad> 
 
                         </table>
                     </div>
@@ -74,10 +74,10 @@
 <script>
     import Vue from 'vue';
     import {mapState} from 'vuex';
-    //import Oportunidad from './Oportunidad.vue';
+    import Oportunidad from './Oportunidad.vue';
     export default {
         props: ['negocio', 'token'],
-        //components:{ Oportunidad},
+        components:{ Oportunidad},
 
         data(){
             return {

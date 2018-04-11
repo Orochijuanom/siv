@@ -8,7 +8,7 @@
             <div class="box-header with-border">
                 <h3 class="box-title">Proveedores</h3> 
                 <div class="box-tools pull-right">     
-                    <a v-on:click="proveedorProp = []" data-toggle="modal" data-target="#modal-negocio" class="btn btn-info btn-sm"><i class="fa fa-user-plus"></i> Crear proveedor</a>
+                    <a data-toggle="modal" data-target="#modal-negocio" class="btn btn-info btn-sm"><i class="fa fa-user-plus"></i> Crear proveedor</a>
                 </div>
             </div>
             <div class="box-body">
@@ -59,8 +59,8 @@
                         |
                         <span><button v-on:click="next">Siguiente</button></span>
                         <span><button v-on:click="prev">Anterior</button></span>
-                        <ProveedorForm v-bind:negocioData="proveedorProp" @negocioCreated="getProveedores()"></ProveedorForm>     
-                        <ProveedorEditForm v-bind:proveedorData="proveedorEdit" @negocioEdit="getProveedores()"></ProveedorEditForm>
+                        <ProveedorForm v-bind:token="token" @proveedorCreated="getProveedores()"></ProveedorForm>     
+                        <ProveedorEditForm v-bind:token="token" v-bind:proveedorData="proveedorEdit" @proveedorEdited="getProveedores()"></ProveedorEditForm>
                     </div>
                 </div>
             </div>
@@ -81,7 +81,6 @@
         data(){
             return {
                 proveedorEdit: [],
-                proveedorProp : [],
                 column: 'id',
                 direction: 'desc',
                 per_page: '10',
@@ -90,6 +89,10 @@
                 search_column: 'descripcion',
                 search_query_1: '',
                 search_query_2: '',
+                headers:  {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + this.token
+                }
             }
         },
         created(){

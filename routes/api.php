@@ -46,6 +46,15 @@ Route::group(['middleware' => 'auth:api'], function () {
     //permite editar un producto
     Route::post('/updateProductos', 'NegocioController@updateProductos');
 
+    //retorna el listado de proveedores
+    Route::get('/proveedores', 'NegocioController@getProveedores');
+
+    //permite crear proveedores
+    Route::post('/proveedores', 'NegocioController@storeProveedores');
+    
+    //permite editar proveedores
+    Route::post('/updateProveedores', 'NegocioController@updateProveedores');
+
     //Route::get('/get_oportunidades_abiertas','NegocioController@get_oportunidades_abiertas');
 });
 
@@ -56,12 +65,6 @@ Route::get('/negocios', 'SuperusuarioController@getNegocios');
 Route::post('/negocios', 'SuperusuarioController@storeNegocios');
 
 Route::post('/administrador', 'UserController@storeAdministrador');
-
-Route::get('/proveedores', 'NegocioController@getProveedores');
-
-Route::post('/proveedores', 'NegocioController@storeProveedores');
-
-Route::post('/updateProveedores', 'NegocioController@updateProveedores');
 
 Route::post('/getStockRela', 'NegocioController@getStockRela');
 

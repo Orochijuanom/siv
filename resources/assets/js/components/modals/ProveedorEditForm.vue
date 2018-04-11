@@ -7,7 +7,7 @@
                     <h4 class="modal-title">Editar Proveedor</h4>
                 </div>
                 <div class="modal-body">
-                    <form v-on:submit.prevent="createProveedor" method="post">
+                    <form v-on:submit.prevent="editProveedor" method="post">
 
 
                         <div class="col-md-12">
@@ -78,7 +78,7 @@
                         </div>
 
                         <div class="form-group col-md-12">
-                            <button type="submit" class="btn btn-success" id="createNegocio" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Enviando">Guardar</button>
+                            <button type="submit" class="btn btn-success" id="editProveedor" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Enviando">Guardar</button>
                         </div>
                         
                     </form>
@@ -99,7 +99,7 @@
 
     export default {
 
-        props: ['proveedorData'],
+        props: ['proveedorData', 'token'],
        
         data(){
             return {
@@ -108,12 +108,15 @@
                     id: '',
                     nombre: '',
                     email: '',
-                    negocio: '',
                     empresa: '',
                     telefono: '',
                     nit: '',
                     productos: []
 
+                },
+                headers:  {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + this.token
                 },
                 envi: {
                     id: '',
@@ -132,7 +135,6 @@
                     this.data.id = this.proveedorData.id;
                     this.data.nombre= this.proveedorData.nombre;
                     this.data.email= this.proveedorData.email;
-                    this.data.negocio= this.proveedorData.negocio_id;
                     this.data.empresa= this.proveedorData.empresa;
                     this.data.telefono= this.proveedorData.telefono;
                     this.data.nit= this.proveedorData.nit;
@@ -156,7 +158,6 @@
                     this.data.id= "";
                     this.data.nombre= "";
                     this.data.email= "";
-                    this.data.negocio= "";
                     this.data.empresa= "";
                     this.data.telefono= "";
                     this.data.nit= "";
@@ -186,10 +187,10 @@
                 this.data.productos.splice(index, 1)
             },
 
-            createProveedor(){
-                var button = $('#createProveedor');
+            editProveedor(){
+                var button = $('#editProveedor');
                  button.button('loading');
-                this.$http.post('/api/updateProveedores', this.data).then(response => {
+                this.$http.post('/api/updateProveedores', this.data, {headers: this.headers}).then(response => {
                     this.$emit('proveedorEdited'); 
                     if (this.errors) {
                         this.errors = [];
