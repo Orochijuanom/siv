@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Negocio;
 use App\User;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\CorreoRegistro as CorreoRegistro;
 use Auth;
 use Hash;
 
@@ -74,6 +76,8 @@ class UserController extends Controller
                 'password' => Hash::make($password),
                 'negocio_id' => Auth::user()->negocio_id
             ]);
+
+            Mail::to($user->email)->send(new CorreoRegistro($user->email, $password));
 
             return response(['data' => 'exito'], 200);
             

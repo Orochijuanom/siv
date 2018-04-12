@@ -30,6 +30,7 @@ Vue.component('Oportunidades', require('./components/Oportunidades.vue'));
 Vue.component('Oportunidadescom', require('./components/negocios/Oportunidades.vue')); 
 Vue.component('Users', require('./components/users/Users.vue'));
 Vue.component('Oportunidadesabiertas', require('./components/negocios/OportunidadesAbiertas.vue')); 
+Vue.component('Oportunidadesvencidas', require('./components/negocios/OportunidadesVencidas.vue')); 
 
 const app = new Vue({
     el: '#app',

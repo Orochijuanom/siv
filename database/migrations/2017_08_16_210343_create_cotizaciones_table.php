@@ -17,8 +17,7 @@ class CreateCotizacionesTable extends Migration
             $table->increments('id');
             $table->integer('oportunidade_id')->unsigned();
             $table->integer('estado_id')->unsigned();
-            $table->string('version');
-            
+            $table->string('version');        
             $table->string('descuento');
             $table->boolean('showdescuento');
             $table->timestamps();

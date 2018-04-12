@@ -7,10 +7,12 @@
             <td><span>{{ oportunidad.empresa }}</span></td>
             <td><span>{{ oportunidad.email }}</span></td>
             <td><span>{{ oportunidad.telefono }}</span></td>
+            <td><span>{{ oportunidad.created_at }}</span></td>
             <td><span>{{ oportunidad.fecha_requerida }}</span></td>
+            <td><span>{{ oportunidad.moneda.siglas }}</span></td>
             <td><span>{{ oportunidad.presupuesto }}</span></td>
             <td>
-                <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modal-edit" 
+                <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modal-cotizacion" 
                     v-on:click="$emit('editempresa', oportunidad)">
                     <span class="fa fa-pencil" aria-hidden="true"></span> Modificar
                 </button>

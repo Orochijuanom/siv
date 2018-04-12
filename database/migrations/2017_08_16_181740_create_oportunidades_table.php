@@ -23,8 +23,8 @@ class CreateOportunidadesTable extends Migration
             $table->string('empresa');
             $table->string('nit')->nullable();
             $table->integer('user_id')->unsigned()->nullable();
-            $table->datetime('fecha_requerida');
-            $table->datetime('fecha_atencion')->nullable();
+            $table->date('fecha_requerida');
+            $table->date('fecha_atencion')->nullable();
             $table->bigInteger('presupuesto');
             $table->integer('moneda_id')->unsigned();
             $table->text('observaciones')->nullable();

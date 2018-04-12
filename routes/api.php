@@ -55,7 +55,11 @@ Route::group(['middleware' => 'auth:api'], function () {
     //permite editar proveedores
     Route::post('/updateProveedores', 'NegocioController@updateProveedores');
 
-    //Route::get('/get_oportunidades_abiertas','NegocioController@get_oportunidades_abiertas');
+    //retorna las oportunidades abiertas
+    Route::get('/get_oportunidades_abiertas','NegocioController@getOportunidadesAbiertas');
+
+    //retorna las oportunidades vencidas
+    Route::get('/get_oportunidades_vencidas','NegocioController@getOportunidadesVencidas');
 });
 
 Route::post('/crearCotizacion','OportunidadesController@crearCotizacion');
@@ -74,7 +78,7 @@ Route::post('/oportunidades', 'OportunidadesController@storeOportunidades');
 
 
 
-Route::get('/get_oportunidades_abiertas','NegocioController@getOportunidadesAbiertas');
+//Route::get('/get_oportunidades_abiertas','NegocioController@getOportunidadesAbiertas');
 
 
 

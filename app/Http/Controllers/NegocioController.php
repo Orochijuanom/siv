@@ -16,9 +16,10 @@ class NegocioController extends Controller
 {
     
 
-    public function getOportunidadesAbiertas(Request $request)
+    public function getOportunidadesAbiertas()
     {
-        $oportunidades_abiertas = Oportunidade::doesntHave('cotizaciones')->where('negocio_id', 1)->FilterPaginateOrder();
+        $hoy = date("Y-m-d");
+        $oportunidades_abiertas = Oportunidade::doesntHave('cotizaciones')->where('negocio_id', Auth::user()->negocio_id)->where('fecha_requerida', '>=', $hoy )->FilterPaginateOrder();
         return response(['oportunidades_abiertas' => $oportunidades_abiertas], 200);
     }
 
@@ -30,6 +31,12 @@ class NegocioController extends Controller
     public function oportunidades_seguimiento(Request $request)
     {
 
+    }
+
+    public function getOportunidadesVencidas(){
+        $hoy = date("Y-m-d");
+        $oportunidades_vencidas = Oportunidade::doesntHave('cotizaciones')->where('negocio_id', Auth::user()->negocio_id)->where('fecha_requerida', '<=', $hoy )->FilterPaginateOrder();
+        return response(['oportunidades_vencidas' => $oportunidades_vencidas], 200);
     }
 
 

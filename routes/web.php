@@ -62,6 +62,10 @@ Route::group(['prefix' => 'negocio', 'middleware' => 'administrador'], function 
         return view('negocio.oportunidades_abiertas');
     });
 
+    Route::get('/oportunidades/vencidas', function(){
+        return view('negocio.oportunidades_vencidas');
+    });
+
     Route::get('/oportunidades/cerradas', function(){
         return view('negocio.oportunidades_cerradas');
     });

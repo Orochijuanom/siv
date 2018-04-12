@@ -62,7 +62,7 @@
                 <div class="col-md-12">
                     <div v-bind:class="{'form-group': true, 'has-error': errors.fecha}">
                         <label for="administrador">Fecha de respuesta esperada* :</label>
-                            <input type="datetime-local" v-model="data.fecha" class="form-control">
+                            <input type="date" v-model="data.fecha" class="form-control">
                         <span class="help-block" v-for="(error, index) in errors.fecha" :key="index">{{ error }}</span>
                     </div>
                 </div>

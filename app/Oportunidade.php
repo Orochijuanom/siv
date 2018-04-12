@@ -13,7 +13,13 @@ class Oportunidade extends Model
 
     protected $filter = ['id', 'descripcion', 'solicitante', 'email', 'fecha_requerida', 'fecha_atencion', 'user_id'];
 
+    protected $appends = ['moneda'];
+
     public function cotizaciones(){
         return $this->hasMany('App\Cotizacione');
+    }
+
+    public function getMonedaAttribute(){
+        return Moneda::find($this->moneda_id);
     }
 }
