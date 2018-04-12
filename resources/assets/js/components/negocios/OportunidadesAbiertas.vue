@@ -5,12 +5,12 @@
             <span>Cargando ...</span>
         </template>
         <div class="box">
-            <div class="box-header with-border">
+            <!-- <div class="box-header with-border">
                 <h3 class="box-title">Oportunidades pendientes</h3> 
                 <div class="box-tools pull-right">     
                     <a data-toggle="modal" data-target="#modal-negocio" class="btn btn-info btn-sm"><i class="fa fa-user-plus"></i> Crear empresa</a>
                 </div>
-            </div>
+            </div> -->
             <div class="box-body">
                 <div class="row">
                     <div class="col-sm-6">

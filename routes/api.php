@@ -58,8 +58,14 @@ Route::group(['middleware' => 'auth:api'], function () {
     //retorna las oportunidades abiertas
     Route::get('/get_oportunidades_abiertas','NegocioController@getOportunidadesAbiertas');
 
+    //retorna el numero de oportunidades abiertas
+    Route::get('/get_numero_abiertas','NegocioController@getNumeroAbiertas');
+
     //retorna las oportunidades vencidas
     Route::get('/get_oportunidades_vencidas','NegocioController@getOportunidadesVencidas');
+
+    //retorna el numero de oportunidades vencidas
+    Route::get('/get_numero_vencidas','NegocioController@getNumeroVencidas');
 });
 
 Route::post('/crearCotizacion','OportunidadesController@crearCotizacion');

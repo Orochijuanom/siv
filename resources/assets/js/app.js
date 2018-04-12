@@ -21,6 +21,7 @@ Vue.use(VueResource);
  */
 
 
+Vue.component('Acordeonoportunidades', require('./components/html/Acordeonoportunidades.vue')); 
 Vue.component('Administradores', require('./components/Administradores.vue'));
 Vue.component('Negocios', require('./components/grid/Negocios.vue'));
 Vue.component('Proveedores', require('./components/grid/Proveedores.vue'));

@@ -10,6 +10,8 @@ const state = {
     tipousers: [],
     monedas: [],
     oportunidadesabiertas: [],
+    numeroabiertas: [],
+    numerovencidas: [],
     oportunidadesvencidas: [],    
     loadingNegocio: true,
 }
@@ -52,8 +54,16 @@ const mutations = {
         state.oportunidadesabiertas = oportunidades
     },
 
+    SET_NUMERO_ABIERTAS(state, numero){
+        state.numeroabiertas = numero
+    },
+
     SET_OPORTUNIDADES_VENCIDAS(state, oportunidades){
         state.oportunidadesvencidas = oportunidades
+    },
+
+    SET_NUMERO_VENCIDAS(state, numero){
+        state.numerovencidas = numero
     },
 
     SET_LOADING(state, status){
@@ -188,6 +198,23 @@ const actions = {
         });
     },
 
+    getNumeroAbiertas:({commit}, params) => {
+        commit('SET_LOADING', true)
+        var url = '';  
+
+        url = '/api/get_numero_abiertas'
+        
+        return Vue.http.get(url, {headers: params.headers}).then(response => {
+            if (response.status === 200) {                
+                commit('SET_NUMERO_ABIERTAS', response.body.numero_abiertas);
+                commit('SET_LOADING', false)
+                              
+            }
+        },response => {
+            console.log('Error');
+        });
+    },
+
     getOportunidadesVencidas:({commit}, params) => {
         commit('SET_LOADING', true)
         var url = '';  
@@ -199,6 +226,23 @@ const actions = {
         return Vue.http.get(url, {headers: params.headers}).then(response => {
             if (response.status === 200) {                
                 commit('SET_OPORTUNIDADES_VENCIDAS', response.body.oportunidades_vencidas);
+                commit('SET_LOADING', false)
+                              
+            }
+        },response => {
+            console.log('Error');
+        });
+    },
+
+    getNumeroVencidas:({commit}, params) => {
+        commit('SET_LOADING', true)
+        var url = '';  
+
+        url = '/api/get_numero_vencidas'
+        
+        return Vue.http.get(url, {headers: params.headers}).then(response => {
+            if (response.status === 200) {                
+                commit('SET_NUMERO_VENCIDAS', response.body.numero_vencidas);
                 commit('SET_LOADING', false)
                               
             }

@@ -23,6 +23,26 @@ class NegocioController extends Controller
         return response(['oportunidades_abiertas' => $oportunidades_abiertas], 200);
     }
 
+    public function getNumeroAbiertas()
+    {
+        $hoy = date("Y-m-d");
+        $numero_abiertas = Oportunidade::doesntHave('cotizaciones')->where('negocio_id', Auth::user()->negocio_id)->where('fecha_requerida', '>=', $hoy )->count();
+        return response(['numero_abiertas' => $numero_abiertas], 200);  
+    }
+
+    public function getOportunidadesVencidas(){
+        $hoy = date("Y-m-d");
+        $oportunidades_vencidas = Oportunidade::doesntHave('cotizaciones')->where('negocio_id', Auth::user()->negocio_id)->where('fecha_requerida', '<=', $hoy )->FilterPaginateOrder();
+        return response(['oportunidades_vencidas' => $oportunidades_vencidas], 200);
+    }
+
+    public function getNumeroVencidas()
+    {
+        $hoy = date("Y-m-d");
+        $numero_vencidas = Oportunidade::doesntHave('cotizaciones')->where('negocio_id', Auth::user()->negocio_id)->where('fecha_requerida', '<=', $hoy )->count();
+        return response(['numero_vencidas' => $numero_vencidas], 200);  
+    }
+
     public function oportunidades_cerradas(Request $request)
     {
 
@@ -33,11 +53,7 @@ class NegocioController extends Controller
 
     }
 
-    public function getOportunidadesVencidas(){
-        $hoy = date("Y-m-d");
-        $oportunidades_vencidas = Oportunidade::doesntHave('cotizaciones')->where('negocio_id', Auth::user()->negocio_id)->where('fecha_requerida', '<=', $hoy )->FilterPaginateOrder();
-        return response(['oportunidades_vencidas' => $oportunidades_vencidas], 200);
-    }
+    
 
 
     public function proveedores(Request $request)

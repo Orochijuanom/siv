@@ -18,7 +18,8 @@ class checkVendedor
     public function handle($request, Closure $next)
     {
         if (Auth::check()) {
-            if (Auth::user()->tipouser_id != 2) {
+            if (Auth::user()->tipouser_id != 3) {
+                dd('hola');
                 return response::view('errors/401',array() ,401);
             }
         }else{

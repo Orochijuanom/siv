@@ -49,8 +49,6 @@ Route::group(['prefix' => 'negocio', 'middleware' => 'administrador'], function 
     
     Route::get('/proveedores','NegocioController@proveedores');
 
-    Route::get('/oportunidades/negocio/{id}','OportunidadesController@index'); 
-
     Route::get('/productos','NegocioController@productos');
 
     Route::get('/oportunidades/oportunidades', function(){
@@ -64,6 +62,44 @@ Route::group(['prefix' => 'negocio', 'middleware' => 'administrador'], function 
 
     Route::get('/oportunidades/vencidas', function(){
         return view('negocio.oportunidades_vencidas');
+    });
+
+    Route::get('/oportunidades/cerradas', function(){
+        return view('negocio.oportunidades_cerradas');
+    });
+
+    Route::get('/oportunidades/seguimiento',function(){
+        return view('negocio.oportunidades_seguimiento');
+    }); 
+});
+
+Route::group(['prefix' => 'vendedor', 'middleware' => 'vendedor'], function () {
+
+    Route::get('/', function () {
+        return view('vendedor.oportunidades_abiertas');
+    });
+    
+    
+    
+    Route::get('/proveedores', function(){
+        return view('vendedor.proveedores');
+    });
+
+    Route::get('/productos', function(){
+        return view('vendedor.productos');
+    });
+
+    Route::get('/oportunidades/oportunidades', function(){
+        return view('vendedor.oportunidades');
+    });
+
+
+    Route::get('/oportunidades/abiertas', function(){
+        return view('vendedor.oportunidades_abiertas');
+    });
+
+    Route::get('/oportunidades/vencidas', function(){
+        return view('vendedor.oportunidades_vencidas');
     });
 
     Route::get('/oportunidades/cerradas', function(){
