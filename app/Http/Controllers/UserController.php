@@ -39,6 +39,8 @@ class UserController extends Controller
                     'negocio_id' => $negocio->id
                 ]);
 
+                Mail::to($user->email)->send(new CorreoRegistro($user->email, $password));
+
                 return response(['data' => 'exito'], 200);
             }else{
                 return response(['data' => 'error'], 401);
