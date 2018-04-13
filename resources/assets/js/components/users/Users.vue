@@ -69,8 +69,8 @@
 <script>
     import Vue from 'vue';
     import User from './User.vue';
-    import UsuarioForm from '../Modals/UsuarioForm.vue';
-    import UsuarioEditForm from '../Modals/UsuarioEditForm.vue';
+    import UsuarioForm from '../modals/UsuarioForm.vue';
+    import UsuarioEditForm from '../modals/UsuarioEditForm.vue';
     import {mapState} from 'vuex';
     export default {
         props: ['token'],
