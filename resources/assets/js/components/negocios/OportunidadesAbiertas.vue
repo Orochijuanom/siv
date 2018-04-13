@@ -46,12 +46,12 @@
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
-                            <Oportunidad v-on:verempresa="verempresa($event)" v-for="(oportunidad,index) in apiNegocio.oportunidadesabiertas.data" :key="index" v-bind:index="index" v-bind:oportunidad="oportunidad"
+                            <Oportunidad v-on:cotizar="setOportunidad($event)" v-for="(oportunidad,index) in apiNegocio.oportunidadesabiertas.data" :key="index" v-bind:index="index" v-bind:oportunidad="oportunidad"
                             v-on:crearusuario="empresaProp = $event"
                             v-on:editempresa="empresaedit = $event"
                             >
                             </Oportunidad> 
-                            <AgregarCotizacionForm></AgregarCotizacionForm>   
+                            <AgregarCotizacionForm v-bind:oportunidad="oportunidadActiva"></AgregarCotizacionForm>   
 
                             
 
@@ -95,6 +95,7 @@
                 search_column: 'descripcion',
                 search_query_1: '',
                 search_query_2: '',
+                oportunidadActiva: [],
                 headers:  {
                     'Accept': 'application/json',
                     'Authorization': 'Bearer ' + this.token
@@ -108,6 +109,9 @@
             apiNegocio: state => state.apiNegocio
         }),
         methods: {
+            setOportunidad(oportunidad){
+                this.oportunidadActiva = oportunidad
+            },
             getOportunidadesAbiertas(){
                 this.$store.dispatch('getOportunidadesAbiertas', {
                     column: this.column,

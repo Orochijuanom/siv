@@ -11,12 +11,12 @@
             <td><span>{{ oportunidad.fecha_requerida }}</span></td>
             <td><span>{{ oportunidad.moneda.siglas }}</span></td>
             <td><span>{{ oportunidad.presupuesto }}</span></td>
-            <!-- <td>
+            <td>
                 <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modal-cotizacion" 
-                    v-on:click="$emit('editempresa', oportunidad)">
-                    <span class="fa fa-pencil" aria-hidden="true"></span> Modificar
+                    v-on:click="$emit('cotizar', oportunidad)">
+                    <span class="fa fa-pencil" aria-hidden="true"></span> Cotizar
                 </button>
-            </td> -->
+            </td>
 
         </tr>
 

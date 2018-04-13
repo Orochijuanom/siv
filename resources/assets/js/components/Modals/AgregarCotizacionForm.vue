@@ -7,82 +7,111 @@
                     <h4 class="modal-title">Agregar Cotización</h4>
                 </div>
                 <div class="modal-body">
-                    <form v-on:submit.prevent="createCotizacion" method="post">
-                        <div class="col-md-12">
-                            <div v-bind:class="{'form-group': true, 'has-error': errors.versionc}">
-                                <label for="nit">Versión :</label>
-                                <input type="number" v-model="data.versionc" class="form-control" >
-                                <span class="help-block" v-for="(error, index) in errors.versionc" :key="index">{{ error }}</span>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div v-bind:class="{'form-group': true, 'has-error': errors.descuento}">
-                                <label for="nit">Descuento :</label>
-                                <input type="number" v-model="data.descuento" class="form-control" >
-                                <span class="help-block" v-for="(error, index) in errors.descuento" :key="index">{{ error }}</span>
-                            </div>
-                        </div>                                                
-                        <div class="col-md-12">
-                            <div v-bind:class="{'form-group': true, 'has-error': errors.oportunidade_id}">
-                                <label for="nombre">Oportunidad :</label>
-                                <input type="text" v-model="data.oportunidade_id" class="form-control" >
-                                <span class="help-block" v-for="(error, index) in errors.oportunidade_id" :key="index">{{ error }}</span>
-                            </div>
-                        </div>                        
-                        <div class="col-sm-12">
-                            <div class="card">
-                                <div class="card-block">                                            
-                                    <div class="form-group">
-                                        <label for="user_id">Buscar y asignar producto</label>
-                                        <input class="form-control" id="user_id" v-model="productoQuery" v-on:keyup="searchProductos" debounce="1000">
-                                    </div>
-                                    <div style="border: 1px solid #e3e3e3; position: relative; z-index: 2; text-align: left; width: 100%;">
-                                        <div v-bind:key="index" onMouseOver="this.style.backgroundColor='rgba(225, 225, 225, 0.5)'" onMouseOut="this.style.backgroundColor='white'" style="padding: 20px 10px; background: white; border-bottom: 1px solid #e3e3e3" v-for="(producto, index) in apiNegocio.productos" v-on:click="setProducto(producto)">
-                                            <h3><strong>Producto:</strong> {{producto.descripcion}}</h3>
-                                            <h2><strong>Categoria:</strong> {{producto.categoria.descripcion}}</h2>                                                        
-                                        </div>
-                                    </div>                                                                                                                                                   
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                <h3><b>Oportunidad:</b></h3>
+                                    <p style="text-align: justified;">{{data.oportunidade_descripcion}}</p>
                                 </div>
                             </div>
-                        </div>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                <h3><b>Empresa:</b></h3>
+                                    <p style="text-align: justified;">{{data.oportunidade_empresa}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                <h3><b>Fecha Requerida:</b></h3>
+                                    <p style="text-align: justified;">{{data.oportunidade_fecharequerida}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                <h3><b>Presupuesto:</b></h3>
+                                    <p style="text-align: justified;">{{data.oportunidade_moneda}} {{ formatPrice(data.oportunidade_presupuesto) }}</p>
+                                </div>
+                            </div>
+                            <form v-on:submit.prevent="createCotizacion" method="post">
+                                <div class="col-md-12">
+                                    <div v-bind:class="{'form-group': true, 'has-error': errors.versionc}">
+                                        <label for="nit">Versión :</label>
+                                        <input type="number" v-model="data.versionc" class="form-control" >
+                                        <span class="help-block" v-for="(error, index) in errors.versionc" :key="index">{{ error }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div v-bind:class="{'form-group': true, 'has-error': errors.descuento}">
+                                        <label for="nit">Descuento :</label>
+                                        <input type="number" v-model="data.descuento" class="form-control" >
+                                        <span class="help-block" v-for="(error, index) in errors.descuento" :key="index">{{ error }}</span>
+                                    </div>
+                                </div>                                                
+                                <div class="col-md-12">
+                                    <div v-bind:class="{'form-group': true, 'has-error': errors.oportunidade_id}">
+                                        <label for="nombre">Oportunidad :</label>
+                                        <input type="text" v-model="data.oportunidade_id" class="form-control" >
+                                        <span class="help-block" v-for="(error, index) in errors.oportunidade_id" :key="index">{{ error }}</span>
+                                    </div>
+                                </div>                        
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-block">                                            
+                                            <div class="form-group">
+                                                <label for="user_id">Buscar y asignar producto</label>
+                                                <input class="form-control" id="user_id" v-model="productoQuery" v-on:keyup="searchProductos" debounce="1000">
+                                            </div>
+                                            <div style="border: 1px solid #e3e3e3; position: relative; z-index: 2; text-align: left; width: 100%;">
+                                                <div v-bind:key="index" onMouseOver="this.style.backgroundColor='rgba(225, 225, 225, 0.5)'" onMouseOut="this.style.backgroundColor='white'" style="padding: 20px 10px; background: white; border-bottom: 1px solid #e3e3e3" v-for="(producto, index) in apiNegocio.productos" v-on:click="setProducto(producto)">
+                                                    <h3><strong>Producto:</strong> {{producto.descripcion}}</h3>
+                                                    <h2><strong>Categoria:</strong> {{producto.categoria.descripcion}}</h2>                                                        
+                                                </div>
+                                            </div>                                                                                                                                                   
+                                        </div>
+                                    </div>
+                                </div>
 
-                        <div class="col-md-12">
-                            <table v-if="data.productos"  class="table table-bordered table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Nº</th>
-                                        <th>ID</th>
-                                        <th>Descripción</th>
-                                        <th>Cantidad</th>
-                                        <th>Valor/U</th>
-                                        <th>Fecha Entrega</th>
-                                        <th>Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-bind:key="index" v-for="(producto, index) in data.productos">
-                                        <td>{{index+1}}</td>
-                                        <td>{{producto.producto_id}}</td>
-                                        <td>{{producto.descripcion}}</td>
-                                        <td><input type="numeric" v-model="data.productos[index].valor" /></td>
-                                        <td>
-                                            <input type="numeric" v-model="data.productos[index].cantidad" />                                            
-                                        </td>
-                                        <td>
-                                            <input type="date" v-model="data.productos[index].fecha_entrega" />                                            
-                                        </td>                                        
-                                        <td>{{data.productos[index].cantidad*data.productos[index].valor}}
-                                            <a title="remover producto" v-on:click="remover(index)">x</a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>                            
+                                <div class="col-md-12">
+                                    <table v-if="data.productos"  class="table table-bordered table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Nº</th>
+                                                <th>ID</th>
+                                                <th>Descripción</th>
+                                                <th>Cantidad</th>
+                                                <th>Valor/U</th>
+                                                <th>Fecha Entrega</th>
+                                                <th>Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-bind:key="index" v-for="(producto, index) in data.productos">
+                                                <td>{{index+1}}</td>
+                                                <td>{{producto.producto_id}}</td>
+                                                <td>{{producto.descripcion}}</td>
+                                                <td><input type="numeric" v-model="data.productos[index].valor" /></td>
+                                                <td>
+                                                    <input type="numeric" v-model="data.productos[index].cantidad" />                                            
+                                                </td>
+                                                <td>
+                                                    <input type="date" v-model="data.productos[index].fecha_entrega" />                                            
+                                                </td>                                        
+                                                <td>{{data.productos[index].cantidad*data.productos[index].valor}}
+                                                    <a title="remover producto" v-on:click="remover(index)">x</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>                            
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <button type="submit" class="btn btn-success" id="createCotizacion" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Enviando">Guardar</button>
+                                </div>
+                                
+                            </form>
                         </div>
-                        <div class="form-group col-md-12">
-                            <button type="submit" class="btn btn-success" id="createCotizacion" data-loading-text="<i class='fa fa-spinner fa-spin'></i> Enviando">Guardar</button>
-                        </div>
-                        
-                    </form>
+                    </div>
+                    
                 </div>
                 <div class="modal-footer" >
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>                
@@ -99,7 +128,7 @@
     import Vue from 'vue';
 
     export default {
-        
+        props: ['oportunidad'],
         data(){
             return {
                 errors: [],
@@ -107,9 +136,37 @@
                     versionc: '',
                     oportunidade_id:'',
                     descuento:'',
-                    productos: []
+                    productos: [],
+                    oportunidade_descripcion: '',
+                    oportunidade_empresa: '',
+                    oportunidade_fecharequerida: '',
+                    oportunidade_moneda: '',
+                    oportunidade_presupuesto: '',
+                    errors: [],
                 },
                 productoQuery: '',                
+            }
+        },
+        watch: {
+            oportunidad: function() {
+                this.errors = []
+                if(this.oportunidad.id != ''){
+                    this.data.oportunidade_id = this.oportunidad.id
+                    this.data.oportunidade_descripcion = this.oportunidad.descripcion
+                    this.data.oportunidade_empresa = this.oportunidad.empresa
+                    this.data.oportunidade_fecharequerida = this.oportunidad.fecha_requerida
+                    this.data.oportunidade_moneda = this.oportunidad.moneda.siglas
+                    this.data.oportunidade_presupuesto = this.oportunidad.presupuesto
+
+                }else{
+                    this.data.oportunidade_id = ''
+                    this.data.oportunidade_descripcion = ''
+                    this.data.oportunidade_empresa = ''
+                    this.data.oportunidade_fecharequerida = ''
+                    this.data.oportunidade_moneda = ''
+                    this.data.oportunidade_presupuesto = ''
+
+                }
             }
         },
         computed: mapState({
@@ -150,6 +207,10 @@
                     toastr.error('Ocurrio un error', 'Error', {timeOut: 5000,closeButton:true});
                 });
             },
+            formatPrice(value) {
+                let val = (value/1).toFixed(2).replace('.', ',')
+                return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+            }
         }
     }
 </script>
