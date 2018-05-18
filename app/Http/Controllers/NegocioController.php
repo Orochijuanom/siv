@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use App\Empresa;
 use App\Proveedore;
+use App\Cliente;
 use App\Producto;
 use App\Categoria;
 use App\Stock;
@@ -91,7 +92,6 @@ class NegocioController extends Controller
 
     public function storeProveedores(Request $request){
         $this->validate($request, [            
-            'nombre' => 'required',
             'email' => 'required',
             'empresa' => 'required',
             'telefono' => 'required',
@@ -102,7 +102,6 @@ class NegocioController extends Controller
         try{
 
             $proveedores = Proveedore::Create([
-                'nombre' => $request->nombre,
                 'email' => $request->email,
                 'negocio_id' => Auth::user()->negocio_id,
                 'telefono' => $request->telefono,
@@ -126,7 +125,6 @@ class NegocioController extends Controller
 
     public function updateProveedores(Request $request){
         $this->validate($request, [            
-            'nombre' => 'required',
             'email' => 'required',
             'empresa' => 'required',
             'telefono' => 'required',
@@ -134,7 +132,6 @@ class NegocioController extends Controller
         ]);
         try{
             $proveedoresDatos = [
-                'nombre' => $request->nombre,
                 'email' => $request->email,
                 'telefono' => $request->telefono,
                 'empresa' => $request->empresa,
@@ -152,6 +149,65 @@ class NegocioController extends Controller
                     'estado' => '1',
                 ]);
             }
+            return response(['data' => 'exito'], 200);
+        }catch(\Exception $e){
+            return response(['data' => $e->getMessage()], 401); 
+        }
+    }
+
+    public function clientes(Request $request)
+    {
+        return view('negocio.clientes');
+    }
+
+    public function getClientes()
+    {        
+        $clientes = Cliente::where('negocio_id', Auth::user()->negocio_id)->with('negocio')->FilterPaginateOrder();
+        return response(['clientes' => $clientes], 200);
+    }
+
+    public function storeClientes(Request $request){
+        $this->validate($request, [            
+            'email' => 'required',
+            'nombre' => 'required',
+            'telefono' => 'required',
+            'nit' => 'required', 
+
+        ]);
+        
+        try{
+
+            $clientes = Cliente::Create([
+                'email' => $request->email,
+                'negocio_id' => Auth::user()->negocio_id,
+                'telefono' => $request->telefono,
+                'nombre' => $request->nombre,
+                'nit' => $request->nit
+            ]);
+
+            return response(['data' => 'exito'], 200);
+        }catch(\Exception $e){
+            return response(['data' => $e->getMessage()], 401); 
+        }
+    }
+
+    public function updateClientes(Request $request){
+        $this->validate($request, [            
+            'email' => 'required',
+            'nombre' => 'required',
+            'telefono' => 'required',
+            'nit' => 'required', 
+        ]);
+        try{
+            $clientesDatos = [
+                'email' => $request->email,
+                'telefono' => $request->telefono,
+                'nombre' => $request->nombre,
+                'nit' => $request->nit
+            ];
+            $clientesData = Cliente::updateOrCreate(['id'=> $request->id], $clientesDatos);
+            //\LogActivity::addToLog('EMPRESA Id:'.$empresaData->id);
+            
             return response(['data' => 'exito'], 200);
         }catch(\Exception $e){
             return response(['data' => $e->getMessage()], 401); 

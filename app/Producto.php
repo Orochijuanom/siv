@@ -11,7 +11,7 @@ class Producto extends Model
 
     protected $fillable = ['descripcion', 'categoria_id' ,'negocio_id','estado', 'nparte', 'fabricante'];
 
-    protected $filter = ['id', 'descripcion'];
+    protected $filter = ['id', 'descripcion', 'nparte'];
     
     public function negocio(){
         return $this->belongsTo('App\Negocio');

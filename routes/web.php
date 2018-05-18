@@ -46,6 +46,8 @@ Route::group(['prefix' => 'negocio', 'middleware' => 'administrador'], function 
     });
     
     Route::get('/empresas', 'EmpresasController@index');
+
+    Route::get('/clientes','NegocioController@clientes');
     
     Route::get('/proveedores','NegocioController@proveedores');
 

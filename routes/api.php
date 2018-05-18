@@ -55,6 +55,15 @@ Route::group(['middleware' => 'auth:api'], function () {
     //permite editar proveedores
     Route::post('/updateProveedores', 'NegocioController@updateProveedores');
 
+    //retorna el listado de clientes
+    Route::get('/clientes', 'NegocioController@getClientes');
+
+    //permite crear clientes
+    Route::post('/clientes', 'NegocioController@storeClientes');
+    
+    //permite editar clientes
+    Route::post('/updateClientes', 'NegocioController@updateClientes');
+
     //retorna las oportunidades abiertas
     Route::get('/get_oportunidades_abiertas','NegocioController@getOportunidadesAbiertas');
 

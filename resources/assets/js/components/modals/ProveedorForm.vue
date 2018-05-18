@@ -19,14 +19,6 @@
                         </div>
 
                         <div class="col-md-12">
-                            <div v-bind:class="{'form-group': true, 'has-error': errors.nombre}">
-                                <label for="nombre">Nombre :</label>
-                                <input type="text" v-model="data.nombre" class="form-control" >
-                                <span class="help-block" v-for="(error, index) in errors.nombre" :key="index">{{ error }}</span>
-                            </div>
-                        </div>
-
-                        <div class="col-md-12">
                             <div v-bind:class="{'form-group': true, 'has-error': errors.empresa}">
                                 <label for="nombre">Empresa :</label>
                                 <input type="text" v-model="data.empresa" class="form-control" >
@@ -70,10 +62,17 @@
                             <br>
                             <label for="producto" class="control-label">Productos(s): </label>
                             <br/>
-                            <span class="tag" v-bind:key="index" v-for="(producto, index) in data.productos">
-                            <span>{{producto[1]}}</span>
-                            <a title="remover producto" v-on:click="remover(index)">x</a>
-                            </span>
+                            
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <span class="label label-success" v-bind:key="index" v-for="(producto, index) in data.productos">
+                                <span>{{producto[1]}}</span>
+                                <a title="remover producto" v-on:click="remover(index)">x</a>
+                                </span>
+                            </div>
+                            
                             
                         </div>
 
@@ -103,7 +102,6 @@
             return {
                 errors: [],
                 data: {
-                    nombre: '',
                     email: '',
                     empresa: '',
                     telefono: '',
@@ -144,7 +142,7 @@
                 button.button('loading');
                 this.$http.post('/api/proveedores', this.data, {headers: this.headers}).then(response => {
                     this.$emit('proveedorCreated'); 
-                    this.data = {nombre: '',email: '',empresa: '',telefono: '', nit: '', dig: '', productos: []};
+                    this.data = {email: '',empresa: '',telefono: '', nit: '', dig: '', productos: []};
                     if (this.errors) {
                         this.errors = [];
                     }

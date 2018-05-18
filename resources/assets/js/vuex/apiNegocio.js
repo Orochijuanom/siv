@@ -3,6 +3,7 @@ import Vue from 'vue';
 const state = {
 
     proveedores: [],
+    clientes: [],
     empresas: [],
     productos: [],
     categorias: [],
@@ -21,6 +22,9 @@ const mutations = {
         state.proveedores = proveedores;
     },
 
+    SET_CLIENTES(state, clientes){
+        state.clientes = clientes;
+    },
 
     SET_EMPRESAS(state, empresas){
         state.empresas = empresas;
@@ -84,6 +88,25 @@ const actions = {
         return Vue.http.get(url, {headers: params.headers}).then(response => {
             if (response.status === 200) {                
                 commit('SET_PROVEEDORES', response.body.proveedores);
+                commit('SET_LOADING', false)
+                              
+            }
+        },response => {
+            console.log('Error');
+        });
+    },
+
+    getClientes: ({commit}, params) =>{
+        commit('SET_LOADING', true)
+        var url = '';  
+        if(params.search_query_1 == ''){
+          url = '/api/clientes?column='+params.column+'&direction='+params.direction+'&per_page='+params.per_page+'&page='+params.page+'&search_operator='+params.search_operator+'&search_column='+params.search_column
+        }else{
+          url = '/api/clientes?column='+params.column+'&direction='+params.direction+'&per_page='+params.per_page+'&page='+params.page+'&search_operator='+params.search_operator+'&search_column='+params.search_column+'&search_query_1='+params.search_query_1
+        } 
+        return Vue.http.get(url, {headers: params.headers}).then(response => {
+            if (response.status === 200) {                
+                commit('SET_CLIENTES', response.body.clientes);
                 commit('SET_LOADING', false)
                               
             }

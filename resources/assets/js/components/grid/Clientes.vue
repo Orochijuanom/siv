@@ -6,9 +6,9 @@
         </template>
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">Proveedores</h3> 
+                <h3 class="box-title">Clientes</h3> 
                 <div class="box-tools pull-right">     
-                    <a data-toggle="modal" data-target="#modal-negocio" class="btn btn-info btn-sm"><i class="fa fa-user-plus"></i> Crear proveedor</a>
+                    <a data-toggle="modal" data-target="#modal-negocio" class="btn btn-info btn-sm"><i class="fa fa-user-plus"></i> Crear cliente</a>
                 </div>
             </div>
             <div class="box-body">
@@ -16,7 +16,7 @@
                     <div class="col-sm-6">
                         <span>Registros por página:</span>
 
-                        <select v-model="per_page" v-on:change="getProveedores">
+                        <select v-model="per_page" v-on:change="getClientes">
                             <option value="5">5</option>
                             <option value="10">10</option>
                             <option value="20">20</option>
@@ -28,38 +28,37 @@
                     <div class="col-sm-12">
                         <div class="input-group col-sm-12">
                             <label>Buscar: </label>
-                            <input type="text" v-model="search_query_1" v-on:keyup="getProveedores" debounce="500" class="form-control">
+                            <input type="text" v-model="search_query_1" v-on:keyup="getClientes" debounce="500" class="form-control">
                         </div>
-                        <table v-if="apiNegocio.proveedores.data"  class="table table-bordered table-striped table-hover">
+                        <table v-if="apiNegocio.clientes.data"  class="table table-bordered table-striped table-hover">
                             <thead>
                                 <tr>
                                     <th>Nº</th>
                                     <th><a @click="sort('nit')">Nit</a></th>
-                                    <th><a @click="sort('empresa')">Empresa</a></th>
+                                    <th><a @click="sort('nombre')">Nombre</a></th>
                                     <th><a @click="sort('email')">Email</a></th>
                                     <th><a @click="sort('telefono')">Telefono</a></th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
-                            <Proveedor v-on:verProveedor="verProveedor($event)" v-for="(proveedor,index) in apiNegocio.proveedores.data" :key="index" v-bind:index="index" v-bind:proveedor="proveedor"
-                            v-on:crearusuario="proveedorProp = $event"
-                            v-on:editproveedor="proveedorEdit = $event"
+                            <Cliente v-on:verCliente="verCliente($event)" v-for="(cliente,index) in apiNegocio.clientes.data" :key="index" v-bind:index="index" v-bind:cliente="cliente"
+                            v-on:editcliente="clienteEdit = $event"
                             >
-                            </Proveedor>    
+                            </Cliente>    
                         
                         </table>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-6">
-                        <span>Mostrando {{apiNegocio.proveedores.from}} - {{apiNegocio.proveedores.to}} de {{apiNegocio.proveedores.total}}</span>
+                        <span>Mostrando {{apiNegocio.clientes.from}} - {{apiNegocio.clientes.to}} de {{apiNegocio.clientes.total}}</span>
                         |
-                        <span>Página actual <input size="2" type="text" v-model="page" v-on:keyup.enter="getProveedores"> de {{apiNegocio.proveedores.last_page}}</span>
+                        <span>Página actual <input size="2" type="text" v-model="page" v-on:keyup.enter="getClientes"> de {{apiNegocio.clientes.last_page}}</span>
                         |
                         <span><button v-on:click="next">Siguiente</button></span>
                         <span><button v-on:click="prev">Anterior</button></span>
-                        <ProveedorForm v-bind:token="token" @proveedorCreated="getProveedores()"></ProveedorForm>     
-                        <ProveedorEditForm v-bind:token="token" v-bind:proveedorData="proveedorEdit" @proveedorEdited="getProveedores()"></ProveedorEditForm>
+                        <ClienteForm v-bind:token="token" @clienteCreated="getClientes()"></ClienteForm>     
+                        <ClienteEditForm v-bind:token="token" v-bind:clienteData="clienteEdit" @clienteEdited="getClientes()"></ClienteEditForm>
                     </div>
                 </div>
             </div>
@@ -71,21 +70,21 @@
 <script>
     import Vue from 'vue';
     import {mapState} from 'vuex';
-    import Proveedor from './Proveedor.vue';
-    import ProveedorForm from '../modals/ProveedorForm.vue'; 
-    import ProveedorEditForm from '../modals/ProveedorEditForm.vue'; 
+    import Cliente from './Cliente.vue';
+    import ClienteForm from '../modals/ClienteForm.vue'; 
+    import ClienteEditForm from '../modals/ClienteEditForm.vue'; 
     export default {
         props: ['token'],
-        components:{ Proveedor, ProveedorForm,ProveedorEditForm },
+        components:{ Cliente, ClienteForm,ClienteEditForm },
         data(){
             return {
-                proveedorEdit: [],
+                clienteEdit: [],
                 column: 'id',
                 direction: 'desc',
                 per_page: '10',
                 page: '1',
                 search_operator: 'like',
-                search_column: 'empresa',
+                search_column: 'nombre',
                 search_query_1: '',
                 search_query_2: '',
                 headers:  {
@@ -95,14 +94,14 @@
             }
         },
         created(){
-            this.getProveedores();
+            this.getClientes();
         },
         computed: mapState({
             apiNegocio: state => state.apiNegocio
         }),
         methods: {
-            getProveedores(){
-                this.$store.dispatch('getProveedores', {
+            getClientes(){
+                this.$store.dispatch('getClientes', {
                     column: this.column,
                     direction: this.direction,
                     per_page: this.per_page,
@@ -125,19 +124,19 @@
                         this.column = column
                         this.direction = 'asc'
                 }
-                this.getProveedores()
+                this.getClientes()
             },
             next(){
-            if(this.apiNegocio.proveedores.next_page_url){                
+            if(this.apiNegocio.clientes.next_page_url){                
                 this.page++
-                this.getProveedores()
+                this.getClientes()
             }
             },
             prev(){
-                if(this.apiNegocio.proveedores.prev_page_url){
+                if(this.apiNegocio.clientes.prev_page_url){
                     
                     this.page--
-                    this.getProveedores()
+                    this.getClientes()
                 }
             },
         }

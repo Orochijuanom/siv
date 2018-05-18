@@ -26,6 +26,14 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
+                        <div class="input-group col-md-3">                
+                            <label for="hasta" class="control-label">Buscar por: </label>
+                            <select v-model="search_column" class="form-control">
+                                <option v-bind:key="filtro.id" v-for="filtro in filtros" v-bind:value="filtro.fvalue">{{filtro.text}}</option>
+                            </select>
+                        
+                    
+                        </div>
                         <div class="input-group col-sm-12">
                             <label>Buscar: </label>
                             <input type="text" v-model="search_query_1" v-on:keyup="getProductos" debounce="500" class="form-control">
@@ -80,6 +88,16 @@
         components:{ Producto, ProductosForm, ProductosEditForm },
         data(){
             return {
+                filtros:[
+                    {
+                    fvalue: 'descripcion',
+                    text: 'Descripcion'
+                    },
+                    {
+                    fvalue: 'nparte',
+                    text: 'Nº de Parte'
+                    },
+                ], 
                 productoEdit:[],
                 column: 'id',
                 direction: 'desc',
