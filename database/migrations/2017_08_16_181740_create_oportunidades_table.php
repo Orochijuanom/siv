@@ -20,12 +20,12 @@ class CreateOportunidadesTable extends Migration
             $table->string('email');
             $table->string('cargo');
             $table->string('telefono');
-            $table->string('empresa');
+            $table->integer('cliente_id')->unsigned();
             $table->string('nit')->nullable();
             $table->integer('user_id')->unsigned()->nullable();
             $table->date('fecha_requerida');
             $table->date('fecha_atencion')->nullable();
-            $table->bigInteger('presupuesto');
+            $table->bigInteger('presupuesto')->nullable();
             $table->integer('moneda_id')->unsigned();
             $table->text('observaciones')->nullable();
             $table->integer('negocio_id')->unsigned();
@@ -35,6 +35,10 @@ class CreateOportunidadesTable extends Migration
             
             $table->foreign('user_id')
                   ->references('id')->on('users')
+                  ->onDelete('restrict');
+
+            $table->foreign('cliente_id')
+                  ->references('id')->on('clientes')
                   ->onDelete('restrict');
 
             $table->foreign('negocio_id')

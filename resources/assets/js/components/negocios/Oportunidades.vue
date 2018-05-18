@@ -14,7 +14,7 @@
                 <div class="row">
 
                     <div class="col-sm-12">
-                        <div class="col-md-12">
+                        <!-- <div class="col-md-12">
                             <div v-bind:class="{'form-group': true, 'has-error': errors.nit}">
                                 <label for="administrador">URL :</label>
                                     <input type="text" v-model="url"  class="form-control" readOnly>
@@ -26,10 +26,10 @@
                                 <label for="administrador">IFRAME :</label>
                                     <input type="text" v-model="iframe" class="form-control" readOnly>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-md-12">
                             <div v-bind:class="{'form-group': true, 'has-error': errors.nit}">
-                                <label for="administrador">NIT* :</label>
+                                <label for="administrador">NIT :</label>
                                     <input type="text" v-model="data.nit" class="form-control">
                                 <span class="help-block" v-for="(error, index) in errors.nit" :key="index">{{ error }}</span>
                             </div>
@@ -37,8 +37,8 @@
 
                         <div class="col-md-12">
                             <div v-bind:class="{'form-group': true, 'has-error': errors.empresa}">
-                                <label for="administrador">Empresa* :</label>
-                                    <input type="text" v-model="data.empresa" class="form-control">
+                                <label for="administrador">Cliente* :</label>
+                                    <input type="text" v-model="data.cliente" class="form-control">
                                 <span class="help-block" v-for="(error, index) in errors.empresa" :key="index">{{ error }}</span>
                             </div>
                         </div>
@@ -85,7 +85,7 @@
 
                         <div class="col-md-12">
                             <div v-bind:class="{'form-group': true, 'has-error': errors.presupuesto}">
-                                <label for="administrador">Presupuesto* : <i>(Sin puntos ni signos de moneda)</i></label>
+                                <label for="administrador">Presupuesto : <i>(Sin puntos ni signos de moneda)</i></label>
                                     <input type="text" v-model="data.presupuesto" class="form-control">
                                 <span class="help-block" v-for="(error, index) in errors.presupuesto" :key="index">{{ error }}</span>
                             </div>
@@ -104,7 +104,7 @@
                         <div class="col-md-12">
                             <div v-bind:class="{'form-group': true, 'has-error': errors.descripcion}">
                                 <label for="administrador">Descripcion* :</label>
-                                    <input type="text" v-model="data.descripcion" class="form-control">
+                                    <textarea v-model="data.descripcion" class="form-control"></textarea>
                                 <span class="help-block" v-for="(error, index) in errors.descripcion" :key="index">{{ error }}</span>
                             </div>
                         </div>
